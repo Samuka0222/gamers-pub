@@ -1,22 +1,21 @@
 'use client'
 
+import { BotResponse } from "./BotResponse";
 import { Input } from "@/components/Input";
 import { sendBotMessage } from "@/actions/sendBotMessage";
 
 import { useState } from "react";
 
 export function RecommendationBot() {
-  const [inputText, setPromptText] = useState('');
-  const [botResponse, setBotResponse] = useState<String | undefined>(undefined);
-  const [prompts, setPrompts] = useState<String[]>([])
+  const [userPrompt, setUserPrompt] = useState('');
+  const [botResponse, setBotResponse] = useState<string | undefined>(undefined);
+  const [chat, setChat] = useState<string[]>([])
 
   const submitAction = async () => {
-    setPrompts(prevState => prevState.concat(inputText));
-    const response = await sendBotMessage({
-      userPrompt: inputText
-    });
+    setChat(prevState => prevState.concat(userPrompt));
+    const response = await sendBotMessage({ userPrompt });
     setBotResponse(response);
-    setPromptText('');
+    setUserPrompt('');
   }
 
   return (
@@ -25,10 +24,10 @@ export function RecommendationBot() {
       className="w-[60%] h-full mt-8 flex flex-col items-center"
     >
       <h2 className="text-center text-xl font-semibold">Precisa de alguma dica para seu próximo jogo?</h2>
-      <div className="mt-5 h-[600px] w-full border border-gray-300 shadow-sm rounded-lg">
-        {prompts.length > 0 && (
+      <div className="mt-5 h-[600px] w-full border border-gray-300 shadow-sm rounded-lg overflow-y-auto">
+        {chat.length > 0 && (
           <ul className="w-full p-3 text-base flex flex-col gap-2">
-            {prompts.map((prompt, index) => (
+            {chat.map((prompt, index) => (
               <li
                 key={index}
                 className="w-fit py-2 px-4 bg-gray-200 rounded-xl self-end"
@@ -39,7 +38,7 @@ export function RecommendationBot() {
             {
               botResponse && (
                 <div className="w-full py-2 px-4 bg-gray-200 rounded-xl self-end">
-                  {botResponse}
+                  <BotResponse markdown={botResponse} />
                 </div>
               )
             }
@@ -51,8 +50,8 @@ export function RecommendationBot() {
           className="w-full h-full border-none focus-visible:ring-0 focus-visible:ring-offset-0"
           type="text"
           placeholder="Digite sua pergunta aqui"
-          value={inputText}
-          onChange={(e) => setPromptText(e.target.value)}
+          value={userPrompt}
+          onChange={(e) => setUserPrompt(e.target.value)}
         />
       </div>
     </form>

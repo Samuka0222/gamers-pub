@@ -1,7 +1,8 @@
+'use client'
+
 import { Github, Instagram, Linkedin, Twitter } from 'lucide-react'
 import { CustomLink } from "./CustomLink";
 import Image from "next/image";
-
 
 export function HeaderMenu() {
   return (

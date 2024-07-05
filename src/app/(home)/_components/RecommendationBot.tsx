@@ -1,14 +1,21 @@
 'use client'
 
 import { Input } from "@/components/Input";
+import { sendBotMessage } from "@/actions/sendBotMessage";
+
 import { useState } from "react";
 
 export function RecommendationBot() {
   const [inputText, setPromptText] = useState('');
+  const [botResponse, setBotResponse] = useState<String | undefined>(undefined);
   const [prompts, setPrompts] = useState<String[]>([])
 
-  const submitAction = () => {
+  const submitAction = async () => {
     setPrompts(prevState => prevState.concat(inputText));
+    const response = await sendBotMessage({
+      userPrompt: inputText
+    });
+    setBotResponse(response);
     setPromptText('');
   }
 
@@ -29,6 +36,13 @@ export function RecommendationBot() {
                 {prompt}
               </li>
             ))}
+            {
+              botResponse && (
+                <div className="w-full py-2 px-4 bg-gray-200 rounded-xl self-end">
+                  {botResponse}
+                </div>
+              )
+            }
           </ul>
         )}
       </div>

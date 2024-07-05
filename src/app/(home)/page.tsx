@@ -1,9 +1,9 @@
+import { HeaderMenu } from "@/components/HeaderMenu";
 
 export default function Home() {
   return (
     <main>
-      <h1>Gamers Pub</h1>
-      <p>Welcome to Gamers Pub!</p>
+      <HeaderMenu />
     </main>
   )
 }

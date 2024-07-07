@@ -1,10 +1,20 @@
+import { Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-export function BotResponse({ markdown }: { markdown: string }) {
+interface BotResponseProps {
+  markdown: string;
+  isPending: boolean;
+}
+
+export function BotResponse({ markdown, isPending }: BotResponseProps) {
   return (
     <div>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+      {
+        isPending
+          ? <Loader2 className='animate-spin mt-[6px]' />
+          : <ReactMarkdown className='mt-[6px]' remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+      }
     </div>
   );
 }

@@ -10,14 +10,14 @@ import { IChatMessage } from "@/interfaces/IChat";
 import { Input } from "@/components/Input";
 import { SubmitButton } from "@/components/SubmitButton";
 import { sendBotMessage } from "@/actions/sendBotMessage";
+import { toast } from "sonner";
 import { useChatStore } from "@/store/chatStore";
-// import { cn } from "@/lib/utils";
 
-export function RecommendationBot() {
+export function RecommendationBotForm() {
   const [userPrompt, setUserPrompt] = useState('');
   const [chat, setChat] = useState<IChatMessage[]>([]);
 
-  const { chatHistory, addMessageToChat } = useChatStore();
+  const { addMessageToChat } = useChatStore();
 
   const [optimisticChat, addOptimisticChat] = useOptimistic(
     chat,
@@ -71,18 +71,17 @@ export function RecommendationBot() {
       setUserPrompt('');
     } catch (error) {
       if (error instanceof GoogleGenerativeAIResponseError) {
-
-      }
+        toast.error(error.message);
+      };
     }
   }
 
   return (
     <form
       action={submitAction}
-      className="w-[60%] h-full mt-8 flex flex-col items-center"
+      className="w-full h-full flex flex-col items-center"
     >
-      <h2 className="text-center text-xl font-semibold">Precisa de alguma dica para seu próximo jogo?</h2>
-      <div className="mt-5 h-[600px] w-full border border-gray-300 shadow-sm rounded-lg overflow-y-auto">
+      <div className="h-[600px] w-full border border-gray-300 shadow-sm rounded-lg overflow-y-auto">
         {optimisticChat.length > 0 && (
           <ul className="w-full py-5 px-10 text-base flex flex-col gap-4">
             {optimisticChat.map((chatMessage, index) => (
@@ -137,6 +136,7 @@ export function RecommendationBot() {
             type="button"
             size='icon'
             className="rounded-full border-none h-10 w-10 p-0 flex justify-center items-center"
+            disabled
           >
             <ImagePlus />
           </Button>

@@ -83,7 +83,7 @@ export function RecommendationBotForm() {
     >
       <div className="h-[600px] w-full border border-gray-300 shadow-sm rounded-lg overflow-y-auto">
         {optimisticChat.length > 0 && (
-          <ul className="w-full py-5 px-10 text-base flex flex-col gap-4">
+          <ul className="w-full py-5 px-4 md:px-6 lg:px-10 text-base flex flex-col gap-4">
             {optimisticChat.map((chatMessage, index) => (
               <li
                 key={index}
@@ -105,7 +105,7 @@ export function RecommendationBotForm() {
                     : <>
                       <span>
                         <Avatar>
-                          <AvatarFallback>
+                          <AvatarFallback className="bg-slate-900 text-primary">
                             <Bot />
                           </AvatarFallback>
                         </Avatar>

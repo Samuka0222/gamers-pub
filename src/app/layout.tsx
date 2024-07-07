@@ -1,7 +1,8 @@
 import "./globals.css";
+import { HeaderMenu } from "@/components/HeaderMenu";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
-import { Toaster } from "@/components/sonner";
+import { Toaster } from "@/components/Sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={inter.className}>
         <main className="w-screen h-screen">
+          <HeaderMenu />
           {children}
           <Toaster />
         </main>

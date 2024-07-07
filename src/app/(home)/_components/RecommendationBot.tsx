@@ -6,22 +6,19 @@ import { useOptimistic, useState } from "react";
 import { BotResponse } from "./BotResponse";
 import { Button } from "@/components/Button";
 import { GoogleGenerativeAIResponseError } from "@google/generative-ai";
+import { IChatMessage } from "@/interfaces/IChat";
 import { Input } from "@/components/Input";
 import { SubmitButton } from "@/components/SubmitButton";
-import { cn } from "@/lib/utils";
 import { sendBotMessage } from "@/actions/sendBotMessage";
-
-interface IChatMessage {
-  message: {
-    text: string;
-    isPending: boolean;
-    owner: 'user' | 'bot'
-  }
-};
+import { useChatStore } from "@/store/chatStore";
+// import { cn } from "@/lib/utils";
 
 export function RecommendationBot() {
   const [userPrompt, setUserPrompt] = useState('');
   const [chat, setChat] = useState<IChatMessage[]>([]);
+
+  const { chatHistory, addMessageToChat } = useChatStore();
+
   const [optimisticChat, addOptimisticChat] = useOptimistic(
     chat,
     (prevMessages, newMessages: IChatMessage) => {
@@ -57,6 +54,8 @@ export function RecommendationBot() {
         }
       });
 
+      addMessageToChat('user', userPrompt);
+
       const response = await sendBotMessage({ userPrompt });
 
       setChat(prevState => prevState.concat({
@@ -65,12 +64,14 @@ export function RecommendationBot() {
           owner: 'bot',
           isPending: false
         }
-      }))
+      }));
+
+      addMessageToChat('model', response)
 
       setUserPrompt('');
     } catch (error) {
       if (error instanceof GoogleGenerativeAIResponseError) {
-        alert(console.log(error.message));
+
       }
     }
   }

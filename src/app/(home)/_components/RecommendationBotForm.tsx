@@ -2,14 +2,23 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/Avatar";
 import { Bot, ImagePlus, SendHorizonal, User2Icon } from "lucide-react";
+import {
+  GoogleGenerativeAIError,
+  GoogleGenerativeAIFetchError,
+  GoogleGenerativeAIRequestInputError,
+  GoogleGenerativeAIResponseError
+} from "@google/generative-ai";
+
 import { useOptimistic, useState } from "react";
+
 import { BotResponse } from "./BotResponse";
 import { Button } from "@/components/Button";
-import { GoogleGenerativeAIResponseError } from "@google/generative-ai";
 import { IChatMessage } from "@/interfaces/IChat";
 import { Input } from "@/components/Input";
 import { SubmitButton } from "@/components/SubmitButton";
+import { getRandomPhrase } from "@/lib/phrases";
 import { sendBotMessage } from "@/actions/sendBotMessage";
+
 import { toast } from "sonner";
 import { useChatStore } from "@/store/chatStore";
 
@@ -25,8 +34,6 @@ export function RecommendationBotForm() {
       return prevMessages.concat(newMessages)
     }
   );
-
-  // TODO: Implementar o UseActionState
 
   const submitAction = async () => {
     try {
@@ -54,8 +61,6 @@ export function RecommendationBotForm() {
         }
       });
 
-      addMessageToChat('user', userPrompt);
-
       const response = await sendBotMessage({ userPrompt });
 
       setChat(prevState => prevState.concat({
@@ -65,12 +70,23 @@ export function RecommendationBotForm() {
           isPending: false
         }
       }));
-
-      addMessageToChat('model', response)
-
+      addMessageToChat('user', userPrompt);
+      addMessageToChat('model', response);
       setUserPrompt('');
     } catch (error) {
+      if (error instanceof GoogleGenerativeAIError) {
+        toast.error(error.message);
+      };
+
       if (error instanceof GoogleGenerativeAIResponseError) {
+        toast.error(error.message);
+      };
+
+      if (error instanceof GoogleGenerativeAIFetchError) {
+        toast.error(error.message);
+      };
+
+      if (error instanceof GoogleGenerativeAIRequestInputError) {
         toast.error(error.message);
       };
     }
@@ -81,17 +97,17 @@ export function RecommendationBotForm() {
       action={submitAction}
       className="w-full h-full flex flex-col items-center"
     >
-      <div className="h-[600px] w-full border border-gray-300 shadow-sm rounded-lg overflow-y-auto">
+      <div className="h-[500px] md:h-[600px] w-full rounded-lg overflow-y-auto">
         {optimisticChat.length > 0 && (
-          <ul className="w-full py-5 px-4 md:px-6 lg:px-10 text-base flex flex-col gap-4">
+          <ul className="w-full py-5 pr-3 text-base flex flex-col gap-4">
             {optimisticChat.map((chatMessage, index) => (
               <li
                 key={index}
-                className='w-full flex text-justify justify-start items-start gap-2'
+                className='w-full flex text-justify justify-start items-start gap-4'
               >
                 {
                   chatMessage.message.owner === 'user'
-                    ? <>
+                    ? <div className="w-full flex gap-2">
                       <span>
                         <Avatar>
                           <AvatarImage />
@@ -100,9 +116,9 @@ export function RecommendationBotForm() {
                           </AvatarFallback>
                         </Avatar>
                       </span>
-                      <p className="mt-[6px]">{chatMessage.message.text}</p>
-                    </>
-                    : <>
+                      <span className="mt-[7px]">{chatMessage.message.text}</span>
+                    </div>
+                    : <div className="w-full flex gap-2">
                       <span>
                         <Avatar>
                           <AvatarFallback className="bg-slate-900 text-primary">
@@ -114,7 +130,7 @@ export function RecommendationBotForm() {
                         markdown={chatMessage.message.text}
                         isPending={chatMessage.message.isPending}
                       />
-                    </>
+                    </div>
                 }
               </li>
             ))}
@@ -123,9 +139,9 @@ export function RecommendationBotForm() {
       </div>
       <div className="w-full flex justify-between items-center mt-4 h-16 border border-gray-300 text-base rounded-lg shadow-sm p-3">
         <Input
-          className="flex-1 h-full border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0 overflow-y-auto"
+          className="flex-1 h-full border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
           type="text"
-          placeholder="Digite sua pergunta aqui"
+          placeholder={getRandomPhrase()}
           value={userPrompt}
           onChange={(e) => setUserPrompt(e.target.value)}
           required
@@ -148,10 +164,3 @@ export function RecommendationBotForm() {
     </form>
   )
 }
-
-
-// className={cn(
-//   chatMessage.message.owner === 'user'
-//     ? "w-fit py-2 px-4 bg-gray-200 rounded-xl self-end"
-//     : "w-fit py-2 px-4 bg-gray-200 rounded-xl self-start"
-// )}

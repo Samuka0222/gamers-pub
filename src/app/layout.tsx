@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <main className="w-screen h-screen">
+        <main className="w-screen h-screen overflow-hidden">
           <HeaderMenu />
           {children}
           <Toaster />

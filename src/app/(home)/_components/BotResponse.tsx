@@ -12,8 +12,8 @@ export function BotResponse({ markdown, isPending }: BotResponseProps) {
     <div>
       {
         isPending
-          ? <Loader2 className='animate-spin mt-[6px]' />
-          : <ReactMarkdown className='mt-[6px]' remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+          ? <Loader2 className='animate-spin mt-[7px]' />
+          : <ReactMarkdown className='mt-[7px]' remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
       }
     </div>
   );

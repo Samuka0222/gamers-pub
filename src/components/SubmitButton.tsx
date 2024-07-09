@@ -2,13 +2,15 @@
 
 import { Button } from './Button';
 import { Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useFormStatus } from 'react-dom';
 
 interface SubmitButtonProps {
   children: React.ReactNode;
+  size?: 'icon' | 'normal';
 }
 
-export function SubmitButton({ children }: SubmitButtonProps) {
+export function SubmitButton({ children, size = 'icon' }: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -16,7 +18,12 @@ export function SubmitButton({ children }: SubmitButtonProps) {
       type='submit'
       variant='outline'
       disabled={pending}
-      className='rounded-full border-none h-10 w-10 p-0 flex justify-center items-center'
+      size={size === 'normal' ? 'default' : 'icon'}
+      className={cn(
+        size === 'normal'
+          ? 'border-none flex justify-center items-center text-black font-semibold'
+          : 'rounded-full border-none h-10 w-10 p-0 flex justify-center items-center'
+      )}
     >
       {
         pending

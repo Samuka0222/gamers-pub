@@ -1,4 +1,4 @@
-import { Content, Part } from '@google/generative-ai';
+import { Content } from '@google/generative-ai';
 import { create } from 'zustand';
 
 type IChatStore = {

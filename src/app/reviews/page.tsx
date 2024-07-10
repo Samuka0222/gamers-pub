@@ -1,7 +1,9 @@
 import { Gamepad, PlusCircleIcon, ScrollText } from "lucide-react";
-import { Button } from "@/components/Button";
-import Link from "next/link";
 import { ProfileHeader } from "./_components/ProfileHeader";
+import { SearchGameForm } from "./_components/SearchGameForm";
+import { searchByGameName } from "@/actions/searchByGameName";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Dialog";
+import { Button } from "@/components/Button";
 
 export default function ReviewsPage() {
   return (
@@ -24,11 +26,22 @@ export default function ReviewsPage() {
               </span>
             </li>
             <li>
-              <Button asChild>
-                <Link href='reviews/create-review'>
-                  <PlusCircleIcon className="mr-1" /> Review
-                </Link>
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant='default' className="bg-slate-900 text-white hover:bg-slate-600 hover:text-secondary text-sm font-medium">
+                    <PlusCircleIcon className="mr-2" /> Avaliação
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-transparent border-none shadow-none">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl text-center text-primary mb-2">Criar nova Avaliação</DialogTitle>
+                    <DialogDescription className="text-center text-white">
+                      Pesquise e clique sobre o jogo que deseja criar uma avaliação
+                    </DialogDescription>
+                  </DialogHeader>
+                  <SearchGameForm searchGameByName={searchByGameName} />
+                </DialogContent>
+              </Dialog>
             </li>
           </ul>
         </div>

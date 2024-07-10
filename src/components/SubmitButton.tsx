@@ -7,10 +7,10 @@ import { useFormStatus } from 'react-dom';
 
 interface SubmitButtonProps {
   children: React.ReactNode;
-  size?: 'icon' | 'normal';
+  className?: string
 }
 
-export function SubmitButton({ children, size = 'icon' }: SubmitButtonProps) {
+export function SubmitButton({ children, className }: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -18,16 +18,13 @@ export function SubmitButton({ children, size = 'icon' }: SubmitButtonProps) {
       type='submit'
       variant='outline'
       disabled={pending}
-      size={size === 'normal' ? 'default' : 'icon'}
       className={cn(
-        size === 'normal'
-          ? 'border-none flex justify-center items-center text-black font-semibold'
-          : 'rounded-full border-none h-10 w-10 p-0 flex justify-center items-center'
+        className ?? 'rounded-full border-none h-10 w-10 p-0 flex justify-center items-center'
       )}
     >
       {
         pending
-          ? <><Loader2 className='animate-spin w-[3.55rem]' /></>
+          ? <><Loader2 className='animate-spin' /></>
           : <>{children}</>
       }
     </Button>

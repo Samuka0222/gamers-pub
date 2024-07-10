@@ -7,6 +7,7 @@ import { Search } from "lucide-react";
 import { SubmitButton } from "@/components/SubmitButton";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface SearchGameFormProps {
   searchGameByName: (gameName: string) => Promise<IGameSearchResult[] | undefined>
@@ -16,6 +17,8 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
   const [isSearching, setIsSearching] = useState(false);
   const [game, setGame] = useState('');
   const [searchResults, setSearchResults] = useState<IGameSearchResult[]>([]);
+
+  const router = useRouter();
 
   const submitAction = async () => {
     try {
@@ -28,22 +31,29 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
     }
   }
 
-  const setGameAction = (gameName: string) => {
+  const onChangeAction = (value: string) => {
+    setGame(value);
     setIsSearching(false);
-    setGame(gameName);
+    setSearchResults([]);
+  }
+
+  const setGameAction = (game: IGameSearchResult) => {
+    setIsSearching(false);
+    setGame(game.name);
+    router.push(`reviews/create-review/${game.id}`)
   }
 
   return (
     <form className="relative flex flex-col gap-3" action={submitAction}>
       <div className="w-full flex justify-between border rounded-lg py-2 px-2">
-        <SubmitButton size="icon">
+        <SubmitButton className="bg-transparent hover:bg-transparent border-none p-2 flex justify-center items-center text-white hover:text-primary font-semibold">
           <Search />
         </SubmitButton>
         <Input
           type="text"
-          className="font-medium placeholder:text-gray-500 border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0 ml-1"
-          onChange={(e) => setGame(e.target.value)}
-          placeholder="Nome do jogo"
+          className="font-medium bg-transparent text-white placeholder:text-gray-70000 border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0 ml-1"
+          onChange={(e) => onChangeAction(e.target.value)}
+          placeholder="Digite o nome do jogo..."
           value={game}
         />
       </div>
@@ -56,7 +66,7 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
                   <Button
                     variant='link'
                     className="w-[90%] text-ellipsis p-0 text-white hover:text-primary justify-start"
-                    onClick={() => setGameAction(result.name)}
+                    onClick={() => setGameAction(result)}
                     type="button"
                   >
                     {result.name}
@@ -70,5 +80,3 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
     </form>
   )
 }
-
-{/* <Image src={`https:${result.cover.url}`} width={100} height={100} alt={`Capa do ${result.name}`} /> */ }

@@ -9,8 +9,8 @@ export async function searchByGameName(
   try {
     const apiqlQuery = `
     search "${gameName}";
-      fields name, cover.url;
-      where version_parent = null;
+    fields name, cover.url;
+    where version_parent = null;
     `;
 
     const response = await axios.post(

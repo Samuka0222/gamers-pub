@@ -27,7 +27,7 @@ export function SubmitButton({ children, size = 'icon' }: SubmitButtonProps) {
     >
       {
         pending
-          ? <><Loader2 className='animate-spin' /></>
+          ? <><Loader2 className='animate-spin w-[3.55rem]' /></>
           : <>{children}</>
       }
     </Button>

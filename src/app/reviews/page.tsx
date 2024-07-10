@@ -1,6 +1,7 @@
-import { Gamepad, ScrollText } from "lucide-react";
+import { Gamepad, PlusCircleIcon, ScrollText } from "lucide-react";
+import { Button } from "@/components/Button";
+import Link from "next/link";
 import { ProfileHeader } from "./_components/ProfileHeader";
-import { SearchGameDialog } from "./_components/SearchGameDialog";
 
 export default function ReviewsPage() {
   return (
@@ -23,7 +24,11 @@ export default function ReviewsPage() {
               </span>
             </li>
             <li>
-              <SearchGameDialog />
+              <Button asChild>
+                <Link href='reviews/create-review'>
+                  <PlusCircleIcon className="mr-1" /> Review
+                </Link>
+              </Button>
             </li>
           </ul>
         </div>

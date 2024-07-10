@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from "@/components/dialog";
+} from "@/components/Dialog";
 import { Button } from "@/components/Button";
 import { EditProfileForm } from "./EditProfileForm";
 import { User2Icon } from "lucide-react";

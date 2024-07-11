@@ -2,6 +2,7 @@ import { ButtonsMenu } from "./_components/ButtonsMenu";
 import { RecommendationBotForm } from "./_components/RecommendationBotForm";
 
 export default function Home() {
+  // TODO: Fix Height on HD Layout
   return (
     <section className="w-full h-full flex flex-col items-center overflow-hidden">
       <div className="w-full h-full flex flex-col items-center mt-11">

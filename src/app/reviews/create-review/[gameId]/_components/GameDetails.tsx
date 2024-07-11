@@ -22,7 +22,7 @@ export function GameDetails({
   }
 
   return (
-    <div className="w-full flex gap-2 justify-center items-center mt-4 border p-3 bg-slate-900 rounded-lg">
+    <div className="w-full flex gap-2 justify-center items-center">
       <div className="w-fit shadow-sm">
         <Image src={getCover(coverUrl)} width={150} height={100} alt={`Capa do ${name}`} />
       </div>

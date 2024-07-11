@@ -4,6 +4,7 @@ import { ReviewForm } from "@/components/ReviewForm";
 import { Suspense } from "react";
 import { getGameById } from "@/actions/getGameById";
 
+
 interface CreateReviewPageProps {
   params: {
     gameId?: number;
@@ -33,7 +34,7 @@ export default async function CreateReviewPage({ params }: CreateReviewPageProps
           }>
             <GameDetails
               name={game.name}
-              releaseDate={new Date(game.first_release_date)}
+              releaseDate={game.first_release_date}
               coverUrl={`https:${game.cover.url!}`}
               platforms={game.platforms}
             />

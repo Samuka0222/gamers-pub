@@ -1,10 +1,11 @@
 import { Badge } from "@/components/Badge";
+import { dateFormat } from "@/helpers/dateFormat";
 import Image from "next/image";
 
 interface GameDetailsProps {
   name: string;
   coverUrl: string;
-  releaseDate: Date;
+  releaseDate: number;
   platforms: {
     id: number;
     name: string;
@@ -32,7 +33,7 @@ export function GameDetails({
         <p className="font-semibold text-gray-300">
           Lançado:
           <span className="ml-1">
-            {String(releaseDate)}
+            {dateFormat(releaseDate)}
           </span>
         </p>
         <div className="w-full text-white">

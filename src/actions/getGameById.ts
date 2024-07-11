@@ -8,7 +8,7 @@ interface GetGameByIdOutput extends IGameSearchResult {
     id: number;
     name: string;
   }[];
-  first_release_date: string;
+  first_release_date: number;
 }
 
 export async function getGameById(

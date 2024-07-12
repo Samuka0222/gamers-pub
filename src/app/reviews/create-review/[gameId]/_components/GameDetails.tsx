@@ -23,21 +23,20 @@ export function GameDetails({
   }
 
   return (
-    <div className="w-full flex gap-2 justify-center items-center">
-      <div className="w-fit shadow-sm">
+    <div className="w-full lg:w-[60%] flex flex-col lg:flex-row justify-center items-center">
+      <div className="w-fit shadow-sm shadow-gray-300 mr-4">
         <Image src={getCover(coverUrl)} width={150} height={100} alt={`Capa do ${name}`} />
       </div>
       <ul className="w-full flex flex-col gap-3 text-white">
-        <p className="text-xl font-semibold">{name}</p>
-        {/* TODO: Implement Date-FNS */}
-        <p className="font-semibold text-gray-300">
+        <p className="w-full lg:w-fit text-center lg:text-start mt-3 lg:mt-0 text-xl font-semibold">{name}</p>
+        <p className="hidden lg:block font-semibold text-gray-300">
           Lançado:
           <span className="ml-1">
             {dateFormat(releaseDate)}
           </span>
         </p>
-        <div className="w-full text-white">
-          <p className="font-semibold">Plataformas:</p>
+        <div className="hidden lg:block w-full text-white">
+          <p className="font-semibold mb-1">Plataformas:</p>
           <ul className="w-full flex gap-1">
             {
               platforms.map(platform => (

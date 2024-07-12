@@ -15,6 +15,7 @@ import { IReview } from "@/interfaces/IReview";
 import { SubmitButton } from "./SubmitButton";
 import { useRouter } from "next/navigation";
 import { IGameDetails } from "@/interfaces/IGame";
+import { getFullCover } from "@/helpers/getFullCover";
 
 interface ReviewFormProps {
   game: IGameDetails
@@ -41,12 +42,12 @@ export function ReviewForm({ game }: ReviewFormProps) {
       id: reviews.length + 1,
       gameId: game.id,
       gameName: game.name,
-      gameCoverUrl: `https:${game.cover.url}`,
+      gameCoverUrl: `https:${getFullCover(game.cover.url)}`,
       status,
       reviewText,
       spoilers,
       platform,
-      rating,
+      rating: status === 'completed' ? rating : undefined,
       startDate,
       endDate,
       hoursPlayed,
@@ -128,12 +129,16 @@ export function ReviewForm({ game }: ReviewFormProps) {
       </div>
       <div className="w-full flex gap-4 mt-5 items-center justify-between">
         <div className="w-[40%]">
-          <h3 className="text-gray-200 text-lg font-semibold mb-2">Nota: {rating} </h3>
+          <h3 className="text-gray-200 text-lg font-semibold mb-2">Nota: {
+            status === 'completed' ? rating : '?'
+          }</h3>
           <Slider
+            // TODO: Add Disabled Style for the slider
             defaultValue={[rating]}
             value={[rating]}
             max={100}
             step={1}
+            disabled={status !== 'completed'}
             onValueChange={(value) => setRating(value[0])}
           />
         </div>

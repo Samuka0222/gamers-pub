@@ -1,5 +1,6 @@
 import { Badge } from "@/components/Badge";
 import { dateFormat } from "@/helpers/dateFormat";
+import { getFullCover } from "@/helpers/getFullCover";
 import Image from "next/image";
 
 interface GameDetailsProps {
@@ -18,14 +19,10 @@ export function GameDetails({
   releaseDate,
   platforms
 }: GameDetailsProps) {
-  const getCover = (coverUrl: string) => {
-    return coverUrl.replace('t_thumb', 't_cover_big')
-  }
-
   return (
     <div className="w-full lg:w-[60%] flex flex-col lg:flex-row justify-center items-center">
       <div className="w-fit shadow-sm shadow-gray-300 mr-4">
-        <Image src={getCover(coverUrl)} width={150} height={100} alt={`Capa do ${name}`} />
+        <Image src={getFullCover(coverUrl)} width={150} height={100} alt={`Capa do ${name}`} />
       </div>
       <ul className="w-full flex flex-col gap-3 text-white">
         <p className="w-full lg:w-fit text-center lg:text-start mt-3 lg:mt-0 text-xl font-semibold">{name}</p>

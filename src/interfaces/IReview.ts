@@ -7,7 +7,7 @@ export interface IReview {
   reviewText: string;
   spoilers: boolean;
   platform?: string;
-  rating: number;
+  rating?: number;
   startDate?: Date;
   endDate?: Date;
   hoursPlayed?: number;

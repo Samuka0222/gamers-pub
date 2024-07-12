@@ -10,15 +10,17 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { RotateCcwIcon, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useReviewsStore } from "@/store/reviewsStore";
+import { IReview } from "@/interfaces/IReview";
+import { SubmitButton } from "./SubmitButton";
+import { useRouter } from "next/navigation";
+import { IGameDetails } from "@/interfaces/IGame";
 
 interface ReviewFormProps {
-  platforms: {
-    id: number;
-    name: string;
-  }[];
+  game: IGameDetails
 }
 
-export function ReviewForm({ platforms }: ReviewFormProps) {
+export function ReviewForm({ game }: ReviewFormProps) {
   const [status, setStatus] = useState('');
   const [reviewText, setReviewText] = useState('');
   const [spoilers, setSpoilers] = useState(false);
@@ -31,8 +33,33 @@ export function ReviewForm({ platforms }: ReviewFormProps) {
   const [mastered, setMastered] = useState(false);
   const [replay, setReplay] = useState(false);
 
+  const { reviews, addReview, editReview } = useReviewsStore();
+  const router = useRouter();
+
+  const submitAction = () => {
+    const newReview: IReview = {
+      id: reviews.length + 1,
+      gameId: game.id,
+      gameName: game.name,
+      gameCoverUrl: `https:${game.cover.url}`,
+      status,
+      reviewText,
+      spoilers,
+      platform,
+      rating,
+      startDate,
+      endDate,
+      hoursPlayed,
+      minutesPlayed,
+      mastered,
+      replay,
+    };
+    addReview(newReview);
+    router.push('/reviews')
+  }
+
   return (
-    <form className="w-full h-full mt-5 flex flex-col overflow-y-auto">
+    <form className="w-full h-full mt-5 flex flex-col items-center overflow-y-auto" action={submitAction}>
       <div className="w-full flex gap-4">
         <div>
           <h3 className="text-gray-200 text-lg font-semibold mb-2">Status: </h3>
@@ -117,7 +144,7 @@ export function ReviewForm({ platforms }: ReviewFormProps) {
               <SelectValue className="placeholder:text-gray-500 font-medium" placeholder="Selecione a plataforma que você jogou" />
             </SelectTrigger>
             <SelectContent>
-              {platforms.map((platform) => {
+              {game.platforms.map((platform) => {
                 return (
                   <SelectItem key={platform.id} value={platform.name}>
                     {platform.name}
@@ -130,6 +157,7 @@ export function ReviewForm({ platforms }: ReviewFormProps) {
       </div>
       <div className="w-full flex gap-4 mt-5 justify-between">
         <div>
+          {/* TODO: Block future days */}
           <h3 className="text-gray-200 text-lg font-semibold mb-2">Data de inicio: </h3>
           <DatePicker date={startDate} setDate={setStartDate} />
         </div>
@@ -173,6 +201,9 @@ export function ReviewForm({ platforms }: ReviewFormProps) {
           </div>
         </div>
       </div>
+      <SubmitButton className="w-[170px] bg-secondary hover:bg-secondary border-none text-white font-semibold mt-5 text-lg">
+        Criar Review
+      </SubmitButton>
     </form>
   )
 }

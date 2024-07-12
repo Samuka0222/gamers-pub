@@ -1,19 +1,11 @@
 'use server';
 
 import axios, { AxiosError } from 'axios';
-import { IGameSearchResult } from '@/interfaces/IGame';
-
-interface GetGameByIdOutput extends IGameSearchResult {
-  platforms: {
-    id: number;
-    name: string;
-  }[];
-  first_release_date: number;
-}
+import { IGameDetails } from '@/interfaces/IGame';
 
 export async function getGameById(
   gameId: number,
-): Promise<GetGameByIdOutput | undefined> {
+): Promise<IGameDetails | undefined> {
   try {
     const apiqlQuery = `fields id, cover.url, name, platforms.name, first_release_date; where id = ${gameId};`;
 

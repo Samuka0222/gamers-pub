@@ -6,3 +6,11 @@ export interface IGameSearchResult {
   };
   name: string;
 }
+
+export interface IGameDetails extends IGameSearchResult {
+  platforms: {
+    id: number;
+    name: string;
+  }[];
+  first_release_date: number;
+}

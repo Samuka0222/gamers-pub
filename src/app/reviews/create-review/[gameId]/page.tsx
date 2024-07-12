@@ -24,6 +24,7 @@ export default async function CreateReviewPage({ params }: CreateReviewPageProps
   }
 
   return (
+    // TODO: Responsiveness
     <section className="w-full h-full py-6 px-5 flex flex-col items-center">
       <div className="w-full h-full lg:max-w-[70%]">
         <h2 className="w-full text-2xl font-semibold text-center">Criar Avaliação</h2>
@@ -45,7 +46,7 @@ export default async function CreateReviewPage({ params }: CreateReviewPageProps
               <UserProfile />
             </div>
           </div>
-          <ReviewForm platforms={game.platforms} />
+          <ReviewForm game={game} />
         </div>
       </div>
     </section >

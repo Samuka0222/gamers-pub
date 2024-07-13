@@ -136,7 +136,6 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
         <div className="w-full lg:w-[40%]">
           <h3 className="text-gray-200 text-lg font-semibold mb-2">Nota: {rating}</h3>
           <Slider
-            // TODO: Add Disabled Style for the slider
             defaultValue={[rating!]}
             value={[rating!]}
             max={100}
@@ -167,7 +166,6 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
 
         <div className="w-full flex flex-col md:flex-row md:justify-center gap-4">
           <div className="text-center md:text-start">
-            {/* TODO: Block future days */}
             <h3 className="text-gray-200 text-lg font-semibold mb-2">Data de inicio: </h3>
             <DatePicker
               date={startDate}
@@ -186,7 +184,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           </div>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mt-2">
+        <div className="w-full flex flex-col md:flex-row justify-center items-center xl:items-start gap-4 xl:gap-8 mt-2">
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-gray-200 text-lg font-semibold mb-2">Horas jogadas: </h3>
             <div className="flex gap-2">
@@ -205,7 +203,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             </div>
           </div>
           <div className="h-full flex flex-col">
-            <h3 className="text-gray-200 text-lg font-semibold mb-2">Platinado? </h3>
+            <h3 className="text-gray-200 text-lg font-semibold mb-2 xl:mb-4">Platinado? </h3>
             <div className="flex gap-2 justify-center items-center">
               <Checkbox onCheckedChange={() => setMastered(!mastered)} />
               <span className="font-semibold text-white">
@@ -214,7 +212,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             </div>
           </div>
           <div className="h-full flex flex-col">
-            <h3 className="text-gray-200 text-lg font-semibold mb-2">Jogou novamente? </h3>
+            <h3 className="text-gray-200 text-lg font-semibold mb-2 xl:mb-4">Jogou novamente? </h3>
             <div className="flex gap-2 justify-center items-center">
               <Checkbox onCheckedChange={() => setReplay(!replay)} />
               <span className="font-semibold text-white">

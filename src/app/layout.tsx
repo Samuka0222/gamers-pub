@@ -19,8 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" className="overflow-hidden">
-      <body className={cn(inter.className, 'overflow-hidden')}>
-        <main className="w-screen h-screen overflow-y-auto">
+      <body className={cn(inter.className)}>
+        <main className="min-w-screen min-h-screen overflow-y-auto">
           <HeaderMenu />
           {children}
         </main>

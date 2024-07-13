@@ -1,12 +1,12 @@
 'use client'
 
 import { Button } from "@/components/Button";
-import { IGameSearchResult } from "@/interfaces/IGameSearchResult";
+import { IGameSearchResult } from "@/interfaces/IGame";
 import { Input } from "@/components/Input";
-import { Search } from "lucide-react";
+import { Loader2Icon, Search } from "lucide-react";
 import { SubmitButton } from "@/components/SubmitButton";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface SearchGameFormProps {
@@ -15,27 +15,34 @@ interface SearchGameFormProps {
 
 export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
   const [isSearching, setIsSearching] = useState(false);
-  const [game, setGame] = useState('');
+  const [searchGameName, setSearchGameName] = useState('');
   const [searchResults, setSearchResults] = useState<IGameSearchResult[]>([]);
+  const [game, setGame] = useState('');
 
   const router = useRouter();
 
-  const submitAction = async () => {
-    try {
-      setIsSearching(true);
-      const response = await searchGameByName(game);
-      setSearchResults(response ?? []);
-    } catch (error) {
-      toast.error('Erro na busca, tente novamente');
-      setIsSearching(false);
-    }
-  }
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchGameName.trim() !== '') {
+        setIsSearching(true);
+        searchGameByName(searchGameName).then((results) => {
+          if (results) {
+            setSearchResults(results);
+            setIsSearching(false);
+          } else {
+            toast.error('Erro ao pesquisar');
+            setIsSearching(false);
+            setSearchResults([]);
+          }
+        });
+      } else {
+        setIsSearching(false);
+        setSearchResults([]);
+      }
+    }, 2000)
 
-  const onChangeAction = (value: string) => {
-    setGame(value);
-    setIsSearching(false);
-    setSearchResults([]);
-  }
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchGameName, searchGameByName]);
 
   const setGameAction = (game: IGameSearchResult) => {
     setIsSearching(false);
@@ -44,21 +51,29 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
   }
 
   return (
-    <form className="relative flex flex-col gap-3" action={submitAction}>
+    <div className="relative flex flex-col gap-3">
       <div className="w-full flex justify-between border rounded-lg py-2 px-2">
-        <SubmitButton className="bg-transparent hover:bg-transparent border-none p-2 flex justify-center items-center text-white hover:text-primary font-semibold">
-          <Search />
-        </SubmitButton>
+        <div className="text-white h-full w-8 flex justify-center items-center">
+          {
+            isSearching
+              ? <Loader2Icon className="animate-spin" />
+              : <Search />
+          }
+        </div>
         <Input
           type="text"
           className="font-medium bg-transparent text-white placeholder:text-gray-70000 border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0 ml-1"
-          onChange={(e) => onChangeAction(e.target.value)}
+          onChange={(e) => {
+            setSearchGameName(e.target.value)
+            setIsSearching(true);
+            setSearchResults([]);
+          }}
           placeholder="Digite o nome do jogo..."
-          value={game}
+          value={searchGameName}
         />
       </div>
       {
-        isSearching && (
+        searchResults.length > 0 && (
           <ul className="absolute top-full w-full h-[300px] flex flex-col bg-slate-900/50 overflow-y-auto rounded-lg mt-2 shadow-sm">
             {
               searchResults.map((result, index) => (
@@ -77,6 +92,6 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
           </ul>
         )
       }
-    </form>
+    </div>
   )
 }

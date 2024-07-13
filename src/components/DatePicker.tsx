@@ -43,7 +43,7 @@ export function DatePicker({ date, setDate, minDate, placeholder }: DatePickerPr
           onSelect={setDate}
           locale={ptBR}
           initialFocus
-          disabled={minDate ? { before: minDate } : undefined}
+          disabled={{ before: minDate ?? undefined, after: new Date() }}
         />
       </PopoverContent>
     </Popover>

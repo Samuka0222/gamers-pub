@@ -14,13 +14,14 @@ export async function searchByGameName(
     `;
 
     const response = await axios.post(
-      'https://api.igdb.com/v4/games',
+      `${process.env.BASE_URL}/v4/games`,
       apiqlQuery,
       {
         headers: {
           'Client-ID': process.env.TWITCH_CLIENT_ID,
           Authorization: `Bearer ${process.env.TWITCH_ACCESS_TOKEN}`,
           'Content-Type': 'text/plain',
+          'x-api-key': process.env.API_KEY,
         },
       },
     );

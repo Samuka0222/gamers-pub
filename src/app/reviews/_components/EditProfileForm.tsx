@@ -40,7 +40,7 @@ export function EditProfileForm() {
           onChange={(e) => setTitleInput(e.target.value)}
         />
       </div>
-      <SubmitButton size="normal">
+      <SubmitButton className="w-[200px] bg-secondary hover:bg-secondary border-none text-white font-semibold mt-10 text-lg">
         Finalizar
       </SubmitButton>
     </form>

@@ -32,21 +32,6 @@ export function GameDetails({
             {dateFormat(releaseDate)}
           </span>
         </p>
-        <div className="hidden lg:block w-full text-white">
-          <p className="font-semibold mb-1">Plataformas:</p>
-          <ul className="w-full flex gap-1">
-            {
-              platforms.map(platform => (
-                <Badge
-                  key={platform.id}
-                  className="bg-slate-900 text-primary hover:bg-slate-900 border-secondary"
-                >
-                  {platform.name}
-                </Badge>
-              ))
-            }
-          </ul>
-        </div>
       </ul>
     </div>
   )

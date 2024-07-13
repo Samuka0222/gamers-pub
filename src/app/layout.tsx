@@ -3,6 +3,7 @@ import { HeaderMenu } from "@/components/HeaderMenu";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/Sonner";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body className={inter.className}>
+    <html lang="pt-br" className="overflow-hidden">
+      <body className={cn(inter.className, 'overflow-hidden')}>
         <main className="w-screen h-screen overflow-y-auto">
           <HeaderMenu />
           {children}

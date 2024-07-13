@@ -16,23 +16,24 @@ import {
 
 interface DatePickerProps {
   date: Date | undefined
+  placeholder: string
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   minDate?: Date | undefined
 }
 
-export function DatePicker({ date, setDate, minDate }: DatePickerProps) {
+export function DatePicker({ date, setDate, minDate, placeholder }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "lg:w-[200px] xl:w-[240px] justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP", { locale: ptBR }) : <span>Defina a data de inicio</span>}
+          {date ? format(date, "PPP", { locale: ptBR }) : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

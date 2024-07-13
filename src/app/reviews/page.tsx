@@ -16,7 +16,7 @@ export default function ReviewsPage() {
   const ordernedReviews = reviews.sort((a, b) => b.id - a.id)
 
   return (
-    <section className="w-full h-full px-6 py-5 flex flex-col items-center">
+    <section className="w-full h-full px-2 lg:px-6 py-5 flex flex-col items-center">
       <div className="w-full lg:w-[60%]">
         <ProfileHeader />
         <div className="w-full flex justify-between items-center mt-5">

@@ -10,11 +10,11 @@ interface IReviewStore {
 export const useReviewsStore = create<IReviewStore>()((set) => ({
   reviews: [
     {
-      id: 4,
+      id: 3,
       gameId: 248568,
       gameName: 'The Sims 3',
       gameCoverUrl:
-        'https:////images.igdb.com/igdb/image/upload/t_cover_big/co8dgc.jpg',
+        'https://images.igdb.com/igdb/image/upload/t_cover_big/co8dgc.jpg',
       status: 'playing',
       reviewText: '',
       spoilers: false,
@@ -28,11 +28,11 @@ export const useReviewsStore = create<IReviewStore>()((set) => ({
       replay: false,
     },
     {
-      id: 1,
+      id: 0,
       gameId: 7348,
       gameName: 'Halo: The Master Chief Collection',
       gameCoverUrl:
-        'https:////images.igdb.com/igdb/image/upload/t_cover_big/co1t95.jpg',
+        'https://images.igdb.com/igdb/image/upload/t_cover_big/co1t95.jpg',
       status: 'completed',
       reviewText: 'Game PEAK',
       spoilers: false,
@@ -46,11 +46,11 @@ export const useReviewsStore = create<IReviewStore>()((set) => ({
       replay: true,
     },
     {
-      id: 2,
+      id: 1,
       gameId: 3966,
       gameName: 'Killer7',
       gameCoverUrl:
-        'https:////images.igdb.com/igdb/image/upload/t_cover_big/co1owa.jpg',
+        'https://images.igdb.com/igdb/image/upload/t_cover_big/co1owa.jpg',
       status: 'completed',
       reviewText: 'Não entendi nada, mas gostei.',
       spoilers: false,
@@ -64,11 +64,11 @@ export const useReviewsStore = create<IReviewStore>()((set) => ({
       replay: false,
     },
     {
-      id: 3,
+      id: 2,
       gameId: 43,
       gameName: 'Deus Ex: Human Revolution',
       gameCoverUrl:
-        'https:////images.igdb.com/igdb/image/upload/t_cover_big/co1rd2.jpg',
+        'https://images.igdb.com/igdb/image/upload/t_cover_big/co1rd2.jpg',
       status: 'completed',
       reviewText: 'Quero ser que nem o Adam Jensen quando crescer',
       spoilers: true,

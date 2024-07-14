@@ -38,6 +38,10 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
   const { reviews, addReview, editReview } = useReviewsStore();
   const router = useRouter();
 
+  const discardAction = () => {
+    router.push('/reviews')
+  }
+
   const submitAction = () => {
     const newReview: IReview = {
       id: review ? review.id : reviews.length + 1,
@@ -66,15 +70,15 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
 
   return (
     <form className="w-full h-fit mt-5 flex flex-col items-center" action={submitAction}>
-      <div className="w-full flex flex-col md:flex-row gap-4">
+      <div className="w-full flex flex-col md:justify-between md:flex-row gap-4">
         <div className="w-full md:w-fit overflow-x-auto md:overflow-hidden pb-2 md:pb-0">
           <h3 className="text-gray-200 text-lg font-semibold mb-2">Status: </h3>
           <div className="w-full flex md:flex-col gap-2">
             <Button
               className={cn(
                 status === 'completed'
-                  ? 'bg-primary text-white hover:bg-primary text-base'
-                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base w-[130px]'
+                  ? 'bg-primary text-white hover:bg-primary text-base lg:w-[120px] xl:w-[160px]'
+                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base lg:w-[120px] xl:w-[160px]'
               )}
               type="button"
               onClick={() => setStatus('completed')}
@@ -84,8 +88,8 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             <Button
               className={cn(
                 status === 'playing'
-                  ? 'bg-primary text-white hover:bg-primary text-base'
-                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base w-[130px]'
+                  ? 'bg-primary text-white hover:bg-primary text-base lg:w-[120px] xl:w-[160px]'
+                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base lg:w-[120px] xl:w-[160px]'
               )}
               type="button"
               onClick={() => setStatus('playing')}
@@ -95,8 +99,8 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             <Button
               className={cn(
                 status === 'wantToPlay'
-                  ? 'bg-primary text-white hover:bg-primary text-base'
-                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base w-[130px]'
+                  ? 'bg-primary text-white hover:bg-primary text-base lg:w-[120px] xl:w-[160px]'
+                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base lg:w-[120px] xl:w-[160px]'
               )}
               type="button"
               onClick={() => setStatus('wantToPlay')}
@@ -106,8 +110,8 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             <Button
               className={cn(
                 status === 'shelved'
-                  ? 'bg-primary text-white hover:bg-primary text-base'
-                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base w-[130px]'
+                  ? 'bg-primary text-white hover:bg-primary text-base lg:w-[120px] xl:w-[160px]'
+                  : 'bg-slate-800 hover:bg-slate-800 hover:text-primary text-base lg:w-[120px] xl:w-[160px]'
               )}
               type="button"
               onClick={() => setStatus('shelved')}
@@ -116,7 +120,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             </Button>
           </div>
         </div>
-        <div className="w-full md:w-[85%] lg:w-full">
+        <div className="w-full md:w-[85%]">
           <div className="w-full flex justify-between mt-4 md:mt-0 mb-2">
             <label htmlFor="review-text" className="text-gray-200 text-lg font-semibold">Sua avaliação: </label>
             <div className="flex gap-2 items-center">
@@ -184,7 +188,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           </div>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-center items-center xl:items-start gap-4 xl:gap-8 mt-2">
+        <div className="w-full flex flex-col md:flex-row justify-center items-center md:items-start gap-4 xl:gap-8 mt-2">
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-gray-200 text-lg font-semibold mb-2">Horas jogadas: </h3>
             <div className="flex gap-2">
@@ -203,7 +207,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             </div>
           </div>
           <div className="h-full flex flex-col">
-            <h3 className="text-gray-200 text-lg font-semibold mb-2 xl:mb-4">Platinado? </h3>
+            <h3 className="text-gray-200 text-lg font-semibold mb-2 md:mb-3">Platinado? </h3>
             <div className="flex gap-2 justify-center items-center">
               <Checkbox onCheckedChange={() => setMastered(!mastered)} />
               <span className="font-semibold text-white">
@@ -212,9 +216,9 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
             </div>
           </div>
           <div className="h-full flex flex-col">
-            <h3 className="text-gray-200 text-lg font-semibold mb-2 xl:mb-4">Jogou novamente? </h3>
+            <h3 className="text-gray-200 text-lg font-semibold mb-2 md:mb-3">Jogou novamente? </h3>
             <div className="flex gap-2 justify-center items-center">
-              <Checkbox onCheckedChange={() => setReplay(!replay)} />
+              <Checkbox checked={replay} onCheckedChange={() => setReplay(!replay)} />
               <span className="font-semibold text-white">
                 <RotateCcwIcon size={28} />
               </span>
@@ -223,11 +227,21 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
         </div>
 
       </div>
-      <SubmitButton className="w-[200px] bg-secondary hover:bg-secondary border-none text-white font-semibold mt-10 text-lg">
-        {
-          review ? 'Atualizar Review' : 'Criar Review'
-        }
-      </SubmitButton>
+      <div className="w-full flex flex-col md:flex-row justify-center items-center mt-8 gap-5">
+        <Button
+          type="button"
+          variant='ghost'
+          className="w-[200px] text-white font-semibold text-lg"
+          onClick={discardAction}
+        >
+          Descartar
+        </Button>
+        <SubmitButton className="w-[200px] bg-secondary hover:bg-secondary border-none text-white font-semibold text-lg">
+          {
+            review ? 'Atualizar Review' : 'Criar Review'
+          }
+        </SubmitButton>
+      </div>
     </form>
   )
 }

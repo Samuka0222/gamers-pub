@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" className="overflow-hidden">
+    <html lang="pt-br">
       <body className={cn(inter.className)}>
         <main className="min-w-screen min-h-screen overflow-y-auto">
           <HeaderMenu />

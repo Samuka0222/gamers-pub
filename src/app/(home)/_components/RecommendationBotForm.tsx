@@ -97,7 +97,7 @@ export function RecommendationBotForm() {
       action={submitAction}
       className="w-full h-full"
     >
-      <div className="w-full h-[550px] md:h-[330px] xl:h-[630px] rounded-lg overflow-auto">
+      <div className="w-full h-[550px] md:h-[330px] xl:h-[600px] rounded-lg overflow-auto">
         {optimisticChat.length > 0 && (
           <ul className="w-full py-5 pr-3 text-base flex flex-col gap-4">
             {optimisticChat.map((chatMessage, index) => (

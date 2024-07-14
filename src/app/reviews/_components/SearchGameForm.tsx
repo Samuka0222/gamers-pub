@@ -74,13 +74,13 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
       </div>
       {
         searchResults.length > 0 && (
-          <ul className="absolute top-full w-full h-[300px] flex flex-col bg-slate-900/50 overflow-y-auto rounded-lg mt-2 shadow-sm">
+          <ul className="absolute top-full w-full h-[300px] flex flex-col bg-slate-900/50 overflow-y-auto overflow-x-hidden rounded-lg mt-2 shadow-sm">
             {
               searchResults.map((result, index) => (
                 <li key={index} className="w-full px-4 py-2 text-sm text-white font-medium border-b border-gray-400 flex items-start">
                   <Button
                     variant='link'
-                    className="w-[90%] text-ellipsis p-0 text-white hover:text-primary justify-start"
+                    className="w-full truncate p-0 text-white hover:text-primary justify-start"
                     onClick={() => setGameAction(result)}
                     type="button"
                   >

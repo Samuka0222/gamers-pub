@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <section className="w-full py-6 md:py-10 px-5 flex flex-col justify-center items-center">
       <h2 className="font-semibold text-xl text-center w-[80%] md:w-full">Precisa de alguma dica para escolher seu próximo jogo?</h2>
-      <div className="w-full md:w-[80%] xl:w-[70%] h-full mt-2 md:mt-0">
+      <div className="w-full md:w-[80%] xl:w-[60%] h-full mt-2 md:mt-0">
         <ButtonsMenu />
         <RecommendationBotForm />
       </div>

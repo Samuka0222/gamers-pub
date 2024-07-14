@@ -10,7 +10,6 @@ export async function searchByGameName(
     const apiqlQuery = `
     search "${gameName}";
     fields name, cover.url;
-    where version_parent = null;
     `;
 
     const response = await axios.post(

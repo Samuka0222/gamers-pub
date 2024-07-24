@@ -53,11 +53,11 @@ export default function ReviewsPage() {
               </span>
             </li>
           </ul>
-          <div className="w-full h-full flex flex-col gap-4">
+          <ul className="w-full h-full flex flex-col gap-4">
             {
               ordernedReviews.map(review => <ReviewCard key={review.id} review={review} />)
             }
-          </div>
+          </ul>
           <div className="w-full my-5">
             <p className="text-gray-600 text-base text-center">Nada mais para ver aqui...</p>
           </div>

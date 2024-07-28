@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, } from "@/components/Card";
+import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
 import { Quote, RotateCcwIcon, Trophy } from "lucide-react";
 import Image from "next/image";
@@ -28,8 +29,8 @@ export function ReviewCard({ review }: ReviewCardProps) {
           <div className="w-full h-full flex gap-1">
             {
               review.reviewText !== ''
-                ? <div className="w-full flex gap-3">
-                  <p className="min-w-fit max-w-[90%] h-full text-base overflow-y-auto">{review.reviewText}</p>
+                ? <div className="min-w-fit max-w-[90%] h-full text-base overflow-y-auto">
+                  <MarkdownText markdown={review.reviewText} isPending={false} />
                 </div>
                 : <p className="text-base text-gray-500">(Não informado)</p>
             }
@@ -66,4 +67,8 @@ export function ReviewCard({ review }: ReviewCardProps) {
       </CardContent>
     </Card>
   )
+}
+
+function DisplayText({ text }: { text: string }) {
+  return <div dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, '<br />') }} />
 }

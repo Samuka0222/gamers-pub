@@ -1,21 +1,22 @@
 'use client'
 
-import { Checkbox } from "./Checkbox";
-import { DatePicker } from "./DatePicker";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
-import { Slider } from "./Slider";
-import { Textarea } from "./Textarea";
-import { useState } from "react";
-import { Button } from "./Button";
-import { Input } from "./Input";
+import { Checkbox } from "../../../components/Checkbox";
+import { DatePicker } from "../../../components/DatePicker";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/Select";
+import { Slider } from "../../../components/Slider";
+import { Textarea } from "../../../components/Textarea";
+import { useEffect, useState } from "react";
+import { Button } from "../../../components/Button";
+import { Input } from "../../../components/Input";
 import { RotateCcwIcon, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useReviewsStore } from "@/store/reviewsStore";
 import { IReview } from "@/interfaces/IReview";
-import { SubmitButton } from "./SubmitButton";
+import { SubmitButton } from "../../../components/SubmitButton";
 import { useRouter } from "next/navigation";
 import { IGameDetails } from "@/interfaces/IGame";
 import { getFullCover } from "@/helpers/getFullCover";
+import { TextEditor } from "../../../components/TextEditor";
 
 interface ReviewFormProps {
   game: IGameDetails;
@@ -41,6 +42,14 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
   const discardAction = () => {
     router.push('/reviews')
   }
+
+  const addNewLineAction = () => {
+    setReviewText(prevState => prevState.concat('\n'));
+  }
+
+  useEffect(() => {
+    console.log(reviewText);
+  }, [reviewText])
 
   const submitAction = () => {
     const newReview: IReview = {
@@ -128,11 +137,10 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
               <span className="font-semibold text-white">Contém Spoilers!</span>
             </div>
           </div>
-          <Textarea
-            name="review-text"
-            className="w-full text-lg resize-y min-h-[185px] overflow-y-auto focus-visible:outline-none focus-visible:ring-offset-0"
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
+          <TextEditor
+            reviewText={reviewText}
+            setReviewText={setReviewText}
+            addNewLineAction={addNewLineAction}
           />
         </div>
       </div>

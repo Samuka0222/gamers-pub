@@ -11,7 +11,7 @@ import {
 
 import { useOptimistic, useState } from "react";
 
-import { BotResponse } from "./BotResponse";
+import { MarkdownText } from "../../../components/MarkdownText";
 import { Button } from "@/components/Button";
 import { IChatMessage } from "@/interfaces/IChat";
 import { Input } from "@/components/Input";
@@ -126,7 +126,7 @@ export function RecommendationBotForm() {
                           </AvatarFallback>
                         </Avatar>
                       </span>
-                      <BotResponse
+                      <MarkdownText
                         markdown={chatMessage.message.text}
                         isPending={chatMessage.message.isPending}
                       />

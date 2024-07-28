@@ -1,6 +1,6 @@
 import { GameDetails } from "@/components/GameDetails";
 import { Loader2Icon } from "lucide-react";
-import { ReviewForm } from "@/components/ReviewForm";
+import { ReviewForm } from "@/app/reviews/_components/ReviewForm";
 import { Suspense } from "react";
 import { getGameById } from "@/actions/getGameById";
 import { UserProfile } from "./_components/UserProfile";

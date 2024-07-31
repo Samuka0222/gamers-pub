@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import { ButtonsMenu } from "./_components/ButtonsMenu";
 import { RecommendationBotForm } from "./_components/RecommendationBotForm";
+
+export const metadata: Metadata = {
+  title: 'Recomendações',
+  description: "Com dúvidas de qual jogo jogar? Acesse nosso chatbot de recomendação de jogos e monte uma lista de games para você jogar!",
+};
 
 export default function Home() {
   return (

@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gamers' Pub: Recomendação e Review de Games
 
-## Getting Started
+![Print da gamers pub](./public/images/gamers-pub=print.png)
 
-First, run the development server:
+Esse é meu primeiro projeto utilizando a API do Google Gemini para criar um chatbot para recomendação de jogos de acordo com as caracteristicas pedidas pelo usuário no prompt. Além disso também implementei um sistema de Review baseado na plataforma Backloggd e utilização da API da IGDB para obter as informações de todos os games.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Nessa primeira versão do projeto, o usuário pode fazer reviews e solicitar recomendações para o chatbot, nenhuma informação é salva, pois decidi não usar um banco de dados nesse primeiro momento. Porém já estou pensando em expandir esse projeto com a criação de uma API isolada utilizando o Nest.js e uma versão mobile com React Native.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Quem quiser testar o projeto, por favor deixe seu feedback, sugestões, reclamações, todas são bem-vindas! 😊
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tecnologias e Ferramentas
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Base:
+- Next.js
+- Typescript
+- pnpm
 
-## Learn More
+# API
+- Axios
+- Google Gemini
+- Next.js
+- IGDB
+- API Gateway (Para criar um proxy para poder interagir com a API do IGDB com a URL do deploy)
 
-To learn more about Next.js, take a look at the following resources:
+### Linting:
+- Eslint
+- Prettier
+- Lint-staged
+- Commitlinting
+- Husky
+- EditorConfig
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#  UI:
+- Shadcn UI
+- Tailwind CSS
+- Sonner
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Gerenciamento de Estado:
+- Zustand
 
-## Deploy on Vercel
+# Outros:
+- Date-Fns
+- React Markdown
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Sinta-se livre para deixar seu feedback, sugestões e reportar bugs!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+# English version.
+
+# Gamers' Pub: Recommendations and Reviews for Games
+
+This is my first project using Google's Gemini API to build a chatbot that suggests games based on what you're looking for! I've also added a review system using Backloggd and the IGDB API to get all the game info.
+
+In this first version, you can review games and ask the chatbot for recommendations. I'm not saving any of your info yet, but I'm thinking of adding a database using Nest.js and making a mobile app with React Native.
+
+Want to try it out? Please let me know what you think! Feedback, suggestions, complaints...I'm all ears! 😊
+
+## Technologies and Tools
+
+### Base:
+- Next.js
+- Typescript
+- pnpm
+
+# API
+- Axios
+- Google Gemini
+- Next.js
+- IGDB
+- API Gateway (Create a Proxy to interact with deploy's URL)
+
+### Linting:
+- Eslint
+- Prettier
+- Lint-staged
+- Commitlinting
+- Husky
+- EditorConfig
+
+#  UI:
+- Shadcn UI
+- Tailwind CSS
+- Sonner
+
+# State Management:
+- Zustand
+
+# Others:
+- Date-Fns
+- React Markdown
+
+### Feel free to leave your feedback and suggestions!

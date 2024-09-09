@@ -13,7 +13,7 @@ export async function searchByGameName(
     `;
 
     const response = await axios.post(
-      `${process.env.BASE_URL}/v4/games`,
+      `${process.env.IGDB_URL}/v4/games`,
       apiqlQuery,
       {
         headers: {

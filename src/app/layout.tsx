@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/Sonner";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         <main className="min-w-screen min-h-screen overflow-y-auto">
           <HeaderMenu />
           {children}
+          <Footer />
         </main>
         <Toaster />
       </body>

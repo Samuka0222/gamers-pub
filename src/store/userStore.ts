@@ -11,6 +11,7 @@ interface IUserStore {
     title: string;
   };
   editUser: (user: IUser) => void;
+  isAuthenticated: boolean;
 }
 
 export const useUserStore = create<IUserStore>()((set) => ({
@@ -18,6 +19,7 @@ export const useUserStore = create<IUserStore>()((set) => ({
     username: 'SuperGamer123',
     title: '🥇 Top Gamer',
   },
+  isAuthenticated: false,
   editUser: (user: IUser) =>
     set(() => ({
       user: {

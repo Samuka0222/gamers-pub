@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/Form";
 import { Input } from "@/components/Input";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { makeSignUp } from "@/actions/auth/makeSignUp";
@@ -71,9 +71,11 @@ export function SignUpForm() {
   });
 
   const [showPassword, setShowPassword] = useState<"password" | "text">('password')
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitAction: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     try {
+      setIsSubmitting(true);
       const user = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -81,12 +83,21 @@ export function SignUpForm() {
         email: values.email,
         password: values.password,
       };
+
       await makeSignUp(user);
+
+      form.reset();
+      setIsSubmitting(false);
       toast.success('Usuário criado!')
     } catch (error) {
-      console.log(error)
+      setIsSubmitting(false);
+
       if (error instanceof AxiosError) {
-        toast.error(error.message)
+        if (error.status === 409) {
+          toast.error('Esse e-mail já está cadastrado');
+        }
+      } else {
+        toast.error('Ocorreu um erro ao tentar cadastrar o usuário')
       }
     }
   }
@@ -227,7 +238,15 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" variant='outline'>Cadastrar</Button>
+        <Button variant='outline' type="submit">
+          {
+            isSubmitting
+              ? <>
+                <Loader2 className="mr-2 animate-spin" /> Cadastrando...
+              </>
+              : 'Cadastrar'
+          }
+        </Button>
       </form>
     </Form>
   )

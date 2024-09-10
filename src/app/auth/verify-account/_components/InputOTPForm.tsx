@@ -22,6 +22,10 @@ import {
 import { makeVerifyAccount } from "@/actions/auth/makeVerifyAccount"
 import { toast } from "sonner"
 import { AxiosError } from "axios"
+import { useSearchParams } from "next/navigation";
+import { useState } from "react"
+import { Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -37,19 +41,32 @@ export function InputOTPForm() {
     },
   })
 
+  const email = useSearchParams().get('email');
+  if (!email) {
+    toast.error('E-mail não encontrado, tente acessar novamente.')
+  }
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
   const submitAction = async (values: z.infer<typeof FormSchema>) => {
     try {
+      setIsSubmitting(true);
       const data = {
-        email: 'mmachado0222@gmail.com',
+        email: email!,
         code: values.pin
       };
       await makeVerifyAccount(data);
       toast.success('Usuário confirmado!')
       form.reset();
+      setIsSubmitting(false);
+      router.push('/auth/sign-in');
     } catch (error) {
-      console.log(error)
+      setIsSubmitting(false);
       if (error instanceof AxiosError) {
         toast.error(error.message)
+      } else {
+        toast.error('Houve um erro ao tentar confirmar o usuário.')
       }
     }
   }
@@ -82,7 +99,15 @@ export function InputOTPForm() {
             </FormItem>
           )}
         />
-        <Button variant='outline' type="submit">Enviar</Button>
+        <Button variant='outline' type="submit">
+          {
+            isSubmitting
+              ? <>
+                <Loader2 className="mr-2 animate-spin" /> Enviando...
+              </>
+              : 'Enviar'
+          }
+        </Button>
       </form>
     </Form>
   )

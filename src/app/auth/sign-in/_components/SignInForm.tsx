@@ -12,8 +12,8 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { makeSignIn } from "@/actions/auth/makeSignIn";
 import { useRouter } from "next/navigation";
-import { CustomLink } from "@/components/CustomLink";
 import Link from "next/link";
+import { getExpirationTime } from "@/helpers/getExpirationTime";
 
 const formSchema = z.object({
   email: z
@@ -53,11 +53,13 @@ export function SignInForm() {
         password: values.password,
       };
 
-      const { AccessToken, RefreshToken } = (await makeSignIn(user)).data;
-      localStorage.setItem('tokens', JSON.stringify({
-        accessToken: AccessToken,
-        refreshToken: RefreshToken,
-      }));
+      const response = (await makeSignIn(user)).data;
+      const tokens = {
+        AccessToken: response.AccessToken,
+        RefreshToken: response.RefreshToken,
+        ExpiresIn: getExpirationTime(response.ExpiresIn)
+      }
+      localStorage.setItem('tokens', JSON.stringify(tokens));
       form.reset();
       setIsSubmitting(false);
       toast.success('Login efetuado! Iremos te redirecionar.')

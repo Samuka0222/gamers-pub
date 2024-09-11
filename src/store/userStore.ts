@@ -6,25 +6,24 @@ interface IUser {
 }
 
 interface IUserStore {
-  user: {
-    username: string;
-    title: string;
-  };
-  editUser: (user: IUser) => void;
+  user:
+    | {
+        username: string;
+        title: string;
+      }
+    | undefined;
   isAuthenticated: boolean;
+  signIn: () => void;
 }
 
 export const useUserStore = create<IUserStore>()((set) => ({
-  user: {
-    username: 'SuperGamer123',
-    title: '🥇 Top Gamer',
-  },
+  user: undefined,
   isAuthenticated: false,
-  editUser: (user: IUser) =>
+  signIn: () =>
     set(() => ({
       user: {
-        username: user.username,
-        title: user.title,
+        username: 'Samukinha',
+        title: 'El Gamer',
       },
     })),
 }));

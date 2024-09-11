@@ -12,6 +12,8 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { makeSignIn } from "@/actions/auth/makeSignIn";
 import { useRouter } from "next/navigation";
+import { CustomLink } from "@/components/CustomLink";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z
@@ -58,6 +60,7 @@ export function SignInForm() {
       }));
       form.reset();
       setIsSubmitting(false);
+      toast.success('Login efetuado! Iremos te redirecionar.')
       router.push('/');
     } catch (error) {
       setIsSubmitting(false);
@@ -127,6 +130,12 @@ export function SignInForm() {
             </FormItem>
           )}
         />
+        <Button type="button" variant='link' asChild>
+          <Link href='/auth/forgot-password' className="text-white hover:text-primary text-lg">
+            Esqueceu sua senha?
+          </Link>
+        </Button>
+
         <Button variant='outline' type="submit">
           {
             isSubmitting

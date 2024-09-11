@@ -1,3 +1,11 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Autenticação',
+  description: "Novo por aqui? Faça seu cadastro e se junte ao Gamers' Pub! Já é membro? Então faça seu login e continue fazendo suas reviews.",
+};
+
+
 export default function Layout({
   children,
 }: Readonly<{

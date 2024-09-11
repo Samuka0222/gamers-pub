@@ -3,6 +3,7 @@ import axios from 'axios';
 type IInput = {
   firstName: string;
   lastName: string;
+  username: string;
   email: string;
   password: string;
 };
@@ -13,7 +14,7 @@ export async function makeSignUp(user: IInput) {
     {
       firstName: user.firstName,
       lastName: user.lastName,
-      username: undefined,
+      username: user.username,
       email: user.email,
       password: user.password,
     },

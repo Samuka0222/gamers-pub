@@ -11,6 +11,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { makeSignUp } from "@/actions/auth/makeSignUp";
+import Link from "next/link";
 
 const formSchema = z.object({
   firstName: z
@@ -86,6 +87,10 @@ export function SignUpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitAction: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    if (values.password !== values.confirmPassword) {
+      toast.error('As duas senhas estão diferentes, favor corrigir.')
+      return;
+    }
     try {
       setIsSubmitting(true);
       const user = {
@@ -250,6 +255,12 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
+        <Button type="button" variant='link' asChild>
+          <Link href='/auth/forgot-password' className="text-white hover:text-primary text-lg">
+            Esqueceu sua senha?
+          </Link>
+        </Button>
+
         <Button variant='outline' type="submit">
           {
             isSubmitting

@@ -79,11 +79,11 @@ export function InputOTPForm() {
           name="pin"
           render={({ field }) => (
             <FormItem className="flex flex-col justify-center items-center">
-              <FormLabel className="text-center w-full">Código de Verificação</FormLabel>
+              <FormLabel className="text-center w-full text-white">Código de Verificação</FormLabel>
               <FormControl>
                 <InputOTP maxLength={6} {...field}>
                   <InputOTPGroup>
-                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={0} color="white" />
                     <InputOTPSlot index={1} />
                     <InputOTPSlot index={2} />
                     <InputOTPSlot index={3} />
@@ -92,7 +92,7 @@ export function InputOTPForm() {
                   </InputOTPGroup>
                 </InputOTP>
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-white">
                 Insira o código fornecido através do seu e-mail.
               </FormDescription>
               <FormMessage />

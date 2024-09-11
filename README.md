@@ -1,6 +1,6 @@
 # Gamers' Pub: Recomendação e Review de Games
 
-![Print da gamers pub](./public/images/gamers-pub=print.png)
+![Print da gamers pub](./public/gamers-pub-print.png)
 
 Esse é meu primeiro projeto utilizando a API do Google Gemini para criar um chatbot para recomendação de jogos de acordo com as caracteristicas pedidas pelo usuário no prompt. Além disso também implementei um sistema de Review baseado na plataforma Backloggd e utilização da API da IGDB para obter as informações de todos os games.
 

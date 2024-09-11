@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={cn(inter.className, 'min-w-screen min-h-screen overflow-y-auto')}>
+      <body className={cn(inter.className, 'min-w-screen min-h-screen overflow-y-auto flex')}>
         {children}
         <Toaster position="top-right" />
       </body>

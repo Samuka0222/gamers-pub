@@ -40,6 +40,9 @@ const formSchema = z.object({
     })
     .min(2, {
       message: 'O nome de exibição deve ter pelo menos 2 caracteres',
+    })
+    .regex(/^[a-zA-Z0-9_.-@]+$/, {
+      message: 'Favor só insira o seguintes itens: letras, números, @, _, -',
     }),
   password: z
     .string({
@@ -47,6 +50,15 @@ const formSchema = z.object({
     })
     .min(8, {
       message: 'A senha deve ter pelo menos 8 caracteres.',
+    })
+    .regex(/[A-Z]/, {
+      message: "É necessário ter pelo menos 1 letra maiúscula.",
+    })
+    .regex(/\d/, {
+      message: "É necessário ter pelo menos 1 dígito númerico.",
+    })
+    .regex(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/, {
+      message: "Adicione pelo menos um caractere especial, EX: @, #, _, -",
     }),
   confirmPassword: z
     .string({

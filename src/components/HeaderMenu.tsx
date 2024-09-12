@@ -13,9 +13,42 @@ import {
 } from './DropdownMenu';
 import { useUserStore } from '@/store/userStore';
 import { User2 } from 'lucide-react';
+// import { Suspense, useState } from 'react';
+import { toast } from 'sonner';
+import { makeRefreshTokenValidation } from '@/actions/auth/makeRefreshTokenValidation';
+import { useEffect } from 'react';
 
 export function HeaderMenu() {
-  const { isAuthenticated } = useUserStore();
+  const { user, signIn } = useUserStore();
+
+  useEffect(() => {
+    if (user === undefined) {
+      const tokens = JSON.parse(localStorage.getItem('tokens')!);
+      if (!tokens) {
+        return user;
+      } else {
+        const expiresIn = new Date(tokens.ExpiresIn)
+        const currentTime = new Date();
+        const isTokenValid = expiresIn > currentTime;
+        if (isTokenValid) {
+          if (user === undefined) {
+            signIn(tokens.AccessToken);
+          } else {
+            try {
+              makeRefreshTokenValidation().then(() => {
+                const newTokens = JSON.parse(localStorage.getItem('tokens')!);
+                signIn(newTokens.AccessToken);
+              });
+            } catch (error) {
+              toast.error('Sessão expirada! Por favor, faça login novamente.');
+              localStorage.removeItem('tokens');
+              return user;
+            }
+          }
+        }
+      }
+    }
+  });
 
   return (
     <motion.header
@@ -47,7 +80,7 @@ export function HeaderMenu() {
       </div>
       <div>
         {
-          !isAuthenticated
+          !user?.isAuthenticated
             ? (
               <Button
                 className='bg-transparent hover:bg-slate-700 text-base'
@@ -67,7 +100,7 @@ export function HeaderMenu() {
                         <User2 size={16} />
                       </div>
                       <div>
-                        <span className='text-white text-sm'>Samuka0222</span>
+                        <span className='text-white text-sm'>{user?.username}</span>
                       </div>
                     </div>
                   </DropdownMenuTrigger>

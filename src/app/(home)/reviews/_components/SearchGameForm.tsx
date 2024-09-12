@@ -47,7 +47,7 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
   const setGameAction = (game: IGameSearchResult) => {
     setIsSearching(false);
     setGame(game.name);
-    router.push(`reviews/create-review/${game.id}`)
+    router.push(`/reviews/create-review/${game.id}`)
   }
 
   return (

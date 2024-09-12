@@ -6,18 +6,14 @@ import { useState } from "react";
 import { useUserStore } from "@/store/userStore";
 
 export function EditProfileForm() {
-  const { user, editUser } = useUserStore();
+  const { user } = useUserStore();
 
-  const [userInput, setUserInput] = useState(user.username);
-  const [titleInput, setTitleInput] = useState(user.title);
+  const [userInput, setUserInput] = useState(user?.username);
+  const [titleInput, setTitleInput] = useState(user?.title);
 
 
   const submitAction = () => {
-    editUser({
-      username: userInput,
-      title: titleInput,
-    })
-
+    // TODO: Implementar a chamada para editar o usuário
   }
 
   return (

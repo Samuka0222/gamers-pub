@@ -12,7 +12,7 @@ export function UserProfile() {
         <User2Icon size={40} />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold text-white">{user.username}</h2>
+        <h2 className="text-lg font-semibold text-white">{user?.username}</h2>
       </div>
     </div>
   )

@@ -1,22 +1,21 @@
 'use client'
 
-import { Checkbox } from "../../../components/Checkbox";
-import { DatePicker } from "../../../components/DatePicker";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/Select";
-import { Slider } from "../../../components/Slider";
-import { Textarea } from "../../../components/Textarea";
+import { Checkbox } from "@/components/Checkbox";
+import { DatePicker } from "@/components/DatePicker";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/Select";
+import { Slider } from "@/components/Slider";
 import { useEffect, useState } from "react";
-import { Button } from "../../../components/Button";
-import { Input } from "../../../components/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import { RotateCcwIcon, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useReviewsStore } from "@/store/reviewsStore";
 import { IReview } from "@/interfaces/IReview";
-import { SubmitButton } from "../../../components/SubmitButton";
+import { SubmitButton } from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
 import { IGameDetails } from "@/interfaces/IGame";
 import { getFullCover } from "@/helpers/getFullCover";
-import { TextEditor } from "../../../components/TextEditor";
+import { TextEditor } from "@/components/TextEditor";
 
 interface ReviewFormProps {
   game: IGameDetails;

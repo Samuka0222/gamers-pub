@@ -1,6 +1,6 @@
 import { GameDetails } from "@/components/GameDetails";
 import { Loader2Icon } from "lucide-react";
-import { ReviewForm } from "@/app/reviews/_components/ReviewForm";
+import { ReviewForm } from "../../_components/ReviewForm";
 import { Suspense } from "react";
 import { getGameById } from "@/actions/getGameById";
 import { UserProfile } from "./_components/UserProfile";
@@ -21,6 +21,9 @@ export default async function CreateReviewPage({ params }: CreateReviewPageProps
   if (!game) {
     return null;
   }
+
+  console.log(params)
+  console.log(game)
 
   return (
     <section className="w-full h-fit pt-6 lg:py-6 md:px-5 flex flex-col items-center box-border">

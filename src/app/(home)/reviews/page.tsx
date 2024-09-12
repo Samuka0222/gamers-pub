@@ -8,8 +8,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@/components/Button";
 import { useReviewsStore } from "@/store/reviewsStore";
 import { ReviewCard } from "./_components/ReviewCard";
+import { useUserStore } from "@/store/userStore";
 
 export default function ReviewsPage() {
+  const { user } = useUserStore();
   const { reviews } = useReviewsStore();
   const completedReviews = reviews.filter(review => review.status === "completed")
   const playingGames = reviews.filter(review => review.status === "playing")

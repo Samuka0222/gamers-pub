@@ -1,5 +1,4 @@
 export interface IReview {
-  id: number;
   gameId: number;
   gameName: string;
   gameCoverUrl: string;
@@ -10,8 +9,14 @@ export interface IReview {
   rating?: number;
   startDate?: Date;
   endDate?: Date;
-  hoursPlayed?: number;
-  minutesPlayed?: number;
+  timePlayed?: string;
   mastered?: boolean;
-  replay?: boolean;
+}
+
+export interface IReviewRequest {
+  created_at: string;
+  entity_type: string;
+  pk: string;
+  sk: string;
+  review: IReview;
 }

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, } from "@/components/Card";
 import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
-import { Quote, RotateCcwIcon, Trophy } from "lucide-react";
+import { RotateCcwIcon, Trophy } from "lucide-react";
 import Image from "next/image";
 
 interface ReviewCardProps {
@@ -55,11 +55,6 @@ export function ReviewCard({ review }: ReviewCardProps) {
             {
               review.mastered && (
                 <Trophy className="text-yellow-500" />
-              )
-            }
-            {
-              review.replay && (
-                <RotateCcwIcon className="text-secondary" />
               )
             }
           </div>

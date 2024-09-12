@@ -23,8 +23,8 @@ export function ProfileHeader() {
           <User2Icon size={40} />
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="text-lg font-semibold">{user.username}</h2>
-          <span className="text-base font-medium text-gray-600">{user.title}</span>
+          <h2 className="text-lg font-semibold">{user?.username}</h2>
+          <span className="text-base font-medium text-gray-600">{user?.title}</span>
         </div>
       </div>
       <Dialog>

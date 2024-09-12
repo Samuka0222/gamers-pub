@@ -6,16 +6,35 @@ import { SearchGameForm } from "./_components/SearchGameForm";
 import { searchByGameName } from "@/actions/searchByGameName";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Dialog";
 import { Button } from "@/components/Button";
-import { useReviewsStore } from "@/store/reviewsStore";
 import { ReviewCard } from "./_components/ReviewCard";
-import { useUserStore } from "@/store/userStore";
+import { getReviewsByUser } from "@/actions/reviews/getReviewsByUser";
+import { useEffect, useState } from "react";
+import { IReviewRequest } from "@/interfaces/IReview";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function ReviewsPage() {
-  const { user } = useUserStore();
-  const { reviews } = useReviewsStore();
-  const completedReviews = reviews.filter(review => review.status === "completed")
-  const playingGames = reviews.filter(review => review.status === "playing")
-  const ordernedReviews = reviews.sort((a, b) => b.id - a.id)
+  // TODO: optimize this request and store on ReviewStore
+  const [reviews, setReviews] = useState<IReviewRequest[]>([]);
+
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const response = await getReviewsByUser();
+        if (response) {
+          setReviews(response.Items);
+          console.log(response);
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast.error(error.message);
+        }
+      }
+    }
+    getReviews();
+
+    console.log(reviews);
+  }, [])
 
   return (
     <section className="w-full h-full px-2 lg:px-6 py-5 flex flex-col items-center">
@@ -45,19 +64,24 @@ export default function ReviewsPage() {
             <li>
               <span className="flex">
                 <ScrollText className="mr-1" />
-                {completedReviews.length} Reviews
+                {/* TODO: Resolve this down here */}
+                {/* {completedReviews.length} Reviews */}
               </span>
             </li>
             <li>
               <span className="flex">
                 <Gamepad className="mr-1" />
-                {playingGames.length} Playing
+                {/* TODO: Resolve this down here */}
+                {/* {playingGames.length} Playing */}
               </span>
             </li>
           </ul>
           <ul className="w-full h-full flex flex-col gap-4">
             {
-              ordernedReviews.map(review => <ReviewCard key={review.id} review={review} />)
+              reviews.length === 0 ? (
+                <p className="text-gray-600 text-base text-center">Nenhuma avaliação encontrada.</p>
+              )
+                : reviews.map(reviewItem => <ReviewCard key={reviewItem.sk} review={reviewItem.review} />)
             }
           </ul>
           <div className="w-full my-5">

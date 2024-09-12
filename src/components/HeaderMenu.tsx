@@ -16,10 +16,13 @@ import { User2 } from 'lucide-react';
 // import { Suspense, useState } from 'react';
 import { toast } from 'sonner';
 import { makeRefreshTokenValidation } from '@/actions/auth/makeRefreshTokenValidation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './AlertDialog';
 
 export function HeaderMenu() {
   const { user, signIn } = useUserStore();
+  const router = useRouter();
 
   useEffect(() => {
     if (user === undefined) {
@@ -71,11 +74,48 @@ export function HeaderMenu() {
       <div className="hidden lg:flex flex-col justify-center items-center">
         <nav className="flex flex-col md:flex-row justify-center items-center md:items-end gap-4 md:gap-8">
           <CustomLink href="/" type="normal">
+            Home
+          </CustomLink>
+          <CustomLink href="/recommendations" type="normal">
             Recomendações
           </CustomLink>
-          <CustomLink href="/reviews" type="normal">
-            Reviews
-          </CustomLink>
+          {
+            user !== undefined
+              ? <>
+                <CustomLink href="/reviews" type="normal">
+                  Reviews
+                </CustomLink>
+              </>
+              : <>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant='default'
+                      className="bg-transparent text-gray-200 uppercase hover:border-b border-primary hover:text-primary transition-colors rounded-none px-0"
+                    >
+                      Reviews
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Quem é você? 🤔</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Para acessar a área de Reviews, você precisa estar logado. Faça o login e começe a fazer suas avaliações!
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className='hover:bg-red-600'>Não quero!</AlertDialogCancel>
+                      <AlertDialogAction
+                        className='bg-transparent border border-gray-200 hover:bg-slate-100 text-black'
+                        onClick={() => router.push('/auth/sign-in')}
+                      >
+                        Entendi
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </>
+          }
         </nav>
       </div>
       <div>

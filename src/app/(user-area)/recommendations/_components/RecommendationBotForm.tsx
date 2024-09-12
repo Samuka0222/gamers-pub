@@ -11,7 +11,7 @@ import {
 
 import { useOptimistic, useState } from "react";
 
-import { MarkdownText } from "../../../components/MarkdownText";
+import { MarkdownText } from "../../../../components/MarkdownText";
 import { Button } from "@/components/Button";
 import { IChatMessage } from "@/interfaces/IChat";
 import { Input } from "@/components/Input";

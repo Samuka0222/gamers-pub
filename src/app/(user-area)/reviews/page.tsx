@@ -12,29 +12,31 @@ import { useEffect, useState } from "react";
 import { IReviewRequest } from "@/interfaces/IReview";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { useUserStore } from "@/store/userStore";
 
 export default function ReviewsPage() {
   // TODO: optimize this request and store on ReviewStore
+  const { user } = useUserStore();
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
 
   useEffect(() => {
-    const getReviews = async () => {
-      try {
-        const response = await getReviewsByUser();
-        if (response) {
-          setReviews(response.Items);
-          console.log(response);
-        }
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          toast.error(error.message);
+    if (user !== undefined) {
+      const getReviews = async () => {
+        try {
+          const response = await getReviewsByUser();
+          if (response) {
+            setReviews(response.Items);
+            console.log(response);
+          }
+        } catch (error) {
+          if (error instanceof AxiosError) {
+            toast.error(error.message);
+          }
         }
       }
+      getReviews();
     }
-    getReviews();
-
-    console.log(reviews);
-  }, [])
+  });
 
   return (
     <section className="w-full h-full px-2 lg:px-6 py-5 flex flex-col items-center">

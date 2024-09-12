@@ -6,11 +6,12 @@ import { IGameDetails } from '@/interfaces/IGame';
 export async function getGameById(
   gameId: number,
 ): Promise<IGameDetails | undefined> {
+  console.log('Invocou a API do IGDB');
   try {
     const apiqlQuery = `fields id, cover.url, name, platforms.name, first_release_date; where id = ${gameId};`;
 
     const response = await axios.post(
-      `${process.env.BASE_URL}/v4/games`,
+      `${process.env.IGDB_URL}/v4/games`,
       apiqlQuery,
       {
         headers: {
@@ -24,7 +25,7 @@ export async function getGameById(
     return response.data[0];
   } catch (err) {
     if (err instanceof AxiosError) {
-      console.error('API request failed:', err.message);
+      console.error('API request failed:', err);
     }
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { motion } from 'framer-motion'
@@ -51,7 +52,7 @@ export function HeaderMenu() {
         }
       }
     }
-  });
+  }, []);
 
   return (
     <motion.header

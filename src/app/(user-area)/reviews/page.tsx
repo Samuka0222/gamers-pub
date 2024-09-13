@@ -18,6 +18,8 @@ export default function ReviewsPage() {
   // TODO: optimize this request and store on ReviewStore
   const { user } = useUserStore();
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
+  const completedReviews = reviews.filter(item => item.review.status === 'completed');
+  const playingGames = reviews.filter(item => item.review.status === 'playing');
 
   useEffect(() => {
     if (user !== undefined) {
@@ -36,7 +38,8 @@ export default function ReviewsPage() {
       }
       getReviews();
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="w-full h-full px-2 lg:px-6 py-5 flex flex-col items-center">
@@ -66,15 +69,13 @@ export default function ReviewsPage() {
             <li>
               <span className="flex">
                 <ScrollText className="mr-1" />
-                {/* TODO: Resolve this down here */}
-                {/* {completedReviews.length} Reviews */}
+                {completedReviews.length} Reviews
               </span>
             </li>
             <li>
               <span className="flex">
                 <Gamepad className="mr-1" />
-                {/* TODO: Resolve this down here */}
-                {/* {playingGames.length} Playing */}
+                {playingGames.length} Playing
               </span>
             </li>
           </ul>

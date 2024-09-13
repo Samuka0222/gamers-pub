@@ -16,6 +16,9 @@ import { useRouter } from "next/navigation";
 import { IGameDetails } from "@/interfaces/IGame";
 import { getFullCover } from "@/helpers/getFullCover";
 import { TextEditor } from "@/components/TextEditor";
+import { createReview } from "@/actions/reviews/createReview";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 interface ReviewFormProps {
   game: IGameDetails;
@@ -23,6 +26,7 @@ interface ReviewFormProps {
 }
 
 export function ReviewForm({ game, review }: ReviewFormProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(review ? review.status : '');
   const [reviewText, setReviewText] = useState(review ? review.reviewText : '');
   const [spoilers, setSpoilers] = useState(review ? review.spoilers : false);
@@ -30,12 +34,11 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
   const [rating, setRating] = useState(review ? review.rating : 50);
   const [startDate, setStartDate] = useState<Date | undefined>(review ? review.startDate : undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(review ? review.endDate : undefined);
-  const [hoursPlayed, setHoursPlayed] = useState(review ? review.hoursPlayed : undefined);
-  const [minutesPlayed, setMinutesPlayed] = useState(review ? review.minutesPlayed : undefined);
+  const [hoursPlayed, setHoursPlayed] = useState(review ? Number(review.timePlayed?.split(':')[0]) : undefined);
+  const [minutesPlayed, setMinutesPlayed] = useState(review ? Number(review.timePlayed?.split(':')[1]) : undefined);
   const [mastered, setMastered] = useState(review ? review.mastered : false);
-  const [replay, setReplay] = useState(review ? review.replay : false);
 
-  const { reviews, addReview, editReview } = useReviewsStore();
+  const { editReview } = useReviewsStore();
   const router = useRouter();
 
   const discardAction = () => {
@@ -46,13 +49,9 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
     setReviewText(prevState => prevState.concat('\n'));
   }
 
-  useEffect(() => {
-    console.log(reviewText);
-  }, [reviewText])
-
   const submitAction = () => {
+    setIsLoading(true);
     const newReview: IReview = {
-      id: review ? review.id : reviews.length + 1,
       gameId: game.id,
       gameName: game.name,
       gameCoverUrl: `https:${getFullCover(game.cover.url)}`,
@@ -63,17 +62,23 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       rating: status === 'completed' ? rating : undefined,
       startDate,
       endDate,
-      hoursPlayed,
-      minutesPlayed,
+      timePlayed: `${hoursPlayed}:${minutesPlayed}`,
       mastered,
-      replay,
     };
-    if (review) {
-      editReview(newReview);
-    } else {
-      addReview(newReview);
+    try {
+      if (review) {
+        editReview(newReview);
+      } else {
+        createReview(newReview);
+        toast.success('Review criada com sucesso');
+        router.push('/reviews');
+      }
+      setIsLoading(false);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.message);
+      }
     }
-    router.push('/reviews')
   }
 
   return (
@@ -219,15 +224,6 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
               <Checkbox onCheckedChange={() => setMastered(!mastered)} />
               <span className="font-semibold text-white">
                 <Trophy size={28} />
-              </span>
-            </div>
-          </div>
-          <div className="h-full flex flex-col">
-            <h3 className="text-gray-200 text-lg font-semibold mb-2 md:mb-3">Jogou novamente? </h3>
-            <div className="flex gap-2 justify-center items-center">
-              <Checkbox checked={replay} onCheckedChange={() => setReplay(!replay)} />
-              <span className="font-semibold text-white">
-                <RotateCcwIcon size={28} />
               </span>
             </div>
           </div>

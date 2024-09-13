@@ -1,25 +1,22 @@
 'use client';
 
-import { IReviewRequest } from '@/interfaces/IReview';
+import { IReview } from '@/interfaces/IReview';
 import axios from 'axios';
 
-type IOutput = {
-  Items: IReviewRequest[];
-  LastEvaluatedItem: IReviewRequest;
-};
-
-export async function getReviewsByUser() {
+export async function createReview(review: IReview) {
   console.log('disparou');
+  // TODO: Create Auth class and implements functions to get tokens
   const tokens = JSON.parse(localStorage.getItem('tokens')!);
 
-  const response = await axios.get<IOutput>(
+  return await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/reviews`,
+    {
+      ...review,
+    },
     {
       headers: {
         Authorization: `Bearer ${tokens.AccessToken}`,
       },
     },
   );
-
-  return response.data;
 }

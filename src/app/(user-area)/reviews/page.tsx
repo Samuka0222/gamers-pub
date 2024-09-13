@@ -16,7 +16,7 @@ import { useUserStore } from "@/store/userStore";
 
 export default function ReviewsPage() {
   // TODO: optimize this request and store on ReviewStore
-  const { user } = useUserStore();
+  const [user, setUser] = useState(useUserStore().user);
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
   const completedReviews = reviews.filter(item => item.review.status === 'completed');
   const playingGames = reviews.filter(item => item.review.status === 'playing');
@@ -39,7 +39,7 @@ export default function ReviewsPage() {
       getReviews();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <section className="w-full h-full px-2 lg:px-6 py-5 flex flex-col items-center">

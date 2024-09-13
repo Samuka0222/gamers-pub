@@ -1,7 +1,7 @@
 import { GameDetails } from "@/components/GameDetails";
 import { ReviewForm } from "../../_components/ReviewForm";
 import { getGameById } from "@/actions/getGameById";
-import { UserProfile } from "./_components/UserProfile";
+import { UserProfile } from "../../_components/UserProfile";
 
 interface CreateReviewPageProps {
   params: {

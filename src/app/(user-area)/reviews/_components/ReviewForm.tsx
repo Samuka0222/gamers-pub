@@ -7,7 +7,7 @@ import { Slider } from "@/components/Slider";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { RotateCcwIcon, Trophy } from "lucide-react";
+import { Loader2, RotateCcwIcon, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useReviewsStore } from "@/store/reviewsStore";
 import { IReview } from "@/interfaces/IReview";
@@ -49,7 +49,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
     setReviewText(prevState => prevState.concat('\n'));
   }
 
-  const submitAction = () => {
+  const submitAction = async () => {
     setIsLoading(true);
     const newReview: IReview = {
       gameId: game.id,
@@ -69,7 +69,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       if (review) {
         editReview(newReview);
       } else {
-        createReview(newReview);
+        await createReview(newReview);
         toast.success('Review criada com sucesso');
         router.push('/reviews');
       }
@@ -241,7 +241,17 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
         </Button>
         <SubmitButton className="w-[200px] bg-secondary hover:bg-secondary border-none text-white font-semibold text-lg">
           {
-            review ? 'Atualizar Review' : 'Criar Review'
+            review
+              ? isLoading
+                ? <>
+                  <Loader2 className="animate-spin mr-2" /> Atualizando...
+                </>
+                : 'Atualizar Review'
+              : isLoading
+                ? <>
+                  <Loader2 className="animate-spin mr-2" /> Criando...
+                </>
+                : 'Criar Review'
           }
         </SubmitButton>
       </div>

@@ -13,8 +13,7 @@ export function MarkdownText({ markdown, isPending }: MarkdownTextProps) {
     const regexStar = /^\s*\*/gm;
     const regexNewLine = /\n/g;
 
-    // Resolve this if needed
-    return markdown;
+    return markdown.replace(regexNewLine, '<br />').replace(regexStar, '');
   }
 
   return (

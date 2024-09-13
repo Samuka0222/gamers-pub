@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, } from "@/components/Card";
 import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
-import { RotateCcwIcon, Trophy } from "lucide-react";
+import { Trophy } from "lucide-react";
 import Image from "next/image";
 
 interface ReviewCardProps {

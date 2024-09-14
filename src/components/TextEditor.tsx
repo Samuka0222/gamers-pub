@@ -11,7 +11,7 @@ export function TextEditor({ reviewText, setReviewText, addNewLineAction }: Text
     <div>
       <Textarea
         name="review-text"
-        className="w-full text-lg resize-y min-h-[185px] overflow-y-auto focus-visible:outline-none focus-visible:ring-offset-0"
+        className="w-full text-base resize-y min-h-[155px] overflow-y-auto focus-visible:outline-none focus-visible:ring-offset-0"
         value={reviewText}
         onChange={(e) => setReviewText(e.target.value)}
         onKeyDownCapture={(e) => {

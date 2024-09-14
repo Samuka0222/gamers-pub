@@ -1,4 +1,3 @@
-import { Badge } from "@/components/Badge";
 import { dateFormat } from "@/helpers/dateFormat";
 import { getFullCover } from "@/helpers/getFullCover";
 import Image from "next/image";
@@ -17,22 +16,21 @@ export function GameDetails({
   name,
   coverUrl,
   releaseDate,
-  platforms
 }: GameDetailsProps) {
   return (
-    <div className="w-full lg:w-[60%] flex flex-col lg:flex-row justify-center items-center">
+    <div className="w-full lg:w-fit flex flex-col lg:flex-row justify-start items-center">
       <div className="w-fit shadow-sm shadow-gray-300 mr-4">
-        <Image src={getFullCover(coverUrl)} width={150} height={100} alt={`Capa do ${name}`} />
+        <Image src={getFullCover(coverUrl)} width={130} height={100} alt={`Capa do ${name}`} />
       </div>
-      <ul className="w-full flex flex-col gap-3 text-white">
-        <p className="w-full lg:w-fit text-center lg:text-start mt-3 lg:mt-0 text-xl font-semibold">{name}</p>
-        <p className="hidden lg:block font-semibold text-gray-300">
+      <div className="w-full lg:w-fit flex flex-col gap-3 text-black">
+        <h3 className="w-full lg:w-fit text-center lg:text-start mt-3 lg:mt-0 text-xl font-semibold">{name}</h3>
+        <p className="hidden lg:block font-semibold text-gray-500">
           Lançado:
           <span className="ml-1">
             {dateFormat(releaseDate)}
           </span>
         </p>
-      </ul>
+      </div>
     </div>
   )
 }

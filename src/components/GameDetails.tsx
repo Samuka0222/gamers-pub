@@ -6,10 +6,6 @@ interface GameDetailsProps {
   name: string;
   coverUrl: string;
   releaseDate: number;
-  platforms: {
-    id: number;
-    name: string;
-  }[];
 }
 
 export function GameDetails({

@@ -20,7 +20,6 @@ export const useUserStore = create<IUserStore>()((set) => ({
   isAuthenticated: false,
   signIn: async (token) => {
     const userInfo = (await getUserInformation(token)).data;
-    console.log('Disparou o fetch');
     set(() => ({
       user: {
         username: userInfo.username,

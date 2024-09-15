@@ -84,7 +84,7 @@ export default function ReviewsPage() {
               reviews.length === 0 ? (
                 <p className="text-gray-600 text-base text-center">Nenhuma avaliação encontrada.</p>
               )
-                : reviews.map(reviewItem => <ReviewCard key={reviewItem.sk} review={reviewItem.review} />)
+                : reviews.map(reviewItem => <ReviewCard key={reviewItem.review.id} review={reviewItem.review} />)
             }
           </ul>
           <div className="w-full my-5">

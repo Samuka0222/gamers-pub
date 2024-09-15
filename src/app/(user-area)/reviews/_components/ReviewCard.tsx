@@ -3,14 +3,17 @@ import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
 import { Trophy } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ReviewCardProps {
   review: IReview
 }
 
 export function ReviewCard({ review }: ReviewCardProps) {
+  const router = useRouter();
+
   return (
-    <Card className="w-full h-fit flex gap-4 px-0 md:px-4 py-4">
+    <Card className="w-full h-fit flex gap-4 px-0 md:px-4 py-4 cursor-pointer" onClick={() => router.push(`reviews/edit-review/${review.id}/${review.gameId}`)}>
       <CardHeader className="p-0 relative pl-2 md:pl-0">
         <div className="absolute -right-5 -top-2 bg-primary w-8 h-8 md:w-12 md:h-12 rounded-full flex justify-center items-center">
           <p className="text-lg md:text-2xl font-bold text-white">

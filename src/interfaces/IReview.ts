@@ -1,4 +1,5 @@
 export interface IReview {
+  id: string;
   gameId: number;
   gameName: string;
   gameCoverUrl: string;
@@ -15,8 +16,5 @@ export interface IReview {
 
 export interface IReviewRequest {
   created_at: string;
-  entity_type: string;
-  pk: string;
-  sk: string;
   review: IReview;
 }

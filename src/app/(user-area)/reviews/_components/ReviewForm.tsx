@@ -4,12 +4,11 @@ import { Checkbox } from "@/components/Checkbox";
 import { DatePicker } from "@/components/DatePicker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/Select";
 import { Slider } from "@/components/Slider";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { Loader2, RotateCcwIcon, Trophy } from "lucide-react";
+import { Loader2, Trash2, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useReviewsStore } from "@/store/reviewsStore";
 import { IReview } from "@/interfaces/IReview";
 import { SubmitButton } from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
@@ -20,6 +19,8 @@ import { createReview } from "@/actions/reviews/createReview";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { GameDetails } from "@/components/GameDetails";
+import { updateReview } from "@/actions/reviews/updateReview";
+import { deleteReview } from "@/actions/reviews/deleteReview";
 
 interface ReviewFormProps {
   game: IGameDetails;
@@ -39,7 +40,6 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
   const [minutesPlayed, setMinutesPlayed] = useState(review ? Number(review.timePlayed?.split(':')[1]) : undefined);
   const [mastered, setMastered] = useState(review ? review.mastered : false);
 
-  const { editReview } = useReviewsStore();
   const router = useRouter();
 
   const discardAction = () => {
@@ -52,7 +52,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
 
   const submitAction = async () => {
     setIsLoading(true);
-    const newReview: IReview = {
+    const newReview = {
       gameId: game.id,
       gameName: game.name,
       gameCoverUrl: `https:${getFullCover(game.cover.url)}`,
@@ -68,12 +68,13 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
     };
     try {
       if (review) {
-        editReview(newReview);
+        await updateReview({ id: review.id, ...newReview });
+        toast.success('Review atualizada com sucesso!');
       } else {
         await createReview(newReview);
         toast.success('Review criada com sucesso');
-        router.push('/reviews');
       }
+      router.push('/reviews');
       setIsLoading(false);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -82,6 +83,20 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
     }
   }
 
+  const deleteReviewAction = async () => {
+    try {
+      if (!review) {
+        toast.error('Erro: Review não encontrada');
+      }
+      await deleteReview(review!.id);
+      toast.success('Review deletada com sucesso!');
+      router.push('/reviews');
+    } catch {
+      toast.error('Não foi possível deletar a review :(')
+    }
+  }
+
+  // TODO: Add Error handling so user can send Required information empty, EX: Status.
   return (
     <form className="w-full h-fit flex flex-col items-center" action={submitAction}>
       <div className="w-full flex gap-4 justify-between items-center">
@@ -89,7 +104,6 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           name={game.name}
           releaseDate={game.first_release_date}
           coverUrl={`https:${game.cover.url!}`}
-          platforms={game.platforms}
         />
         <div className="w-[500px] flex flex-col md:flex-row gap-4 items-center justify-center">
           <div className="w-full flex justify-center items-center gap-2">
@@ -166,9 +180,10 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           </div>
           <div className="w-full">
             <h3 className="text-slate-800 text-lg font-semibold mb-2">Plataforma: </h3>
-            <Select onValueChange={(value) => setPlatform(value)}>
+            <Select onValueChange={(value) => setPlatform(value)} required>
+              {/* TODO: Ensure that if is editing a review, the platform is showing here*/}
               <SelectTrigger className="w-full h-[42px] focus:ring-0">
-                <SelectValue className="placeholder:text-gray-500 font-medium" placeholder="Selecione a plataforma que você jogou" />
+                <SelectValue defaultValue={review?.platform ?? undefined} className="placeholder:text-gray-500 font-medium" placeholder="Selecione a plataforma que você jogou" />
               </SelectTrigger>
               <SelectContent>
                 {game.platforms.map((platform) => {
@@ -236,15 +251,28 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
         </div>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-center items-center mt-8 gap-5">
+        {
+          review && <Button type="button" variant='destructive' onClick={deleteReviewAction}>
+            {
+              isLoading
+                ? <>
+                  Deletando <Loader2 className="animate-spin" />
+                </>
+                : <>
+                  Deletar Review <Trash2 className="ml-2" />
+                </>
+            }
+          </Button>
+        }
         <Button
           type="button"
-          variant='ghost'
-          className="w-[200px] text-black font-semibold text-lg"
+          variant='outline'
+          className="w-[200px] text-black font-semibold"
           onClick={discardAction}
         >
           Descartar
         </Button>
-        <SubmitButton className="w-[200px] bg-secondary hover:bg-secondary border-none text-black font-semibold text-lg">
+        <SubmitButton className="w-[200px] bg-secondary hover:bg-secondary border-none text-black font-semibold">
           {
             review
               ? isLoading

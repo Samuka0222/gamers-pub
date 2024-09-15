@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { EditReviewFormContainer } from "./_components/EditReviewFormContainer";
 import { Loader2 } from "lucide-react";
-import { getGameById } from "@/actions/getGameById";
+import { getGameById } from "@/actions/games/getGameById";
 
 interface EditReviewPageProps {
   params: {

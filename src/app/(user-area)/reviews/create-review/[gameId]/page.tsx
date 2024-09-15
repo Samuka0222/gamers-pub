@@ -1,5 +1,5 @@
 import { ReviewForm } from "../../_components/ReviewForm";
-import { getGameById } from "@/actions/getGameById";
+import { getGameById } from "@/actions/games/getGameById";
 
 interface CreateReviewPageProps {
   params: {

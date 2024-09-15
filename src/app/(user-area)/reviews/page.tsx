@@ -3,7 +3,7 @@
 import { Gamepad, PlusCircleIcon, ScrollText } from "lucide-react";
 import { ProfileHeader } from "./_components/ProfileHeader";
 import { SearchGameForm } from "./_components/SearchGameForm";
-import { searchByGameName } from "@/actions/searchByGameName";
+import { searchByGameName } from "@/actions/games/searchByGameName";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Dialog";
 import { Button } from "@/components/Button";
 import { ReviewCard } from "./_components/ReviewCard";

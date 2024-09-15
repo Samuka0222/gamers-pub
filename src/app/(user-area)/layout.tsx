@@ -9,7 +9,7 @@ export default function Layout({
   return (
     <>
       <HeaderMenu />
-      <main className="min-w-full min-h-full">
+      <main className="min-w-screen min-h-full flex flex-col justify-center items-center">
         {children}
       </main>
       <Footer />

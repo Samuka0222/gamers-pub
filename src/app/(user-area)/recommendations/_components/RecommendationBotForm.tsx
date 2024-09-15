@@ -17,7 +17,7 @@ import { IChatMessage } from "@/interfaces/IChat";
 import { Input } from "@/components/Input";
 import { SubmitButton } from "@/components/SubmitButton";
 import { getRandomPhrase } from "@/lib/phrases";
-import { sendBotMessage } from "@/actions/sendBotMessage";
+import { sendBotMessage } from "@/actions/games/sendBotMessage";
 
 import { toast } from "sonner";
 import { useChatStore } from "@/store/chatStore";

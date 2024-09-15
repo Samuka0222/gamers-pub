@@ -7,12 +7,10 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <main className="w-screen h-screen flex flex-col justify-start items-center overflow-y-auto">
       <HeaderMenu />
-      <main className="min-w-screen min-h-full flex flex-col justify-center items-center">
-        {children}
-      </main>
+      {children}
       <Footer />
-    </>
+    </main>
   );
 }

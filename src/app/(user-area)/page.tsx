@@ -1,6 +1,6 @@
 export default function HomePage() {
   return (
-    <main className="w-full xl:w-[70%] h-full flex flex-col justify-center items-center px-5 py-6">
+    <section className="w-full xl:w-[70%] h-full flex flex-col justify-center items-center px-5 py-6">
       <div className="w-full h-fit flex justify-center items-center">
         <h2 className="w-fit text-3xl font-bold text-slate-600">
           Bem-vindo ao
@@ -10,26 +10,26 @@ export default function HomePage() {
         </h2>
       </div>
 
-      <section className="w-full flex flex-col justify-center items-center mt-10">
+      <div className="w-full flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold">Reviews Populares</h3>
         <div>
           TODO: Colocar as reviews aqui.
         </div>
-      </section>
+      </div>
 
-      <section className="w-full flex flex-col justify-center items-center mt-10">
+      <div className="w-full flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold text-center">Games jogados recentemente por nossos membros</h3>
         <div>
           TODO: Colocar as capas aqui.
         </div>
-      </section>
+      </div>
 
-      <section className="w-full flex flex-col justify-center items-center mt-10">
+      <div className="w-full flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold">Lançando em breve</h3>
         <div>
           TODO: Colocar as capas aqui.
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
   )
 }

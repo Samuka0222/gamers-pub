@@ -20,6 +20,7 @@ export const useUserStore = create<IUserStore>()((set) => ({
   isAuthenticated: false,
   signIn: async (token) => {
     const userInfo = (await getUserInformation(token)).data;
+    console.log(userInfo);
     set(() => ({
       user: {
         username: userInfo.username,

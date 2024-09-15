@@ -1,50 +1,30 @@
 'use client'
 
-import { Gamepad, PlusCircleIcon, ScrollText } from "lucide-react";
+import { Loader2, PlusCircleIcon } from "lucide-react";
 import { ProfileHeader } from "./_components/ProfileHeader";
 import { SearchGameForm } from "./_components/SearchGameForm";
 import { searchByGameName } from "@/actions/games/searchByGameName";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/Dialog";
 import { Button } from "@/components/Button";
-import { ReviewCard } from "./_components/ReviewCard";
-import { getReviewsByUser } from "@/actions/reviews/getReviewsByUser";
-import { useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { IReviewRequest } from "@/interfaces/IReview";
-import { AxiosError } from "axios";
-import { toast } from "sonner";
-import { useUserStore } from "@/store/userStore";
+import { ReviewsList } from "./_components/ReviewsList";
 
 export default function ReviewsPage() {
   // TODO: optimize this request and store on ReviewStore
-  const [user, setUser] = useState(useUserStore().user);
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
-  const completedReviews = reviews.filter(item => item.review.status === 'completed');
-  const playingGames = reviews.filter(item => item.review.status === 'playing');
-
-  useEffect(() => {
-    if (user !== undefined) {
-      const getReviews = async () => {
-        try {
-          const response = await getReviewsByUser();
-          if (response) {
-            setReviews(response.Items);
-            console.log(response);
-          }
-        } catch (error) {
-          if (error instanceof AxiosError) {
-            toast.error(error.message);
-          }
-        }
-      }
-      getReviews();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
 
   return (
-    <section className="w-full h-full px-2 lg:px-6 py-5 flex flex-col items-center">
-      <div className="w-full lg:w-[60%]">
-        <ProfileHeader />
+    <section className="w-full xl:w-[80%] h-full flex flex-col justify-center items-center px-5 py-6">
+      <div className="w-full h-full flex-1 lg:w-[60%]">
+        <ProfileHeader reviews={reviews} />
         <div className="w-full flex justify-between items-center mt-5">
           <h1 className="text-2xl font-semibold">Reviews</h1>
           <Dialog>
@@ -64,32 +44,14 @@ export default function ReviewsPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="mt-5 w-full flex flex-col justify-center items-center">
-          <ul className="flex gap-4 justify-center items-center font-medium mb-5">
-            <li>
-              <span className="flex">
-                <ScrollText className="mr-1" />
-                {completedReviews.length} Reviews
-              </span>
-            </li>
-            <li>
-              <span className="flex">
-                <Gamepad className="mr-1" />
-                {playingGames.length} Playing
-              </span>
-            </li>
-          </ul>
-          <ul className="w-full h-full flex flex-col gap-4">
-            {
-              reviews.length === 0 ? (
-                <p className="text-gray-600 text-base text-center">Nenhuma avaliação encontrada.</p>
-              )
-                : reviews.map(reviewItem => <ReviewCard key={reviewItem.review.id} review={reviewItem.review} />)
-            }
-          </ul>
-          <div className="w-full my-5">
-            <p className="text-gray-600 text-base text-center">Nada mais para ver aqui...</p>
-          </div>
+        <div className="w-full h-auto flex flex-col justify-start items-center gap-4 mt-5 overflow-y-auto">
+          <Suspense fallback={
+            <div className="w-full h-full flex justify-center items-center">
+              <Loader2 className="animate-spin" />
+            </div>
+          }>
+            <ReviewsList reviews={reviews} setReviews={setReviews} />
+          </Suspense>
         </div>
       </div>
     </section>

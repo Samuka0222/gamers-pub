@@ -1,26 +1,14 @@
-import { getUserInformation } from '@/actions/user/getUserInformation';
+import { IUser, IUserResponse } from '@/interfaces/IUser';
 import { create } from 'zustand';
 
 interface IUserStore {
-  user:
-    | {
-        username: string;
-        firstName: string;
-        lastName: string;
-        title: string;
-        email: string;
-        isAuthenticated: boolean;
-      }
-    | undefined;
-  signIn: (token: string) => Promise<void>;
+  user: IUser | undefined;
+  setUser: (userInfo: IUserResponse) => void;
 }
 
 export const useUserStore = create<IUserStore>()((set) => ({
   user: undefined,
-  isAuthenticated: false,
-  signIn: async (token) => {
-    const userInfo = (await getUserInformation(token)).data;
-    console.log(userInfo);
+  setUser: (userInfo) =>
     set(() => ({
       user: {
         username: userInfo.username,
@@ -30,6 +18,5 @@ export const useUserStore = create<IUserStore>()((set) => ({
         title: 'El Gamer',
         isAuthenticated: true,
       },
-    }));
-  },
+    })),
 }));

@@ -1,13 +1,14 @@
+import { Auth } from '@/helpers/auth';
 import { getExpirationTime } from '@/helpers/getExpirationTime';
 import axios from 'axios';
 
 export async function makeRefreshTokenValidation() {
-  const tokens = JSON.parse(localStorage.getItem('tokens')!);
+  const tokens = new Auth().getUserTokens()?.tokens;
   if (!tokens) {
     throw new Error('Tokens de autenticação não foram encontrados');
   }
 
-  const refreshToken = tokens.refreshToken;
+  const refreshToken = tokens.RefreshToken;
   if (!refreshToken) {
     return false;
   }

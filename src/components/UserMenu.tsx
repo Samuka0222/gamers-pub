@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { makeRefreshTokenValidation } from '@/actions/auth/makeRefreshTokenValidation';
+import { getUserInformation } from "@/actions/user/getUserInformation";
 import Link from "next/link";
 import { Button } from "./Button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./DropdownMenu";
@@ -9,38 +9,41 @@ import { User2 } from "lucide-react";
 import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import { toast } from 'sonner';
+import { Auth } from '@/helpers/auth';
 
 export function UserMenu() {
-  const { user, signIn } = useUserStore();
+  const { setUser } = useUserStore();
+  const user = useUserStore.getState().user;
 
   useEffect(() => {
-    if (user === undefined) {
-      const tokens = JSON.parse(localStorage.getItem('tokens')!);
+    const handleSignIn = async () => {
+      const auth = new Auth();
+      const tokens = auth.getUserTokens();
       if (!tokens) {
         return user;
       } else {
-        const expiresIn = new Date(tokens.ExpiresIn)
-        const currentTime = new Date();
-        const isTokenValid = expiresIn > currentTime;
+        const isTokenValid = auth.validateTokens();
         if (isTokenValid) {
-          if (user === undefined) {
-            signIn(tokens.AccessToken);
-          } else {
-            try {
-              makeRefreshTokenValidation().then(() => {
-                const newTokens = JSON.parse(localStorage.getItem('tokens')!);
-                signIn(newTokens.AccessToken);
-              });
-            } catch (error) {
-              toast.error('Sessão expirada! Por favor, faça login novamente.');
-              localStorage.removeItem('tokens');
-              return user;
-            }
+          const userInfo = (await getUserInformation(tokens.AccessToken)).data ?? user;
+          setUser(userInfo);
+        } else {
+          try {
+            await auth.validateWithRefreshToken();
+            const newTokens = JSON.parse(localStorage.getItem("tokens")!);
+            const userInfo = (await getUserInformation(newTokens.AccessToken)).data ?? user;
+            setUser(userInfo)
+          } catch (error) {
+            toast.error('Sessão expirada! Por favor, faça login novamente.');
+            localStorage.removeItem('tokens');
+            return user;
           }
         }
       }
     }
-  }, []);
+    if (user === undefined) {
+      handleSignIn();
+    }
+  }, [setUser]);
 
   return (
     <>

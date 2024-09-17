@@ -12,27 +12,28 @@ interface ReviewsListProps {
 }
 
 export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
-  const { user } = useUserStore();
+  const { user } = useUserStore()
+  console.log(user)
 
   useEffect(() => {
-    console.log('disparou o fetch')
     const getReviews = async () => {
-      if (user !== undefined) {
-        try {
-          const response = await getReviewsByUser();
-          if (response) {
-            setReviews(response.Items);
-            console.log(response);
-          }
-        } catch (error) {
-          if (error instanceof AxiosError) {
-            toast.error(error.message);
-          }
+      console.log('disparou o fetch')
+      try {
+        const response = await getReviewsByUser();
+        if (response) {
+          setReviews(response.Items);
+          console.log(response);
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast.error(error.message);
         }
       }
+    }
+    if (user !== undefined) {
       getReviews();
     }
-  }, []);
+  }, [user]);
 
   return (
     <ul className="w-full h-full flex flex-col gap-4">

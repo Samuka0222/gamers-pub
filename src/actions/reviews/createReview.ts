@@ -5,7 +5,8 @@ import { Auth } from '@/helpers/auth';
 
 export async function createReview(review: Record<string, any>) {
   console.log('disparou');
-  // TODO: Create Auth class and implements functions to get tokens
+  const auth = new Auth();
+  const tokens = auth.getUserTokens();
 
   return await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/reviews`,
@@ -14,7 +15,7 @@ export async function createReview(review: Record<string, any>) {
     },
     {
       headers: {
-        Authorization: `Bearer ${new Auth().getUserTokens()?.tokens}`,
+        Authorization: `Bearer ${tokens?.AccessToken}`,
       },
     },
   );

@@ -2,10 +2,12 @@
 
 import { Button } from "@/components/Button"
 import { PlusCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function ButtonsMenu() {
+  const router = useRouter();
   const clickAction = () => {
-    window.location.reload();
+    router.push('/recommendations')
   }
 
   return (

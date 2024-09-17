@@ -1,6 +1,6 @@
 'use client';
 
-import { IReview, IReviewRequest } from '@/interfaces/IReview';
+import { IReview } from '@/interfaces/IReview';
 import axios from 'axios';
 
 type IOutput = {

@@ -2,6 +2,11 @@ export interface IChatMessage {
   message: {
     text: string;
     isPending: boolean;
-    owner: 'user' | 'bot';
+    owner: string;
   };
+}
+
+export interface IChat {
+  id: string;
+  chatHistory: IChatMessage[];
 }

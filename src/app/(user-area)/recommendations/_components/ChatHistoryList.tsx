@@ -10,10 +10,10 @@ interface ChatHistoryListProps {
 export function ChatHistoryList({ chatHistory }: ChatHistoryListProps) {
 
   return (
-    <div className="w-full h-[550px] md:h-[330px] xl:h-[500px] rounded-lg overflow-auto">
+    <div className="w-full flex flex-col flex-1 rounded-lg overflow-y-auto scroll">
       {
         chatHistory.length > 0 && (
-          <ul className="w-full py-5 pr-3 text-base flex flex-col gap-4">
+          <ul className="w-full h-fit py-5 pr-3 text-base flex flex-col gap-4">
             {chatHistory.map((chatMessage, index) => (
               <li
                 key={index}

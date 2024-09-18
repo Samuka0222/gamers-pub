@@ -1,10 +1,9 @@
 'use client'
 
-import { ImagePlus, SendHorizonal } from "lucide-react";
+import { SendHorizonal } from "lucide-react";
 
-import { useEffect, useOptimistic, useState } from "react";
+import { useOptimistic, useState } from "react";
 
-import { Button } from "@/components/Button";
 import { ChatHistoryList } from "./ChatHistoryList";
 import { Input } from "@/components/Input";
 import { SubmitButton } from "@/components/SubmitButton";
@@ -13,7 +12,6 @@ import { sendBotMessage } from "@/actions/chatbot/sendBotMessage";
 import { IChatMessage } from "@/interfaces/IChat";
 
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 interface RecommendationBotFormProps {
   id: string;
@@ -88,7 +86,7 @@ export function RecommendationBotForm({ id, chat, setChat }: RecommendationBotFo
   return (
     <form
       action={submitAction}
-      className="w-full h-full"
+      className="w-full h-full xl:max-h-[700px] flex flex-col justify-center items-center"
     >
       <ChatHistoryList chatHistory={optimisticChat} />
       <div className="w-full flex justify-between items-center mt-4 h-16 border border-gray-300 text-base rounded-lg shadow-sm p-3">
@@ -101,15 +99,6 @@ export function RecommendationBotForm({ id, chat, setChat }: RecommendationBotFo
           required
         />
         <div className="flex gap-2 justify-center items-center">
-          <Button
-            variant='outline'
-            type="button"
-            size='icon'
-            className="rounded-full border-none h-10 w-10 p-0 flex justify-center items-center"
-            disabled
-          >
-            <ImagePlus />
-          </Button>
           <SubmitButton>
             <SendHorizonal />
           </SubmitButton>

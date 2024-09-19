@@ -4,15 +4,25 @@
 import Image from "next/image";
 import { CustomLink } from "./CustomLink";
 import { Button } from './Button';
-import { useUserStore } from '@/store/userStore';
+import { useGlobalStore } from '@/store/globalStore';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './AlertDialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from './AlertDialog';
 import { UserMenu } from './UserMenu';
 import { Skeleton } from './Skeleton';
 
 export function HeaderMenu() {
-  const { user } = useUserStore();
+  const { user } = useGlobalStore();
   const router = useRouter();
 
   return (

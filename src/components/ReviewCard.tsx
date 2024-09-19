@@ -35,14 +35,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
       whileInView={{ y: 0, opacity: 1, repeatCount: 0 }}
       transition={{ duration: 0.7, ease: 'easeInOut' }}
     >
-      <Card className="relative w-full h-fit flex gap-4 px-0 md:px-4 py-4 cursor-pointer">
-        <Button
-          variant='outline'
-          className="absolute top-0 -right-0 border-[1px] rounded-ss-none rounded-ee-none"
-          onClick={() => router.push(`reviews/edit-review/${review.id}/${review.gameId}`)}
-        >
-          <SquarePen />
-        </Button>
+      <Card className="relative w-full h-fit flex gap-4 px-0 md:px-4 py-4">
         <CardHeader className="p-0 relative pl-2 md:pl-0">
           <div className="absolute -right-5 -top-2 bg-primary w-8 h-8 md:w-12 md:h-12 rounded-full flex justify-center items-center">
             <p className="text-lg md:text-2xl font-bold text-white">

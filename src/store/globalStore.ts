@@ -1,12 +1,12 @@
 import { IUser, IUserResponse } from '@/interfaces/IUser';
 import { create } from 'zustand';
 
-interface IUserStore {
+interface IGlobalStore {
   user: IUser | undefined;
   setUser: (userInfo: IUserResponse) => void;
 }
 
-export const useUserStore = create<IUserStore>()((set) => ({
+export const useGlobalStore = create<IGlobalStore>()((set) => ({
   user: undefined,
   setUser: (userInfo) =>
     set(() => ({

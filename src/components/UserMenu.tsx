@@ -7,13 +7,13 @@ import { Button } from "./Button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./DropdownMenu";
 import { User2 } from "lucide-react";
 import { useEffect } from "react";
-import { useUserStore } from "@/store/userStore";
+import { useGlobalStore } from "@/store/globalStore";
 import { toast } from 'sonner';
 import { Auth } from '@/helpers/auth';
 
 export function UserMenu() {
-  const { setUser } = useUserStore();
-  const user = useUserStore.getState().user;
+  const { setUser } = useGlobalStore();
+  const user = useGlobalStore.getState().user;
 
   useEffect(() => {
     const handleSignIn = async () => {

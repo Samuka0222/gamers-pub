@@ -3,8 +3,8 @@ import { IReviewRequest } from "@/interfaces/IReview";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { ReviewCard } from "./ReviewCard";
-import { useUserStore } from "@/store/userStore";
+import { ReviewCard } from "@/components/ReviewCard";
+import { useGlobalStore } from "@/store/globalStore";
 
 interface ReviewsListProps {
   reviews: IReviewRequest[],
@@ -12,7 +12,7 @@ interface ReviewsListProps {
 }
 
 export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
-  const { user } = useUserStore()
+  const { user } = useGlobalStore()
   console.log(user)
 
   useEffect(() => {

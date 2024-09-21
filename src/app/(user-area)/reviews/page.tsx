@@ -24,7 +24,7 @@ export default function ReviewsPage() {
   return (
     <section className="w-full xl:w-[80%] h-full flex flex-col justify-center items-center px-5 py-6">
       <div className="w-full h-full flex-1 lg:w-[60%]">
-        <ProfileHeader reviews={reviews} />
+        <ProfileHeader />
         <div className="w-full flex justify-between items-center mt-5">
           <h1 className="text-2xl font-semibold">Reviews</h1>
           <Dialog>

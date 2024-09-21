@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useGlobalStore } from "@/store/globalStore";
 import { toast } from 'sonner';
 import { Auth } from '@/helpers/auth';
+import Image from "next/image";
 
 export function UserMenu() {
   const { setUser } = useGlobalStore();
@@ -22,9 +23,9 @@ export function UserMenu() {
       if (!tokens) {
         return user;
       } else {
-        const isTokenValid = auth.validateTokens();
-        if (isTokenValid) {
-          const userInfo = (await getUserInformation(tokens.AccessToken)).data ?? user;
+        const isTokenInvalid = auth.validateTokens();
+        if (!isTokenInvalid) {
+          const userInfo = (await getUserInformation(tokens.AccessToken)).data;
           setUser(userInfo);
         } else {
           try {
@@ -45,6 +46,10 @@ export function UserMenu() {
     }
   }, [setUser]);
 
+  const signOutAction = () => {
+    alert('finalizar isso')
+  }
+
   return (
     <>
       {
@@ -64,21 +69,42 @@ export function UserMenu() {
               <DropdownMenu>
                 <DropdownMenuTrigger className='bg-slate-900 border border-primary py-2 px-3 rounded-lg'>
                   <div className='w-full h-full flex justify-center items-center gap-2'>
-                    <div className='bg-white rounded-full p-1'>
-                      <User2 size={16} />
-                    </div>
+                    {
+                      user.profilePicture !== undefined
+                        ? <Image src={user.profilePicture} alt="Sua foto de perfil" height={24} width={24} className="rounded-full" />
+                        : <div className='bg-white rounded-full p-1'>
+                          <User2 size={16} />
+                        </div>
+                    }
                     <div>
                       <span className='text-white text-sm'>{user?.username}</span>
                     </div>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>Perfil</DropdownMenuItem>
-                  <DropdownMenuItem className='block lg:hidden'>Criar Review</DropdownMenuItem>
-                  <DropdownMenuItem className='block lg:hidden'>Recomendações</DropdownMenuItem>
-                  <DropdownMenuItem>Configurações</DropdownMenuItem>
-                  <DropdownMenuItem>Feedback</DropdownMenuItem>
-                  <DropdownMenuItem>Desconectar</DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/settings/${user.username}`}>
+                      Configurações
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className='block lg:hidden' asChild>
+                    <Link href='/reviews'>
+                      Criar Review
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className='block lg:hidden' asChild>
+                    <Link href='/recommendations'>
+                      Recomendações
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href='/reviews'>
+                      Feedback
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={signOutAction}>
+                    Desconectar
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>

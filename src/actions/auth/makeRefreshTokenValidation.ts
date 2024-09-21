@@ -3,7 +3,9 @@ import { getExpirationTime } from '@/helpers/getExpirationTime';
 import axios from 'axios';
 
 export async function makeRefreshTokenValidation() {
-  const tokens = new Auth().getUserTokens()?.tokens;
+  console.log('disparou autenticação com Refresh Tokens');
+  const auth = new Auth();
+  const tokens = auth.getUserTokens();
   if (!tokens) {
     throw new Error('Tokens de autenticação não foram encontrados');
   }
@@ -23,7 +25,7 @@ export async function makeRefreshTokenValidation() {
   if (response.status === 200) {
     const newTokens = {
       AccessToken: response.data.AccessToken,
-      RefreshToken: response.data.RefreshToken,
+      RefreshToken: refreshToken,
       ExpiresAt: getExpirationTime(response.data.ExpiresIn),
     };
 

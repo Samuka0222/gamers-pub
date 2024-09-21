@@ -39,7 +39,7 @@ export function GamesList({ type }: GamesListProps) {
                 <div className="w-full h-fit flex justify-start items-center">
                   <Image
                     className="border rounded-sm"
-                    src={getFullCover(`https:${item.cover.url}`)}
+                    src={item.cover !== undefined ? getFullCover(`https:${item.cover.url}`) : ''}
                     alt={`capa do jogo ${item.name}`}
                     width={50}
                     height={100}

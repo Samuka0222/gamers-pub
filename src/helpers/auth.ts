@@ -11,6 +11,7 @@ export class Auth {
   getUserTokens: () => ITokens | undefined;
   validateTokens: () => boolean;
   validateWithRefreshToken: () => Promise<'sucess' | 'error' | undefined>;
+  removeTokens: () => void;
 
   constructor() {
     this.getUserTokens = () => {
@@ -49,6 +50,10 @@ export class Auth {
           return 'error';
         }
       }
+    };
+
+    this.removeTokens = () => {
+      localStorage.removeItem('tokens');
     };
   }
 }

@@ -3,19 +3,16 @@
 import { Card, CardContent, CardHeader, } from "@/components/Card";
 import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
-import { SquarePen, Trophy } from "lucide-react";
+import { Trophy } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Button } from "@/components/Button";
 
 interface ReviewCardProps {
   review: IReview
 }
 
 export function ReviewCard({ review }: ReviewCardProps) {
-  const router = useRouter();
-
   const translateStatus = (status: string) => {
     switch (status) {
       case 'completed':
@@ -32,7 +29,8 @@ export function ReviewCard({ review }: ReviewCardProps) {
   return (
     <motion.div
       initial={{ y: 200, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1, repeatCount: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.7, ease: 'easeInOut' }}
     >
       <Card className="relative w-full h-fit flex gap-4 px-0 md:px-4 py-4">

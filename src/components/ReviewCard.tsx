@@ -5,14 +5,15 @@ import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
 import { Trophy } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 interface ReviewCardProps {
   review: IReview
+  canUserEdit?: boolean
+  author?: boolean
 }
 
-export function ReviewCard({ review }: ReviewCardProps) {
+export function ReviewCard({ review, canUserEdit, author }: ReviewCardProps) {
   const translateStatus = (status: string) => {
     switch (status) {
       case 'completed':
@@ -49,6 +50,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
         <CardContent className="w-full h-full flex flex-col py-0 px-2 md:px-6 justify-between">
           <div className="w-full min-h-[120px] max-h-fit flex-1">
             <h3 className="md:text-xl font-semibold mb-2">{review.gameName}</h3>
+            {/* TODO: Add Review Author */}
             <div className="w-full h-full flex gap-1">
               {
                 review.reviewText !== ''
@@ -84,7 +86,3 @@ export function ReviewCard({ review }: ReviewCardProps) {
     </motion.div>
   )
 }
-
-// function DisplayText({ text }: { text: string }) {
-//   return <div dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, '<br />') }} />
-// }

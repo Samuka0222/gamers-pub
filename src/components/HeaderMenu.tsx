@@ -37,7 +37,7 @@ export function HeaderMenu() {
           />
         </div>
       </div>
-      <div className="hidden lg:flex flex-col justify-center items-center">
+      <div className="hidden md:flex flex-col justify-center items-center">
         <nav className="w-fit flex flex-col md:flex-row justify-center items-center md:items-end gap-4 md:gap-8">
           <CustomLink href="/" type="normal">
             Home

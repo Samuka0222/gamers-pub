@@ -13,11 +13,9 @@ interface ReviewsListProps {
 
 export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
   const { user } = useGlobalStore()
-  console.log(user)
 
   useEffect(() => {
     const getReviews = async () => {
-      console.log('disparou o fetch')
       try {
         const response = await getReviewsByUser();
         if (response) {
@@ -36,14 +34,21 @@ export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
   }, [user]);
 
   return (
-    <ul className="w-full h-full flex flex-col gap-4">
+    <>
       {
         reviews.length === 0
-          ? <p className="w-full text-center text-lg font-medium">Nenhuma review feita ainda.</p>
-          : reviews.map(reviewItem => <li key={reviewItem.review.id} className="w-full h-full">
-            <ReviewCard review={reviewItem.review} />
-          </li>)
+          ? <div className="min-w-full h-full flex flex-col justify-center items-center gap-4">
+            <h4 className="text-gray-500 text-lg">Nada para ver aqui...</h4>
+            <p>¯\_(ツ)_/¯</p>
+          </div>
+          : < ul className="w-full h-full flex flex-col gap-4">
+            {
+              reviews.map(reviewItem => <li key={reviewItem.review.id} className="w-full h-full">
+                <ReviewCard review={reviewItem.review} />
+              </li>)
+            }
+          </ul >
       }
-    </ul>
+    </>
   )
 }

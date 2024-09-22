@@ -6,8 +6,8 @@ import { CustomLink } from "./CustomLink";
 export function Footer() {
   return (
     <footer className="w-full flex justify-center items-center gap-8 bg-slate-900 py-2">
-      <span className='text-white w-fit whitespace-nowrap'>Criado por Samuel Machado</span>
-      <ul className="w-fit flex gap-2 items-center justify-center">
+      <span className='text-white w-fit md:whitespace-nowrap'>Criado por Samuel Machado</span>
+      <ul className="w-fit flex gap-1 md:gap-2 items-center justify-center">
         <li>
           <CustomLink href="https://github.com/Samuka0222" type="social">
             <Github />

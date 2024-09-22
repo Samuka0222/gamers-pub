@@ -38,11 +38,11 @@ export function DatePicker({ date, setDate, minDate, placeholder }: DatePickerPr
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
+          className="flex flex-col justify-center items-center"
           mode="single"
           selected={date}
           onSelect={setDate}
           locale={ptBR}
-          initialFocus
           disabled={{ before: minDate ?? undefined, after: new Date() }}
         />
       </PopoverContent>

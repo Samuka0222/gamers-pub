@@ -39,7 +39,7 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
         setIsSearching(false);
         setSearchResults([]);
       }
-    }, 2000)
+    }, 1500)
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchGameName, searchGameByName]);

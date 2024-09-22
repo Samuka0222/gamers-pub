@@ -99,37 +99,39 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
   // TODO: Add Error handling so user can send Required information empty, EX: Status.
   return (
     <form className="w-full h-fit flex flex-col items-center" action={submitAction}>
-      <div className="w-full flex gap-4 justify-between items-center">
+      <div className="w-full flex flex-col lg:flex-row gap-4 justify-between items-center">
         <GameDetails
           name={game.name}
           releaseDate={game.first_release_date}
           coverUrl={`https:${game.cover.url!}`}
         />
-        <div className="w-[500px] flex flex-col md:flex-row gap-4 items-center justify-center">
-          <div className="w-full flex justify-center items-center gap-2">
-            <Slider
-              defaultValue={[rating!]}
-              value={[rating!]}
-              max={100}
-              step={1}
-              onValueChange={(value) => setRating(value[0])}
-            />
-            <span className="w-[100px] text-slate-800 text-xl font-semibold">{rating}</span>
+        <div className="w-full h-fit flex mb-4 lg:mb-0 justify-center items-center gap-4">
+          <div className="w-[500px] flex flex-col md:flex-row gap-4 items-center justify-center">
+            <div className="w-full flex justify-center items-center gap-2">
+              <Slider
+                defaultValue={[rating!]}
+                value={[rating!]}
+                max={100}
+                step={1}
+                onValueChange={(value) => setRating(value[0])}
+              />
+              <span className="w-[100px] text-slate-800 text-xl font-semibold">{rating}</span>
+            </div>
           </div>
-        </div>
-        <div className="w-fit h-[100%] flex flex-col justify-center items-center">
-          <h3 className="text-slate-800 text-lg font-semibold mb-2 md:mb-3">Platinado? </h3>
-          <div className="flex gap-2 justify-center items-center">
-            <Checkbox onCheckedChange={() => setMastered(!mastered)} />
-            <span className={cn(mastered ? "text-yellow-500" : "text-black", "font-semibold")}>
-              <Trophy size={28} />
-            </span>
+          <div className="w-fit h-[100%] flex lg:flex-col justify-center items-center gap-2">
+            <h3 className="text-slate-800 text-lg font-semibold lg:mb-3">Platinado? </h3>
+            <div className="flex gap-2 justify-center items-center">
+              <Checkbox onCheckedChange={() => setMastered(!mastered)} />
+              <span className={cn(mastered ? "text-yellow-500" : "text-black", "font-semibold")}>
+                <Trophy size={28} />
+              </span>
+            </div>
           </div>
         </div>
       </div>
       <div className="w-full flex flex-col md:justify-between gap-4 mt-3">
-        <div className="w-full overflow-x-auto flex gap-4 pb-2">
-          <div className="w-full flex-col lg:flex-row">
+        <div className="w-full flex flex-col lg:flex-row gap-4 pb-2">
+          <div className="w-full flex-col lg:flex-row overflow-x-auto py-2">
             <h3 className="text-slate-800 text-lg font-semibold mb-2">Status: </h3>
             <div className="w-full flex gap-2">
               <Button
@@ -180,7 +182,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           </div>
           <div className="w-full">
             <h3 className="text-slate-800 text-lg font-semibold mb-2">Plataforma: </h3>
-            <Select onValueChange={(value) => setPlatform(value)} required>
+            <Select onValueChange={(value) => setPlatform(value)} required={review ? false : true}>
               {/* TODO: Ensure that if is editing a review, the platform is showing here*/}
               <SelectTrigger className="w-full h-[42px] focus:ring-0">
                 <SelectValue defaultValue={review?.platform ?? undefined} className="placeholder:text-gray-500 font-medium" placeholder="Selecione a plataforma que você jogou" />
@@ -212,10 +214,12 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           />
         </div>
       </div>
-      <div className="w-full flex flex-col xl:flex-row gap-4 mt-5 justify-center items-center">
+      <div className="w-full flex flex-col md:flex-row gap-4 mt-5 justify-center items-center">
         <div className="w-full flex flex-col md:flex-row md:justify-center gap-8">
           <div className="text-center md:text-start">
-            <h3 className="text-slate-800 text-lg font-semibold mb-2">Data de inicio: </h3>
+            <h3 className="text-slate-800 text-lg font-semibold mb-2">
+              Data de inicio:
+            </h3>
             <DatePicker
               date={startDate}
               setDate={setStartDate}

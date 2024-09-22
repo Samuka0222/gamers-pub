@@ -1,6 +1,6 @@
 'use client'
 
-import { Loader2, PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 import { ProfileHeader } from "./_components/ProfileHeader";
 import { SearchGameForm } from "./_components/SearchGameForm";
 import { searchByGameName } from "@/actions/games/searchByGameName";
@@ -13,7 +13,7 @@ import {
   DialogTrigger
 } from "@/components/Dialog";
 import { Button } from "@/components/Button";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { IReviewRequest } from "@/interfaces/IReview";
 import { ReviewsList } from "./_components/ReviewsList";
 
@@ -22,7 +22,7 @@ export default function ReviewsPage() {
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
 
   return (
-    <section className="w-full xl:w-[80%] h-full flex flex-col justify-center items-center px-5 py-6">
+    <section className="w-full xl:w-[80%] min-h-[88.3vh] max-h-full flex flex-col justify-center items-center px-5 py-6">
       <div className="w-full h-full flex-1 lg:w-[60%]">
         <ProfileHeader />
         <div className="w-full flex justify-between items-center mt-5">
@@ -44,14 +44,8 @@ export default function ReviewsPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="w-full h-auto flex flex-col justify-start items-center gap-4 mt-5 overflow-y-auto">
-          <Suspense fallback={
-            <div className="w-full h-full flex justify-center items-center">
-              <Loader2 className="animate-spin" />
-            </div>
-          }>
-            <ReviewsList reviews={reviews} setReviews={setReviews} />
-          </Suspense>
+        <div className="w-full h-full flex flex-col justify-start items-center gap-4 mt-5 overflow-y-auto">
+          <ReviewsList reviews={reviews} setReviews={setReviews} />
         </div>
       </div>
     </section>

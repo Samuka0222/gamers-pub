@@ -19,8 +19,8 @@ export default async function CreateReviewPage({ params }: CreateReviewPageProps
   }
 
   return (
-    <section className="w-full h-fit pt-6 lg:py-6 md:px-5 flex flex-col items-center box-border">
-      <div className="w-full h-fit lg:w-[90%] 2xl:w-[70%]">
+    <section className="w-full md:min-h-[90.5vh] min-h-[88.4vh] pt-6 lg:py-6 md:px-5 flex flex-col justify-center items-center box-border">
+      <div className="w-full min-h-full lg:w-[90%] 2xl:w-[70%]">
         <h2 className="w-full text-2xl font-semibold text-center">Criar Avaliação</h2>
         <div className="w-full h-fit px-5 py-6 lg:px-12 shadow-sm mt-6 mx-0 md:border md:rounded-lg">
           <ReviewForm game={game} />

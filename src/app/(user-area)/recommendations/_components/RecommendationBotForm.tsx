@@ -86,9 +86,11 @@ export function RecommendationBotForm({ id, chat, setChat }: RecommendationBotFo
   return (
     <form
       action={submitAction}
-      className="w-full h-full xl:max-h-[700px] flex flex-col justify-center items-center"
+      className="w-full min-h-full flex flex-1 flex-col justify-between items-center"
     >
-      <ChatHistoryList chatHistory={optimisticChat} />
+      <div className="w-full flex flex-col rounded-lg h-[500px] md:h-[520px] xl:min-h-[650px] xl:max-h-[700px] overflow-y-auto">
+        <ChatHistoryList chatHistory={optimisticChat} />
+      </div>
       <div className="w-full flex justify-between items-center mt-4 h-16 border border-gray-300 text-base rounded-lg shadow-sm p-3">
         <Input
           className="flex-1 h-full border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0"

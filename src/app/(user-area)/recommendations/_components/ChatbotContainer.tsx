@@ -27,7 +27,7 @@ export function ChatbotContainer({ chatHistoryId }: { chatHistoryId: string }) {
     <>
       {
         isLoading
-          ? <div className="w-full h-full flex justify-center items-center">
+          ? <div className="w-full min-h-full flex flex-1 justify-center items-center">
             <Loader2 />
           </div>
           : <RecommendationBotForm chat={chat} setChat={setChat} id={chatHistoryId} />

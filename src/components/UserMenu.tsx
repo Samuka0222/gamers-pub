@@ -42,10 +42,10 @@ export function UserMenu() {
           }
         }
       }
-      setIsLoadingUserInformation(false);
     }
     if (user === undefined) {
       handleSignIn();
+      setIsLoadingUserInformation(false);
     }
   }, [setUser]);
 

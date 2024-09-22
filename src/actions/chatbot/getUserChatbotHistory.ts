@@ -32,6 +32,5 @@ export async function getUserChatBotHistory(): Promise<IUserChatbotHistory[]> {
     created_at: item.created_at,
     chatbot_history: item.chatbot_history,
   }));
-
   return formatedResponse;
 }

@@ -2,11 +2,11 @@
 
 import { getUserChatBotHistory } from "@/actions/chatbot/getUserChatbotHistory"
 import { Button } from "@/components/Button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/DropdownMenu"
 import { IUserChatbotHistory } from "@/interfaces/IChat"
 import { format } from "date-fns"
-import { Loader2, PlusCircle } from "lucide-react"
+import { Clock, Loader2, PlusCircle } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -27,17 +27,28 @@ export function ChatbotMenu() {
     }
     getUserChatbotHistoryList();
     setIsLoading(false);
-  }, [])
+  }, []);
 
-  const router = useRouter();
-
+  const updateUserChatbotHistoryList = async () => {
+    setIsLoading(true)
+    try {
+      const response = await getUserChatBotHistory();
+      setUserChatbotHistory(response);
+      console.log(response)
+    } catch {
+      toast.error('Não foi possível obter o histórico do usuário')
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
-    <nav className="w-auto flex lg:flex-col gap-4 py-5">
+    <nav className="w-auto flex justify-between lg:flex-col gap-4 mt-7 lg:lg:mt-5">
       <Button
         variant='outline'
         size='sm'
         className="text-gray-500"
+        onClick={() => updateUserChatbotHistoryList}
         asChild
       >
         <Link href='/recommendations'>
@@ -47,29 +58,35 @@ export function ChatbotMenu() {
           </>
         </Link>
       </Button>
-      <div className="w-full h-fit lg:border-t">
-        <h4 className="w-full text-center font-medium">Chats anteriores</h4>
-        <ul className="w-full flex lg:flex-col gap-2 lg:mt-2">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant='outline'
+            size='sm'
+            className="text-gray-500"
+          >
+            <>
+              Histórico
+              <Clock className="ml-2" />
+            </>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent >
           {
-            isLoading
-              ? <div className="w-full h-full flex justify-center items-center">
+            !isLoading
+              ? userChatbotHistory.map((item) => (
+                <DropdownMenuItem key={item.created_at} className="cursor-pointer" asChild>
+                  <Link href={`/recommendations/${item.id}`}>
+                    {format(new Date(item.created_at), 'dd/MM/yyyy')}
+                  </Link>
+                </DropdownMenuItem>
+              ))
+              : <div className="w-full h-full flex justify-center items-center">
                 <Loader2 className="animate-spin" />
               </div>
-              : userChatbotHistory.map((item) => (
-                <li key={item.created_at}>
-                  <Button
-                    variant='outline'
-                    className="w-full"
-                    size='sm'
-                    onClick={() => router.push(`/recommendations/${item.id}`)}
-                  >
-                    {format(new Date(item.created_at), 'dd/MM/yyyy')}
-                  </Button>
-                </li>
-              ))
           }
-        </ul>
-      </div>
-    </nav>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </nav >
   )
 }

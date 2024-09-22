@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { GameDetails } from "@/components/GameDetails";
 import { updateReview } from "@/actions/reviews/updateReview";
 import { deleteReview } from "@/actions/reviews/deleteReview";
+import { useGlobalStore } from "@/store/globalStore";
 
 interface ReviewFormProps {
   game: IGameDetails;
@@ -40,6 +41,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
   const [minutesPlayed, setMinutesPlayed] = useState(review ? Number(review.timePlayed?.split(':')[1]) : undefined);
   const [mastered, setMastered] = useState(review ? review.mastered : false);
 
+  const { user } = useGlobalStore();
   const router = useRouter();
 
   const discardAction = () => {
@@ -52,6 +54,12 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
 
   const submitAction = async () => {
     setIsLoading(true);
+    if (status === '') {
+      toast.error('É necessário selecionar um Status')
+      setIsLoading(false);
+      return
+    }
+
     const newReview = {
       gameId: game.id,
       gameName: game.name,
@@ -65,7 +73,9 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       endDate,
       timePlayed: `${hoursPlayed}:${minutesPlayed}`,
       mastered,
+      author: user?.username!
     };
+
     try {
       if (review) {
         await updateReview({ id: review.id, ...newReview });
@@ -96,7 +106,6 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
     }
   }
 
-  // TODO: Add Error handling so user can send Required information empty, EX: Status.
   return (
     <form className="w-full h-fit flex flex-col items-center" action={submitAction}>
       <div className="w-full flex flex-col lg:flex-row gap-4 justify-between items-center">
@@ -131,7 +140,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       </div>
       <div className="w-full flex flex-col md:justify-between gap-4 mt-3">
         <div className="w-full flex flex-col lg:flex-row gap-4 pb-2">
-          <div className="w-full flex-col lg:flex-row overflow-x-auto py-2">
+          <div className="w-full flex-col lg:flex-row overflow-x-auto">
             <h3 className="text-slate-800 text-lg font-semibold mb-2">Status: </h3>
             <div className="w-full flex gap-2">
               <Button
@@ -183,9 +192,12 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           <div className="w-full">
             <h3 className="text-slate-800 text-lg font-semibold mb-2">Plataforma: </h3>
             <Select onValueChange={(value) => setPlatform(value)} required={review ? false : true}>
-              {/* TODO: Ensure that if is editing a review, the platform is showing here*/}
               <SelectTrigger className="w-full h-[42px] focus:ring-0">
-                <SelectValue defaultValue={review?.platform ?? undefined} className="placeholder:text-gray-500 font-medium" placeholder="Selecione a plataforma que você jogou" />
+                <SelectValue
+                  defaultValue={review ? review.platform : ''}
+                  className="placeholder:text-gray-500 font-medium"
+                  placeholder="Selecione a plataforma que você jogou"
+                />
               </SelectTrigger>
               <SelectContent>
                 {game.platforms.map((platform) => {

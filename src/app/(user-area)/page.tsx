@@ -61,7 +61,7 @@ export default function HomePage() {
                 {
                   reviews.map(item => (
                     <li key={item.created_at} className="w-[800px] ">
-                      <ReviewCard review={item.review} />
+                      <ReviewCard review={item.review} author />
                     </li>
                   ))
                 }

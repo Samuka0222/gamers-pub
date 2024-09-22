@@ -130,8 +130,9 @@ export function EditUserInfoForm() {
         <div className="w-full h-fit flex justify-between items-center gap-8">
           <div className="w-[150px] h-28 flex flex-col justify-center items-center">
             {
+              // TODO: Create a Get Profile Picture function
               user?.profilePicture !== undefined
-                ? <Image src={user?.profilePicture} alt={`Sua foto de perfil`} height={100} width={100} />
+                ? <Image src={user?.profilePicture} alt='Sua foto de perfil' height={100} width={100} />
                 : <div className="w-full h-full bg-gray-500 flex justify-center items-center rounded-lg">
                   <User2 color="white" size={50} />
                 </div>

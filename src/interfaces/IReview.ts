@@ -12,6 +12,7 @@ export interface IReview {
   endDate?: Date;
   timePlayed?: string;
   mastered?: boolean;
+  author: string;
 }
 
 export interface IReviewRequest {

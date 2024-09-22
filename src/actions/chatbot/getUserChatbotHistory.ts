@@ -27,10 +27,17 @@ export async function getUserChatBotHistory(): Promise<IUserChatbotHistory[]> {
     },
   );
 
-  const formatedResponse = response.data.Items.map((item) => ({
+  const formattedResponse = response.data.Items.map((item) => ({
     id: item.sk.slice(3),
     created_at: item.created_at,
     chatbot_history: item.chatbot_history,
   }));
-  return formatedResponse;
+
+  const ordenedResponse = formattedResponse.sort((a, b) => {
+    const dateA = new Date(a.created_at).getTime();
+    const dateB = new Date(b.created_at).getTime();
+    return dateB - dateA;
+  });
+
+  return ordenedResponse;
 }

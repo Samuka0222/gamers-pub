@@ -44,7 +44,7 @@ export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
           : < ul className="w-full h-full flex flex-col gap-4">
             {
               reviews.map(reviewItem => <li key={reviewItem.review.id} className="w-full h-full">
-                <ReviewCard review={reviewItem.review} />
+                <ReviewCard review={reviewItem.review} canUserEdit />
               </li>)
             }
           </ul >

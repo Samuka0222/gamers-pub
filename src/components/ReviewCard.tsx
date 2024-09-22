@@ -3,9 +3,11 @@
 import { Card, CardContent, CardHeader, } from "@/components/Card";
 import { MarkdownText } from "@/components/MarkdownText";
 import { IReview } from "@/interfaces/IReview";
-import { Trophy } from "lucide-react";
+import { EditIcon, Trophy } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Button } from "./Button";
+import Link from "next/link";
 
 interface ReviewCardProps {
   review: IReview
@@ -35,6 +37,19 @@ export function ReviewCard({ review, canUserEdit, author }: ReviewCardProps) {
       transition={{ duration: 0.7, ease: 'easeInOut' }}
     >
       <Card className="relative w-full h-fit flex gap-4 px-0 md:px-4 py-4">
+        {
+          canUserEdit && (
+            <Button
+              variant='outline'
+              className="absolute top-0 right-0 rounded-ss-none rounded-ee-none"
+              asChild
+            >
+              <Link href={`/reviews/edit-review/${review.id}`}>
+                <EditIcon />
+              </Link>
+            </Button>
+          )
+        }
         <CardHeader className="p-0 relative pl-2 md:pl-0">
           <div className="absolute -right-5 -top-2 bg-primary w-8 h-8 md:w-12 md:h-12 rounded-full flex justify-center items-center">
             <p className="text-lg md:text-2xl font-bold text-white">
@@ -50,7 +65,9 @@ export function ReviewCard({ review, canUserEdit, author }: ReviewCardProps) {
         <CardContent className="w-full h-full flex flex-col py-0 px-2 md:px-6 justify-between">
           <div className="w-full min-h-[120px] max-h-fit flex-1">
             <h3 className="md:text-xl font-semibold mb-2">{review.gameName}</h3>
-            {/* TODO: Add Review Author */}
+            {
+              author && (<h4 className="md:text-base font-semibold mb-2">Criado por {review.author}</h4>)
+            }
             <div className="w-full h-full flex gap-1">
               {
                 review.reviewText !== ''

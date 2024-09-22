@@ -18,7 +18,6 @@ import { IReviewRequest } from "@/interfaces/IReview";
 import { ReviewsList } from "./_components/ReviewsList";
 
 export default function ReviewsPage() {
-  // TODO: optimize this request and store on ReviewStore
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
 
   return (

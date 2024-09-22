@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { InputOTPForm } from "./_components/InputOTPForm";
+import { Loader2 } from "lucide-react";
 
 export default function VerifyAccountPage() {
   return (
@@ -10,7 +12,13 @@ export default function VerifyAccountPage() {
         </p>
       </div>
       <div className="w-full flex justify-center items-center mt-10">
-        <InputOTPForm />
+        <Suspense fallback={
+          <div className="w-full h-full flex justify-center items-center">
+            <Loader2 className="animate-spin" />
+          </div>
+        }>
+          <InputOTPForm />
+        </Suspense>
       </div>
     </section>
   )

@@ -1,6 +1,8 @@
 // import { InputOTPForm } from "./_components/InputOTPForm";
 
+import { Suspense } from "react";
 import { NewPasswordForm } from "./_components/NewPasswordForm";
+import { Loader2 } from "lucide-react";
 
 export default function ResetPasswordPage() {
   return (
@@ -15,7 +17,13 @@ export default function ResetPasswordPage() {
         </div>
       </div>
       <div className="w-full flex justify-center items-center mt-5">
-        <NewPasswordForm />
+        <Suspense fallback={
+          <div className="w-full h-full flex justify-center items-center">
+            <Loader2 className="animate-spin" />
+          </div>
+        }>
+          <NewPasswordForm />
+        </Suspense>
       </div>
     </section>
   )

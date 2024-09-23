@@ -12,9 +12,10 @@ import { toast } from 'sonner';
 import { Auth } from '@/helpers/auth';
 import { Skeleton } from "./Skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
+import { getUserProfilePicture } from "@/actions/upload/getUserProfilePicture";
 
 export function UserMenu() {
-  const { setUser } = useGlobalStore();
+  const { setUser, setUserProfilePicture } = useGlobalStore();
   const user = useGlobalStore.getState().user;
   const [isLoadingUserInformation, setIsLoadingUserInformation] = useState(true);
 
@@ -27,13 +28,17 @@ export function UserMenu() {
       } else {
         const isTokenInvalid = auth.validateTokens();
         if (!isTokenInvalid) {
-          const userInfo = (await getUserInformation(tokens.AccessToken)).data;
+          const userInfo = await getUserInformation(tokens.AccessToken);
           setUser(userInfo);
+          const userProfilePicture = await getUserProfilePicture();
+          if (userProfilePicture.status === 200) {
+            setUserProfilePicture(userProfilePicture.signedUrl!)
+          }
         } else {
           try {
             await auth.validateWithRefreshToken();
             const newTokens = JSON.parse(localStorage.getItem("tokens")!);
-            const userInfo = (await getUserInformation(newTokens.AccessToken)).data ?? user;
+            const userInfo = await getUserInformation(newTokens.AccessToken) ?? user;
             setUser(userInfo)
           } catch (error) {
             toast.error('Sessão expirada! Por favor, faça login novamente.');

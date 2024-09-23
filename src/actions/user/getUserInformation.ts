@@ -4,7 +4,7 @@ import axios from 'axios';
 export async function getUserInformation(token: string) {
   console.log('disparou');
 
-  return await axios.get<IUserResponse>(
+  const response = await axios.get<IUserResponse>(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/users`,
     {
       headers: {
@@ -12,4 +12,6 @@ export async function getUserInformation(token: string) {
       },
     },
   );
+
+  return response.data;
 }

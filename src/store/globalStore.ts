@@ -4,6 +4,7 @@ import { create } from 'zustand';
 interface IGlobalStore {
   user: IUser | undefined;
   setUser: (userInfo: IUserResponse) => void;
+  setUserProfilePicture: (imageUrl: string) => void;
 }
 
 export const useGlobalStore = create<IGlobalStore>()((set) => ({
@@ -15,9 +16,11 @@ export const useGlobalStore = create<IGlobalStore>()((set) => ({
         firstName: userInfo.first_name,
         lastName: userInfo.last_name,
         email: userInfo.email,
-        profilePicture: userInfo.profilePicture,
+        profilePicture: undefined,
         title: userInfo.title,
         isAuthenticated: true,
       },
     })),
+  setUserProfilePicture: (imageUrl) =>
+    set((state) => ({ user: { ...state.user!, profilePicture: imageUrl } })),
 }));

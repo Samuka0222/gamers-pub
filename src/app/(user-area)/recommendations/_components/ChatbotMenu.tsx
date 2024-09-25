@@ -30,7 +30,7 @@ export function ChatbotMenu({ chatId }: { chatId: string }) {
     }
     getUserChatbotHistoryList();
     setIsLoading(false);
-  }, []);
+  }, [chatId]);
 
   const deleteChatHistoryAction = async (chatHistoryId: string) => {
     try {

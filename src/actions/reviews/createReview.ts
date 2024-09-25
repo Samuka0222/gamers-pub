@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Auth } from '@/helpers/auth';
 
 export async function createReview(review: Record<string, any>) {
-  console.log('disparou');
   const auth = new Auth();
   const tokens = auth.getUserTokens();
 

@@ -20,7 +20,6 @@ type IOutput = {
 export async function getChatHistoryById(
   chathistoryId: string,
 ): Promise<IOutput> {
-  console.log('disparou');
   const auth = new Auth();
   const tokens = auth.getUserTokens();
 

@@ -6,7 +6,6 @@ import { IGameDetails } from '@/interfaces/IGame';
 export async function getGameById(
   gameId: number,
 ): Promise<IGameDetails | undefined> {
-  console.log('Invocou a API do IGDB');
   try {
     const apiqlQuery = `fields id, cover.url, name, platforms.name, first_release_date; where id = ${gameId};`;
 

@@ -1,29 +1,29 @@
 'use client'
 
 import { getRandomReviews } from "@/actions/reviews/getRandomReviews";
-import { IReviewRequest } from "@/interfaces/IReview";
+import { IReview } from "@/interfaces/IReview";
 import { useGlobalStore } from "@/store/globalStore";
 import { Loader2 } from "lucide-react";
-import { Suspense, useEffect, useState } from "react";
-import { ReviewCard } from "@/components/ReviewCard";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { GamesList } from "./_components/GamesList";
+import { RandomReviewCard } from "@/components/ReviewCard";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const { user } = useGlobalStore();
 
   const [userName, setUserName] = useState<string | undefined>(undefined);
-  const [reviews, setReviews] = useState<IReviewRequest[]>([]);
+  const [reviews, setReviews] = useState<IReview[]>([]);
   const [isLoading, SetIsLoading] = useState(false);
 
   useEffect(() => {
     const getRandomReviewsforUser = async () => {
       SetIsLoading(true);
       const response = await getRandomReviews();
-      setReviews(response.Items);
+      setReviews(response);
       SetIsLoading(false);
     }
-
     getRandomReviewsforUser();
   }, [])
 
@@ -34,7 +34,7 @@ export default function HomePage() {
   }, [user])
 
   return (
-    <section className="w-full xl:w-[70%] h-full flex flex-col justify-center items-center px-5 py-6">
+    <section className="w-full h-full flex flex-col justify-center items-center px-5 py-6 overflow-x-hidden">
       <div className="w-full h-fit flex justify-center items-center">
         <div>
           <Image src='/logo-gamers-pub.png' width={180} height={180} alt="logo do Gamers Pub" />
@@ -49,19 +49,21 @@ export default function HomePage() {
           </h1>
         </div>
       </div>
-      <div className="w-full flex flex-col justify-center items-center mt-10">
+      <div className="w-full xl:w-[70%] h-full flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold">Confira algumas das últimas reviews.</h3>
         {
           isLoading
             ? <div className="w-full h-full flex justify-center items-center">
               <Loader2 className="animate-spin" />
             </div>
-            : <div className="w-full h-fit flex justify-center items-center mt-6">
-              <ul className="w-full h-full flex gap-4 justify-center items-center overflow-x-auto">
+            : <div className="w-full h-fit flex justify-center items-center mt-6 pb-3 overflow-x-auto">
+              <ul
+                className="w-full h-full flex gap-8 justify-start items-center"
+              >
                 {
                   reviews.map(item => (
-                    <li key={item.created_at} className="w-[800px] ">
-                      <ReviewCard review={item.review} author />
+                    <li key={item.id} className="min-w-full md:min-w-full lg:min-w-[600px] relative">
+                      <RandomReviewCard review={item} />
                     </li>
                   ))
                 }
@@ -70,32 +72,36 @@ export default function HomePage() {
         }
       </div>
 
-      <div className="w-full flex flex-col justify-center items-center mt-10">
+      <div className="w-full h-fit flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold text-center">Games jogados recentemente por nossos membros</h3>
         {
           isLoading
             ? <div className="w-full h-full flex justify-center items-center">
               <Loader2 className="animate-spin" />
             </div>
-            : <div className="w-fit h-fit flex justify-center items-center mt-6">
-              <ul className="w-fit h-full flex flex-row-reverse gap-4 justify-center items-center overflow-x-auto overflow-y-hidden">
-                {
-                  reviews.map(item => (
-                    <li key={item.created_at} className="w-auto relative">
-                      <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center text-base text-center font-medium text-transparent hover:bg-black/50 hover:text-white transition-colors">
-                        {item.review.gameName}
-                      </div>
-                      <Image
-                        src={item.review.gameCoverUrl}
-                        alt={`capa do jogo ${item.review.gameName}`}
-                        width={150}
-                        height={230}
-                      />
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
+            : reviews !== undefined && reviews.length > 0
+              ? <div className="w-full h-full flex justify-center items-center mt-6 pb-3 overflow-x-auto">
+                <ul
+                  className="w-fit h-full flex flex-row-reverse gap-4 justify-center items-center"
+                >
+                  {
+                    reviews.map(item => (
+                      <li key={item.id} className="w-[150px] relative">
+                        <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center text-base text-center font-medium text-transparent hover:bg-black/50 hover:text-white transition-colors">
+                          {item.gameName}
+                        </div>
+                        <Image
+                          src={item.gameCoverUrl}
+                          alt={`capa do jogo ${item.gameName}`}
+                          width={150}
+                          height={230}
+                        />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+              : <p>Nada para ver aqui!</p>
         }
       </div>
       <div className="w-full h-full flex flex-col md:flex-row justify-center gap-10 md:gap-20 items-start mt-10">

@@ -1,12 +1,12 @@
 'use client';
 
+import { Auth } from '@/helpers/auth';
 import { IReview } from '@/interfaces/IReview';
 import axios from 'axios';
 
 export async function updateReview(review: IReview) {
-  console.log('disparou');
-  // TODO: Create Auth class and implements functions to get tokens
-  const tokens = JSON.parse(localStorage.getItem('tokens')!);
+  const auth = new Auth();
+  const tokens = auth.getUserTokens();
 
   return await axios.put(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/reviews/${review.id}`,
@@ -15,7 +15,7 @@ export async function updateReview(review: IReview) {
     },
     {
       headers: {
-        Authorization: `Bearer ${tokens.AccessToken}`,
+        Authorization: `Bearer ${tokens!.AccessToken}`,
       },
     },
   );

@@ -1,9 +1,9 @@
 import { getReviewsByUser } from "@/actions/reviews/getReviewsByUser";
 import { IReviewRequest } from "@/interfaces/IReview";
 import { AxiosError } from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { ReviewCard } from "@/components/ReviewCard";
+import { ReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
 import { useGlobalStore } from "@/store/globalStore";
 
 interface ReviewsListProps {
@@ -12,7 +12,8 @@ interface ReviewsListProps {
 }
 
 export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
-  const { user } = useGlobalStore()
+  const { user } = useGlobalStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getReviews = async () => {
@@ -20,7 +21,7 @@ export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
         const response = await getReviewsByUser();
         if (response) {
           setReviews(response.Items);
-          console.log(response);
+          setIsLoading(false);
         }
       } catch (error) {
         if (error instanceof AxiosError) {
@@ -36,18 +37,23 @@ export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
   return (
     <>
       {
-        reviews.length === 0
+        isLoading
           ? <div className="min-w-full h-full flex flex-col justify-center items-center gap-4">
-            <h4 className="text-gray-500 text-lg">Nada para ver aqui...</h4>
-            <p>¯\_(ツ)_/¯</p>
+            <ReviewCardSkeleton />
+            <ReviewCardSkeleton />
           </div>
-          : < ul className="w-full h-full flex flex-col gap-4">
-            {
-              reviews.map(reviewItem => <li key={reviewItem.review.id} className="w-full h-full">
-                <ReviewCard review={reviewItem.review} canUserEdit />
-              </li>)
-            }
-          </ul >
+          : reviews.length === 0
+            ? <div className="min-w-full h-full flex flex-col justify-center items-center gap-4">
+              <h4 className="text-gray-500 text-lg">Nada para ver aqui...</h4>
+              <p>¯\_(ツ)_/¯</p>
+            </div>
+            : < ul className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 lg:gap-10">
+              {
+                reviews.map(reviewItem => <li key={reviewItem.review.id} className="w-full lg:w-[800px] h-fit">
+                  <ReviewCard review={reviewItem.review} />
+                </li>)
+              }
+            </ul >
       }
     </>
   )

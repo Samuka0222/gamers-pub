@@ -113,7 +113,6 @@ export function EditUserInfoForm() {
       setIsSubmitting(false);
       window.location.reload();
     } catch (error) {
-      console.log(error)
       if (error instanceof AxiosError) {
         toast.error('ERRO: ' + error.message)
       }

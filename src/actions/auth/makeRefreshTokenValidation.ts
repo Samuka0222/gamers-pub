@@ -3,7 +3,6 @@ import { getExpirationTime } from '@/helpers/getExpirationTime';
 import axios from 'axios';
 
 export async function makeRefreshTokenValidation() {
-  console.log('disparou autenticação com Refresh Tokens');
   const auth = new Auth();
   const tokens = auth.getUserTokens();
   if (!tokens) {

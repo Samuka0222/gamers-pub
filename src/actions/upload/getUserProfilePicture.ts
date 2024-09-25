@@ -19,10 +19,6 @@ export async function getUserProfilePicture(): Promise<IOutput> {
     },
   );
 
-  console.log('status: ' + response.status);
-  console.log('URL: ' + response.data);
-  console.log(response.data);
-
   return {
     status: response.status,
     signedUrl: response.data,

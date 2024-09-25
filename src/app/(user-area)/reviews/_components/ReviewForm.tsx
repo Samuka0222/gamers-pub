@@ -30,6 +30,7 @@ interface ReviewFormProps {
 
 export function ReviewForm({ game, review }: ReviewFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [status, setStatus] = useState(review ? review.status : '');
   const [reviewText, setReviewText] = useState(review ? review.reviewText : '');
   const [spoilers, setSpoilers] = useState(review ? review.spoilers : false);
@@ -98,6 +99,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       if (!review) {
         toast.error('Erro: Review não encontrada');
       }
+      setIsDeleting(true);
       await deleteReview(review!.id);
       toast.success('Review deletada com sucesso!');
       router.push('/reviews');
@@ -254,12 +256,14 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
                 className="w-12 p-0 placeholder:text-center text-center"
                 type="number"
                 placeholder="HH"
+                value={hoursPlayed}
                 onChange={(e) => setHoursPlayed(Number(e.target.value))}
               />
               <Input
                 className="w-12 p-0 placeholder:text-center text-center"
                 type="number"
                 placeholder="MM"
+                value={minutesPlayed}
                 onChange={(e) => setMinutesPlayed(Number(e.target.value))}
               />
             </div>

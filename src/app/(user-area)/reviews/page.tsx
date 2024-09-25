@@ -21,7 +21,7 @@ export default function ReviewsPage() {
   const [reviews, setReviews] = useState<IReviewRequest[]>([]);
 
   return (
-    <section className="w-full xl:w-[80%] min-h-[88.3vh] max-h-full flex flex-col justify-center items-center px-5 py-6">
+    <section className="w-full xl:w-[80%] h-full flex flex-1 flex-col justify-center items-center px-5 py-6">
       <div className="w-full h-full flex-1 lg:w-[60%]">
         <ProfileHeader />
         <div className="w-full flex justify-between items-center mt-5">
@@ -43,7 +43,7 @@ export default function ReviewsPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="w-full h-full flex flex-col justify-start items-center gap-4 mt-5 overflow-y-auto">
+        <div className="w-full h-full flex flex-col justify-start items-center gap-4 mt-10">
           <ReviewsList reviews={reviews} setReviews={setReviews} />
         </div>
       </div>

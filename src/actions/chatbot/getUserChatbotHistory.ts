@@ -14,7 +14,6 @@ type IOutput = {
 };
 
 export async function getUserChatBotHistory(): Promise<IUserChatbotHistory[]> {
-  console.log('disparou');
   const auth = new Auth();
   const tokens = auth.getUserTokens();
 

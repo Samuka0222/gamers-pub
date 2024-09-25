@@ -20,7 +20,6 @@ export function ChatbotMenu() {
       try {
         const response = await getUserChatBotHistory();
         setUserChatbotHistory(response);
-        console.log(response)
       } catch {
         toast.error('Não foi possível obter o histórico do usuário')
       }
@@ -34,7 +33,6 @@ export function ChatbotMenu() {
     try {
       const response = await getUserChatBotHistory();
       setUserChatbotHistory(response);
-      console.log(response)
     } catch {
       toast.error('Não foi possível obter o histórico do usuário')
     } finally {
@@ -74,13 +72,17 @@ export function ChatbotMenu() {
         <DropdownMenuContent >
           {
             !isLoading
-              ? userChatbotHistory.map((item) => (
-                <DropdownMenuItem key={item.created_at} className="cursor-pointer" asChild>
-                  <Link href={`/recommendations/${item.id}`}>
-                    {format(new Date(item.created_at), 'dd/MM/yyyy')}
-                  </Link>
+              ? userChatbotHistory.length > 0
+                ? userChatbotHistory.map((item) => (
+                  <DropdownMenuItem key={item.created_at} className="cursor-pointer" asChild>
+                    <Link href={`/recommendations/${item.id}`}>
+                      {format(new Date(item.created_at), 'dd/MM/yyyy')}
+                    </Link>
+                  </DropdownMenuItem>
+                ))
+                : <DropdownMenuItem className="cursor-pointer">
+                  Nenhum resultado...
                 </DropdownMenuItem>
-              ))
               : <div className="w-full h-full flex justify-center items-center">
                 <Loader2 className="animate-spin" />
               </div>

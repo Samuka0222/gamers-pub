@@ -19,7 +19,6 @@ export function EditReviewFormContainer({ game, reviewId }: EditReviewFormContai
 
   useEffect(() => {
     const getReviewData = async () => {
-      console.log('Fetching data...')
       setIsPending(true);
       try {
         const response = await getReviewById(reviewId);

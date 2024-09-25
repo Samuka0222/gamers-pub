@@ -7,7 +7,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center">
+    <main className="w-full min-h-screen flex flex-1 flex-col justify-start items-center">
       <HeaderMenu />
       {children}
       <Footer />

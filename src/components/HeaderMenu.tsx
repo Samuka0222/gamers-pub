@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger
 } from './AlertDialog';
 import { UserMenu } from './UserMenu';
+import Link from "next/link";
 
 export function HeaderMenu() {
   const { user } = useGlobalStore();
@@ -28,14 +29,17 @@ export function HeaderMenu() {
       className="w-full py-2 bg-slate-900 flex justify-between px-5 md:px-10 lg:px-0 lg:justify-center items-center gap-8 lg:gap-40 shadow-sm"
     >
       <div className='w-fit h-fit flex justify-center items-center'>
-        <div className='w-[50px] h-[50px]'>
-          <Image
-            src='/logo-gamers-pub.png'
-            alt='Logo do Gamers pub'
-            width={50}
-            height={50}
-          />
-        </div>
+        <Link href="/" className="hover:scale-105 flex justify-center items-center transition-transform">
+          <div className='w-[50px] h-[50px]'>
+            <Image
+              src='/logo-gamers-pub.png'
+              alt='Logo do Gamers pub'
+              width={50}
+              height={50}
+            />
+          </div>
+          <span className="block lg:hidden uppercase text-xl text-white font-bold ml-1">Home</span>
+        </Link>
       </div>
       <div className="hidden md:flex flex-col justify-center items-center">
         <nav className="w-fit flex flex-col md:flex-row justify-center items-center md:items-end gap-4 md:gap-8">

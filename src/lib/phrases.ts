@@ -8,6 +8,7 @@ export function getRandomPhrase() {
     'Fala para mim qual são os melhores jogos de Corrida?',
     'Me recomende jogos semelhantes a Ghost of Tsushima.',
     'Quero saber quais são os melhores jogos Souls-like que não são da From Software.',
+    'Quais serão os próximos grandes lançamentos da Sony para o Playstation?',
   ];
 
   const randomIndex = Math.floor(Math.random() * phrases.length);

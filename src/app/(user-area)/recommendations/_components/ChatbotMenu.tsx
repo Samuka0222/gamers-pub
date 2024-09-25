@@ -1,18 +1,22 @@
 'use client'
 
+import { deleteChatHistory } from "@/actions/chatbot/deleteChatHistory"
 import { getUserChatBotHistory } from "@/actions/chatbot/getUserChatbotHistory"
 import { Button } from "@/components/Button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/DropdownMenu"
 import { IUserChatbotHistory } from "@/interfaces/IChat"
 import { format } from "date-fns"
-import { Clock, Loader2, PlusCircle } from "lucide-react"
+import { Clock, Loader2, PlusCircle, Trash2 } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
-export function ChatbotMenu() {
+export function ChatbotMenu({ chatId }: { chatId: string }) {
   const [userChatbotHistory, setUserChatbotHistory] = useState<IUserChatbotHistory[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const getUserChatbotHistoryList = async () => {
@@ -28,25 +32,26 @@ export function ChatbotMenu() {
     setIsLoading(false);
   }, []);
 
-  const updateUserChatbotHistoryList = async () => {
-    setIsLoading(true)
+  const deleteChatHistoryAction = async (chatHistoryId: string) => {
     try {
-      const response = await getUserChatBotHistory();
-      setUserChatbotHistory(response);
-    } catch {
-      toast.error('Não foi possível obter o histórico do usuário')
+      setIsDeleting(true);
+      await deleteChatHistory(chatHistoryId);
+      toast.success('Conversa deletada com sucesso!');
+      setIsDeleting(false);
+      router.push('/recommendations');
+    } catch (error) {
+      toast.error("Erro ao deletar o histórico :/")
     } finally {
-      setIsLoading(false);
+      setIsDeleting(false);
     }
   }
 
   return (
-    <nav className="w-auto flex justify-between lg:flex-col gap-4 mt-7 lg:lg:mt-5">
+    <nav className="w-full flex justify-between gap-4 mt-7 lg:lg:mt-5">
       <Button
         variant='outline'
         size='sm'
         className="text-gray-500"
-        onClick={() => updateUserChatbotHistoryList}
         asChild
       >
         <Link href='/recommendations'>
@@ -89,6 +94,28 @@ export function ChatbotMenu() {
           }
         </DropdownMenuContent>
       </DropdownMenu>
+      {
+        chatId !== '' && (
+          <Button
+            variant='destructive'
+            type="button"
+            size='sm'
+            className="text-white"
+            onClick={() => deleteChatHistoryAction(chatId)}
+          >
+            {
+              isDeleting ? <>
+                Deletando ...
+                <Loader2 className="animate-spin ml-2" />
+              </>
+                : <>
+                  Deletar conversa
+                  <Trash2 className="ml-2" />
+                </>
+            }
+          </Button>
+        )
+      }
     </nav >
   )
 }

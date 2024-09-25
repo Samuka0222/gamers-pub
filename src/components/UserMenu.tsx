@@ -99,7 +99,7 @@ export function UserMenu() {
                   <DropdownMenuContent>
                     <DropdownMenuItem asChild>
                       <Link href={'/reviews'}>
-                        Configurações
+                        Perfil
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className='block lg:hidden' asChild>
@@ -110,11 +110,6 @@ export function UserMenu() {
                     <DropdownMenuItem className='block lg:hidden' asChild>
                       <Link href='/recommendations'>
                         Recomendações
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href='/reviews'>
-                        Feedback
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={signOutAction}>

@@ -159,7 +159,7 @@ export function EditUserInfoForm() {
             }
           </div>
         </div>
-        <div className="w-full h-full flex flex-col gap-4">
+        <div className="w-full h-full flex flex-col gap-4 text-start">
           <div className="w-full flex flex-col md:flex-row justify-center items-center gap-8">
             <FormField
               control={form.control}
@@ -233,6 +233,8 @@ export function EditUserInfoForm() {
                     <SelectItem value="🎖️ Top Gamer">🎖️ Top Gamer</SelectItem>
                     <SelectItem value="Platinador">Platinador</SelectItem>
                     <SelectItem value="Sommelier de Indies">Amante dos Indie</SelectItem>
+                    <SelectItem value="☣️ Hardcore Gamer ☣️">☣️ Hardcore Gamer ☣️</SelectItem>
+                    <SelectItem value="Casual Player">Casual Player</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

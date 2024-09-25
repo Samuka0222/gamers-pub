@@ -142,7 +142,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       </div>
       <div className="w-full flex flex-col md:justify-between gap-4 mt-3">
         <div className="w-full flex flex-col lg:flex-row gap-4 pb-2">
-          <div className="w-full flex-col lg:flex-row overflow-x-auto">
+          <div className="w-full flex-col lg:flex-row pb-2 lg:pb-0 overflow-x-auto">
             <h3 className="text-slate-800 text-lg font-semibold mb-2">Status: </h3>
             <div className="w-full flex gap-2">
               <Button
@@ -272,7 +272,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
       </div>
       <div className="w-full flex flex-col md:flex-row justify-center items-center mt-8 gap-5">
         {
-          review && <Button type="button" variant='destructive' onClick={deleteReviewAction}>
+          review && <Button type="button" variant='destructive' onClick={deleteReviewAction} className="w-[200px]">
             {
               isLoading
                 ? <>

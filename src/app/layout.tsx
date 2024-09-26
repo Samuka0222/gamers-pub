@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     default: 'Gamers Pub'
   },
   description: "Com dúvidas de qual jogo jogar? Acesse nosso chatbot de recomendação de jogos e monte uma lista de games para você jogar!",
+
 };
 
 export default function RootLayout({

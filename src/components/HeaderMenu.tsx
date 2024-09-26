@@ -32,7 +32,7 @@ export function HeaderMenu() {
         <Link href="/" className="hover:scale-105 flex justify-center items-center transition-transform">
           <div className='w-[50px] h-[50px]'>
             <Image
-              src='/logo-gamers-pub.png'
+              src='/logo-gamers-pub-sm.png'
               alt='Logo do Gamers pub'
               width={50}
               height={50}

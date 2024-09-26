@@ -26,8 +26,8 @@ export function UserMenu() {
       if (!tokens) {
         return user;
       } else {
-        const isTokenInvalid = auth.validateTokens();
-        if (!isTokenInvalid) {
+        const isTokenValid = auth.validateTokens();
+        if (isTokenValid) {
           const userInfo = await getUserInformation(tokens.AccessToken);
           setUser(userInfo);
           const userProfilePicture = await getUserProfilePicture();
@@ -39,7 +39,11 @@ export function UserMenu() {
             await auth.validateWithRefreshToken();
             const newTokens = JSON.parse(localStorage.getItem("tokens")!);
             const userInfo = await getUserInformation(newTokens.AccessToken) ?? user;
-            setUser(userInfo)
+            setUser(userInfo);
+            const userProfilePicture = await getUserProfilePicture();
+            if (userProfilePicture.status === 200) {
+              setUserProfilePicture(userProfilePicture.signedUrl!)
+            }
           } catch (error) {
             toast.error('Sessão expirada! Por favor, faça login novamente.');
             localStorage.removeItem('tokens');

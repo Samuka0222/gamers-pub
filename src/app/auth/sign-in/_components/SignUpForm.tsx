@@ -12,6 +12,7 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { makeSignUp } from "@/actions/auth/makeSignUp";
 import Link from "next/link";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/AlertDialog";
 
 const formSchema = z.object({
   firstName: z
@@ -85,6 +86,7 @@ export function SignUpForm() {
 
   const [showPassword, setShowPassword] = useState<"password" | "text">('password')
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const submitAction: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     if (values.password !== values.confirmPassword) {
@@ -106,6 +108,7 @@ export function SignUpForm() {
       form.reset();
       setIsSubmitting(false);
       toast.success('Usuário criado!')
+      setIsDialogOpen(true);
     } catch (error) {
       setIsSubmitting(false);
 
@@ -120,157 +123,178 @@ export function SignUpForm() {
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(submitAction)}
-        className="flex flex-col gap-4 py-2"
-      >
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <Input
-                  placeholder="Insira seu nome..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <Input
-                  placeholder="Insira seu sobrenome..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <Input
-                  placeholder="Insira seu usuário..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <Input
-                  placeholder="Insira seu e-mail..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <div className="w-full h-full relative">
+    <>
+      <AlertDialog open={isDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Bem-vindo ao Gamers&apos; Pub</AlertDialogTitle>
+            <AlertDialogDescription>
+              Seja muito bem-vindo a comunidade Gamer feita para Gamers de verdade! Para continuar com o processo de cadastro, você deve verificar o seu e-mail para confirmar sua conta!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              type="button"
+              onClick={() => setIsDialogOpen(false)}
+              className="bg-transparent border-gray-400 hover:bg-gray-400"
+            >
+              Entendi
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(submitAction)}
+          className="flex flex-col gap-4 py-2"
+        >
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
                   <Input
-                    placeholder="Insira sua senha..."
-                    type={showPassword}
+                    placeholder="Insira seu nome..."
+                    type="text"
                     {...field}
                   />
-                  <Button
-                    variant='outline'
-                    type="button"
-                    className="absolute top-0 right-0 rounded-none rounded-e-lg"
-                    onClick={() => setShowPassword(
-                      showPassword === 'password' ? 'text' : 'password'
-                    )}>
-                    {
-                      showPassword === 'password' ? (
-                        <EyeOff />
-                      ) : (
-                        <Eye />
-                      )
-                    }
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <div className="w-full h-full relative">
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
                   <Input
-                    placeholder="Confirme sua senha..."
-                    type={showPassword}
+                    placeholder="Insira seu sobrenome..."
+                    type="text"
                     {...field}
                   />
-                  <Button
-                    variant='outline'
-                    type="button"
-                    className="absolute top-0 right-0 rounded-none rounded-e-lg"
-                    onClick={() => setShowPassword(
-                      showPassword === 'password' ? 'text' : 'password'
-                    )}>
-                    {
-                      showPassword === 'password' ? (
-                        <EyeOff />
-                      ) : (
-                        <Eye />
-                      )
-                    }
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="button" variant='link' asChild>
-          <Link href='/auth/forgot-password' className="text-white hover:text-primary text-lg">
-            Esqueceu sua senha?
-          </Link>
-        </Button>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <Input
+                    placeholder="Insira seu usuário..."
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <Input
+                    placeholder="Insira seu e-mail..."
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <div className="w-full h-full relative">
+                    <Input
+                      placeholder="Insira sua senha..."
+                      type={showPassword}
+                      {...field}
+                    />
+                    <Button
+                      variant='outline'
+                      type="button"
+                      className="absolute top-0 right-0 rounded-none rounded-e-lg"
+                      onClick={() => setShowPassword(
+                        showPassword === 'password' ? 'text' : 'password'
+                      )}>
+                      {
+                        showPassword === 'password' ? (
+                          <EyeOff />
+                        ) : (
+                          <Eye />
+                        )
+                      }
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <div className="w-full h-full relative">
+                    <Input
+                      placeholder="Confirme sua senha..."
+                      type={showPassword}
+                      {...field}
+                    />
+                    <Button
+                      variant='outline'
+                      type="button"
+                      className="absolute top-0 right-0 rounded-none rounded-e-lg"
+                      onClick={() => setShowPassword(
+                        showPassword === 'password' ? 'text' : 'password'
+                      )}>
+                      {
+                        showPassword === 'password' ? (
+                          <EyeOff />
+                        ) : (
+                          <Eye />
+                        )
+                      }
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="button" variant='link' asChild>
+            <Link href='/auth/forgot-password' className="text-white hover:text-primary text-lg">
+              Esqueceu sua senha?
+            </Link>
+          </Button>
 
-        <Button variant='outline' type="submit">
-          {
-            isSubmitting
-              ? <>
-                <Loader2 className="mr-2 animate-spin" /> Cadastrando...
-              </>
-              : 'Cadastrar'
-          }
-        </Button>
-      </form>
-    </Form>
+          <Button variant='outline' type="submit">
+            {
+              isSubmitting
+                ? <>
+                  <Loader2 className="mr-2 animate-spin" /> Cadastrando...
+                </>
+                : 'Cadastrar'
+            }
+          </Button>
+        </form>
+      </Form>
+    </>
   )
 }

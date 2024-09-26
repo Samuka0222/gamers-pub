@@ -1,5 +1,4 @@
 import { makeRefreshTokenValidation } from '@/actions/auth/makeRefreshTokenValidation';
-import { IUserResponse } from '@/interfaces/IUser';
 
 type ITokens = {
   AccessToken: string;
@@ -28,9 +27,13 @@ export class Auth {
       if (!tokens) {
         return false;
       } else {
+        console.log(tokens.ExpiresIn);
         const expiresIn = new Date(tokens.ExpiresIn);
         const now = new Date();
-        return expiresIn < now;
+        console.log(expiresIn);
+        console.log(now);
+        console.log(expiresIn >= now);
+        return expiresIn > now;
       }
     };
 

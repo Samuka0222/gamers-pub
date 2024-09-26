@@ -25,7 +25,7 @@ export async function makeRefreshTokenValidation() {
     const newTokens = {
       AccessToken: response.data.AccessToken,
       RefreshToken: refreshToken,
-      ExpiresAt: getExpirationTime(response.data.ExpiresIn),
+      ExpiresIn: getExpirationTime(response.data.ExpiresIn),
     };
 
     localStorage.setItem('tokens', JSON.stringify(newTokens));

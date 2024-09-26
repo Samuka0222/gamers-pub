@@ -7,8 +7,9 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { GamesList } from "./_components/GamesList";
-import { RandomReviewCard } from "@/components/ReviewCard";
+import { RandomReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
 import { motion } from "framer-motion";
+import { Skeleton } from "@/components/Skeleton";
 
 export default function HomePage() {
   const { user } = useGlobalStore();
@@ -53,8 +54,8 @@ export default function HomePage() {
         <h3 className="text-xl font-semibold">Confira algumas das últimas reviews.</h3>
         {
           isLoading
-            ? <div className="w-full h-full flex justify-center items-center">
-              <Loader2 className="animate-spin" />
+            ? <div className="w-[600px] h-full flex justify-center items-center">
+              <ReviewCardSkeleton />
             </div>
             : <div className="w-full h-fit flex justify-center items-center mt-6 pb-3 overflow-x-auto">
               <ul
@@ -76,8 +77,14 @@ export default function HomePage() {
         <h3 className="text-xl font-semibold text-center">Games jogados recentemente por nossos membros</h3>
         {
           isLoading
-            ? <div className="w-full h-full flex justify-center items-center">
-              <Loader2 className="animate-spin" />
+            ? <div className="w-full h-full flex gap-4 justify-center items-center">
+              <Skeleton className="w-[70px] h-[100px]" />
+              <Skeleton className="w-[70px] h-[100px]" />
+              <Skeleton className="w-[70px] h-[100px]" />
+              <Skeleton className="w-[70px] h-[100px]" />
+              <Skeleton className="w-[70px] h-[100px]" />
+              <Skeleton className="w-[70px] h-[100px]" />
+              <Skeleton className="w-[70px] h-[100px]" />
             </div>
             : reviews !== undefined && reviews.length > 0
               ? <div className="w-full h-full flex justify-center items-center mt-6 pb-3 overflow-x-auto">

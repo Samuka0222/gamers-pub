@@ -70,7 +70,7 @@ export function HeaderMenu() {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Quem é você? 🤔</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Para acessar a área de Reviews, você precisa estar logado. Faça o login e começe a fazer suas avaliações!
+                        Para acessar a área de Recomendações, você precisa estar logado. Faça o login e começe a fazer suas avaliações!
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

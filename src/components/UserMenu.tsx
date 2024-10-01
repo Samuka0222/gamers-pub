@@ -13,11 +13,14 @@ import { Auth } from '@/helpers/auth';
 import { Skeleton } from "./Skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import { getUserProfilePicture } from "@/actions/upload/getUserProfilePicture";
+import { useRouter } from "next/navigation";
 
 export function UserMenu() {
   const { setUser, setUserProfilePicture } = useGlobalStore();
   const user = useGlobalStore.getState().user;
   const [isLoadingUserInformation, setIsLoadingUserInformation] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleSignIn = async () => {

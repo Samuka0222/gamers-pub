@@ -3,12 +3,10 @@
 import { getRandomReviews } from "@/actions/reviews/getRandomReviews";
 import { IReview } from "@/interfaces/IReview";
 import { useGlobalStore } from "@/store/globalStore";
-import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { GamesList } from "./_components/GamesList";
 import { RandomReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
-import { motion } from "framer-motion";
 import { Skeleton } from "@/components/Skeleton";
 
 export default function HomePage() {

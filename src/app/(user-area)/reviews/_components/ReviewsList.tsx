@@ -20,7 +20,7 @@ export function ReviewsList({ reviews, setReviews }: ReviewsListProps) {
       try {
         const response = await getReviewsByUser();
         if (response) {
-          setReviews(response.Items);
+          setReviews(response);
           setIsLoading(false);
         }
       } catch (error) {

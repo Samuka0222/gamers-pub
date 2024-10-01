@@ -27,12 +27,8 @@ export class Auth {
       if (!tokens) {
         return false;
       } else {
-        console.log(tokens.ExpiresIn);
         const expiresIn = new Date(tokens.ExpiresIn);
         const now = new Date();
-        console.log(expiresIn);
-        console.log(now);
-        console.log(expiresIn >= now);
         return expiresIn > now;
       }
     };

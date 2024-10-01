@@ -116,7 +116,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
           releaseDate={game.first_release_date}
           coverUrl={`https:${game.cover.url!}`}
         />
-        <div className="w-full h-fit flex mb-4 lg:mb-0 justify-center items-center gap-4">
+        <div className="w-fit h-fit flex mb-4 lg:mb-0 justify-center items-center gap-4">
           <div className="w-[500px] flex flex-col md:flex-row gap-4 items-center justify-center">
             <div className="w-full flex justify-center items-center gap-2">
               <Slider
@@ -274,7 +274,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
         {
           review && <Button type="button" variant='destructive' onClick={deleteReviewAction} className="w-[200px]">
             {
-              isLoading
+              isDeleting
                 ? <>
                   Deletando <Loader2 className="animate-spin" />
                 </>

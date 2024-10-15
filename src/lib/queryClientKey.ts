@@ -8,6 +8,4 @@ export const CH_QUERY_KEY = ['chatbot-history'];
 
 export const RANDOM_REVIEWS_QUERY_KEY = ['random-reviews'];
 
-export const FUTURE_RELEASES_QUERY_KEY = ['future-releases'];
-
 export const RELEASES_QUERY_KEY = ['releases'];

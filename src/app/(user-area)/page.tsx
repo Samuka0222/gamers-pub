@@ -5,26 +5,16 @@ import { IReview } from "@/interfaces/IReview";
 import { useGlobalStore } from "@/store/globalStore";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { GamesList } from "./_components/GamesList";
+import { GamesListContainer } from "./_components/GamesListContainer";
 import { RandomReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
 import { Skeleton } from "@/components/Skeleton";
+import { useGetRandomReviews } from "@/hooks/useGetRandomReviews";
 
 export default function HomePage() {
   const { user } = useGlobalStore();
+  const { randomReviews, isLoading: isRandomReviewsLoading, error } = useGetRandomReviews();
 
   const [userName, setUserName] = useState<string | undefined>(undefined);
-  const [reviews, setReviews] = useState<IReview[]>([]);
-  const [isLoading, SetIsLoading] = useState(false);
-
-  useEffect(() => {
-    const getRandomReviewsforUser = async () => {
-      SetIsLoading(true);
-      const response = await getRandomReviews();
-      setReviews(response);
-      SetIsLoading(false);
-    }
-    getRandomReviewsforUser();
-  }, [])
 
   useEffect(() => {
     if (user !== undefined) {
@@ -51,7 +41,7 @@ export default function HomePage() {
       <div className="w-full xl:w-[70%] h-full flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold">Confira algumas das últimas reviews.</h3>
         {
-          isLoading
+          isRandomReviewsLoading
             ? <div className="w-[600px] h-full flex justify-center items-center">
               <ReviewCardSkeleton />
             </div>
@@ -60,7 +50,7 @@ export default function HomePage() {
                 className="w-full h-full flex gap-8 justify-start items-center"
               >
                 {
-                  reviews.map(item => (
+                  randomReviews?.map(item => (
                     <li key={item.id} className="min-w-full md:min-w-full lg:min-w-[600px] relative">
                       <RandomReviewCard review={item} />
                     </li>
@@ -74,7 +64,7 @@ export default function HomePage() {
       <div className="w-full h-fit flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold text-center">Games jogados recentemente por nossos membros</h3>
         {
-          isLoading
+          isRandomReviewsLoading
             ? <div className="w-full h-full flex gap-4 justify-center items-center">
               <Skeleton className="w-[70px] h-[100px]" />
               <Skeleton className="w-[70px] h-[100px]" />
@@ -84,13 +74,13 @@ export default function HomePage() {
               <Skeleton className="w-[70px] h-[100px]" />
               <Skeleton className="w-[70px] h-[100px]" />
             </div>
-            : reviews !== undefined && reviews.length > 0
+            : randomReviews !== undefined
               ? <div className="w-full h-full flex justify-center items-center mt-6 pb-3 overflow-x-auto">
                 <ul
                   className="w-fit h-full flex flex-row-reverse gap-4 justify-center items-center"
                 >
                   {
-                    reviews.map(item => (
+                    randomReviews.map(item => (
                       <li key={item.id} className="w-[150px] relative">
                         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center text-base text-center font-medium text-transparent hover:bg-black/50 hover:text-white transition-colors">
                           {item.gameName}
@@ -114,13 +104,13 @@ export default function HomePage() {
           <h3 className="w-full text-lg text-center md:text-start font-semibold">
             Lançados recentemente
           </h3>
-          <GamesList type="released" />
+          <GamesListContainer type="released" />
         </div>
         <div className="w-fit h-full">
           <h3 className="w-full text-lg text-center md:text-start font-semibold">
             Lançando em breve
           </h3>
-          <GamesList type="upcoming" />
+          <GamesListContainer type="upcoming" />
         </div>
       </div>
     </section>

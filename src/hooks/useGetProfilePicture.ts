@@ -1,4 +1,4 @@
-import { getUserProfilePictureAction } from '@/actions/upload/getUserProfilePicture';
+import { getUserProfilePictureAction } from '@/actions/upload/getUserProfilePictureAction';
 import { queryClient } from '@/lib/queryClient';
 import { PROFILE_PICTURE_QUERY_KEY } from '@/lib/queryClientKey';
 import { useGlobalStore } from '@/store/globalStore';

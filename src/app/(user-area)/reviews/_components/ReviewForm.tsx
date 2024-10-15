@@ -22,6 +22,8 @@ import { GameDetails } from "@/components/GameDetails";
 import { updateReview } from "@/actions/reviews/updateReview";
 import { deleteReview } from "@/actions/reviews/deleteReview";
 import { useGlobalStore } from "@/store/globalStore";
+import { queryClient } from "@/lib/queryClient";
+import { REVIEWS_QUERY_KEY } from "@/lib/queryClientKey";
 
 interface ReviewFormProps {
   game: IGameDetails;
@@ -85,6 +87,7 @@ export function ReviewForm({ game, review }: ReviewFormProps) {
         await createReview(newReview);
         toast.success('Review criada com sucesso');
       }
+      queryClient.invalidateQueries({ queryKey: REVIEWS_QUERY_KEY })
       router.push('/reviews');
       setIsLoading(false);
     } catch (error) {

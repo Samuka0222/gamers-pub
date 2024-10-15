@@ -1,5 +1,3 @@
-'use client'
-
 import { PlusCircleIcon } from "lucide-react";
 import { ProfileHeader } from "./_components/ProfileHeader";
 import { SearchGameForm } from "./_components/SearchGameForm";
@@ -13,13 +11,9 @@ import {
   DialogTrigger
 } from "@/components/Dialog";
 import { Button } from "@/components/Button";
-import { useState } from "react";
-import { IReviewRequest } from "@/interfaces/IReview";
 import { ReviewsList } from "./_components/ReviewsList";
 
 export default function ReviewsPage() {
-  const [reviews, setReviews] = useState<IReviewRequest[]>([]);
-
   return (
     <section className="w-full xl:w-[80%] h-full flex flex-1 flex-col justify-center items-center px-5 py-6">
       <div className="w-full h-full flex-1 lg:w-[60%]">
@@ -43,8 +37,8 @@ export default function ReviewsPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="w-full h-full flex flex-col justify-start items-center gap-4 mt-10">
-          <ReviewsList reviews={reviews} setReviews={setReviews} />
+        <div className="w-full h-full flex flex-col justify-start items-center gap-4 mt-10 mb-16">
+          <ReviewsList />
         </div>
       </div>
     </section>

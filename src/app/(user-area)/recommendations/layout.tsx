@@ -1,5 +1,3 @@
-import { ChatbotMenu } from "./_components/ChatbotMenu";
-
 export default function Layout({
   children,
 }: Readonly<{

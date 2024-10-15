@@ -3,25 +3,31 @@
 import { useEffect, useState } from "react";
 import { RecommendationBotForm } from "./RecommendationBotForm";
 import { IChatMessage } from "@/interfaces/IChat";
-import { getChatHistoryById } from "@/actions/chatbot/getChatHistoryById";
 import { Loader2 } from "lucide-react";
+import { useChatHistoryByUser } from "@/hooks/useGetChatHistoryByUser";
+import type { Content } from "@google/generative-ai";
 
 export function ChatbotContainer({ chatHistoryId }: { chatHistoryId: string }) {
+  const { chatbotHistory, isLoading } = useChatHistoryByUser();
   const [chat, setChat] = useState<IChatMessage[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getChatHistory = async () => {
-      const response = await getChatHistoryById(chatHistoryId);
-      setChat(response.chatHistory)
-    };
+    if (chatbotHistory !== undefined && chatHistoryId !== '') {
+      const filteredChat = chatbotHistory.find(item => item.id === chatHistoryId)
 
-    if (chatHistoryId !== '') {
-      getChatHistory();
+      const formattedChat = filteredChat?.chatbot_history.map(
+        (item: Content) => ({
+          message: {
+            text: item.parts[0].text!,
+            isPending: false,
+            owner: item.role,
+          },
+        }),
+      );
+
+      setChat(formattedChat!)
     }
-
-    setIsLoading(false);
-  }, []);
+  }, [chatbotHistory])
 
   return (
     <>

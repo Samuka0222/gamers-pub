@@ -2,7 +2,7 @@
 
 import { SendHorizonal } from "lucide-react";
 
-import { useEffect, useOptimistic, useState } from "react";
+import { useOptimistic, useState } from "react";
 
 import { ChatHistoryList } from "./ChatHistoryList";
 import { Input } from "@/components/Input";
@@ -14,7 +14,6 @@ import { IChatMessage } from "@/interfaces/IChat";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { getChatHistoryById } from "@/actions/chatbot/getChatHistoryById";
 import { ChatbotMenu } from "./ChatbotMenu";
 
 interface RecommendationBotFormProps {
@@ -23,9 +22,8 @@ interface RecommendationBotFormProps {
   setChat: React.Dispatch<React.SetStateAction<IChatMessage[]>>
 }
 
-export function RecommendationBotForm({ id, chat, setChat }: RecommendationBotFormProps) {
+export function RecommendationBotForm({ id: conversationId, chat, setChat }: RecommendationBotFormProps) {
   const [userPrompt, setUserPrompt] = useState('');
-  const [conversationId, setConversationId] = useState(id);
 
   const [optimisticChat, addOptimisticChat] = useOptimistic(
     chat,

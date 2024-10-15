@@ -1,5 +1,4 @@
 import { ChatbotContainer } from "../_components/ChatbotContainer";
-import { ChatbotMenu } from "../_components/ChatbotMenu";
 
 interface RecommendationsPageProps {
   params: {

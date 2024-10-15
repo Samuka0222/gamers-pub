@@ -1,29 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { getUserInformation } from "@/actions/user/getUserInformation";
 import Link from "next/link";
 import { Button } from "./Button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./DropdownMenu";
 import { User2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useGlobalStore } from "@/store/globalStore";
-import { toast } from 'sonner';
 import { Auth } from '@/helpers/auth';
 import { Skeleton } from "./Skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
-import { getUserProfilePicture } from "@/actions/upload/getUserProfilePicture";
 import { useSignIn } from "@/hooks/useSignIn";
+import { toast } from "sonner";
+import { useGetProfilePicture } from "@/hooks/useGetProfilePicture";
+import { useRouter } from "next/navigation";
 
 export function UserMenu() {
-  const { userInfo, error, isLoading } = useSignIn();
   const { setUser, setUserProfilePicture } = useGlobalStore();
+  const { userInfo, error, isLoading } = useSignIn();
+  const { profilePictureUrl, isLoading: IsProfileLoading } = useGetProfilePicture();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (error) toast.error('Sessão não autenticada, efetue o Login');
+    console.log(error);
+    router.push('/');
+  }, [error]);
 
   useEffect(() => {
     if (userInfo !== undefined) {
       setUser(userInfo);
     }
-  }, [userInfo])
+  }, [userInfo]);
+
+  useEffect(() => {
+    if (profilePictureUrl !== undefined) {
+      setUserProfilePicture(profilePictureUrl);
+    }
+  }, [profilePictureUrl])
 
   const signOutAction = () => {
     const auth = new Auth();
@@ -53,9 +68,9 @@ export function UserMenu() {
                   <DropdownMenuTrigger className='bg-slate-900 border border-primary py-2 px-3 rounded-lg'>
                     <div className='w-full h-full flex justify-center items-center gap-2'>
                       {
-                        userInfo.profilePicture !== undefined
+                        !IsProfileLoading
                           ? <Avatar className="w-7 h-7">
-                            <AvatarImage src={userInfo.profilePicture} />
+                            <AvatarImage src={profilePictureUrl} />
                             <AvatarFallback>{userInfo.username.slice(0, 1)}</AvatarFallback>
                           </Avatar>
                           : <div className='bg-white rounded-full p-1'>

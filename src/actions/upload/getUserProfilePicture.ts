@@ -6,7 +6,7 @@ interface IOutput {
   signedUrl: string | undefined;
 }
 
-export async function getUserProfilePicture(): Promise<IOutput> {
+export async function getUserProfilePictureAction(): Promise<IOutput> {
   const auth = new Auth();
   const tokens = auth.getUserTokens();
 

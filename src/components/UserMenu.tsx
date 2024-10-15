@@ -13,53 +13,17 @@ import { Auth } from '@/helpers/auth';
 import { Skeleton } from "./Skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import { getUserProfilePicture } from "@/actions/upload/getUserProfilePicture";
-import { useRouter } from "next/navigation";
+import { useSignIn } from "@/hooks/useSignIn";
 
 export function UserMenu() {
+  const { userInfo, error, isLoading } = useSignIn();
   const { setUser, setUserProfilePicture } = useGlobalStore();
-  const user = useGlobalStore.getState().user;
-  const [isLoadingUserInformation, setIsLoadingUserInformation] = useState(true);
-
-  const router = useRouter();
 
   useEffect(() => {
-    const handleSignIn = async () => {
-      const auth = new Auth();
-      const tokens = auth.getUserTokens();
-      if (!tokens) {
-        return user;
-      } else {
-        const isTokenValid = auth.validateTokens();
-        if (isTokenValid) {
-          const userInfo = await getUserInformation(tokens.AccessToken);
-          setUser(userInfo);
-          const userProfilePicture = await getUserProfilePicture();
-          if (userProfilePicture.status === 200) {
-            setUserProfilePicture(userProfilePicture.signedUrl!)
-          }
-        } else {
-          try {
-            await auth.validateWithRefreshToken();
-            const newTokens = JSON.parse(localStorage.getItem("tokens")!);
-            const userInfo = await getUserInformation(newTokens.AccessToken) ?? user;
-            setUser(userInfo);
-            const userProfilePicture = await getUserProfilePicture();
-            if (userProfilePicture.status === 200) {
-              setUserProfilePicture(userProfilePicture.signedUrl!)
-            }
-          } catch (error) {
-            toast.error('Sessão expirada! Por favor, faça login novamente.');
-            localStorage.removeItem('tokens');
-            return user;
-          }
-        }
-      }
+    if (userInfo !== undefined) {
+      setUser(userInfo);
     }
-    if (user === undefined) {
-      handleSignIn();
-      setIsLoadingUserInformation(false);
-    }
-  }, [setUser]);
+  }, [userInfo])
 
   const signOutAction = () => {
     const auth = new Auth();
@@ -70,9 +34,9 @@ export function UserMenu() {
   return (
     <>
       {
-        isLoadingUserInformation
+        isLoading
           ? <UserMenuSkeleton />
-          : !user?.isAuthenticated
+          : userInfo === undefined
             ? (
               <Button
                 className='bg-transparent hover:bg-slate-700 text-base'
@@ -89,17 +53,17 @@ export function UserMenu() {
                   <DropdownMenuTrigger className='bg-slate-900 border border-primary py-2 px-3 rounded-lg'>
                     <div className='w-full h-full flex justify-center items-center gap-2'>
                       {
-                        user.profilePicture !== undefined
+                        userInfo.profilePicture !== undefined
                           ? <Avatar className="w-7 h-7">
-                            <AvatarImage src={user.profilePicture} />
-                            <AvatarFallback>{user.username.slice(0, 1)}</AvatarFallback>
+                            <AvatarImage src={userInfo.profilePicture} />
+                            <AvatarFallback>{userInfo.username.slice(0, 1)}</AvatarFallback>
                           </Avatar>
                           : <div className='bg-white rounded-full p-1'>
                             <User2 size={16} />
                           </div>
                       }
                       <div>
-                        <span className='text-white text-sm max-w-[100px] truncate'>{user?.username}</span>
+                        <span className='text-white text-sm max-w-[100px] truncate'>{userInfo?.username}</span>
                       </div>
                     </div>
                   </DropdownMenuTrigger>

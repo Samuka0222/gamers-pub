@@ -5,7 +5,7 @@ import { IUserChatbotHistory } from '@/interfaces/IChat';
 import { Content } from '@google/generative-ai';
 import axios from 'axios';
 
-type IOutput = {
+type IAxiosOutput = {
   Items: {
     sk: string;
     created_at: string;
@@ -17,7 +17,7 @@ export async function getUserChatBotHistory(): Promise<IUserChatbotHistory[]> {
   const auth = new Auth();
   const tokens = auth.getUserTokens();
 
-  const response = await axios.get<IOutput>(
+  const response = await axios.get<IAxiosOutput>(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/chatbot`,
     {
       headers: {

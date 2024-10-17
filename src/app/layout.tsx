@@ -11,8 +11,7 @@ export const metadata: Metadata = {
     template: '%s | Gamers Pub',
     default: 'Gamers Pub'
   },
-  description: "Com dúvidas de qual jogo jogar? Acesse nosso chatbot de recomendação de jogos e monte uma lista de games para você jogar!",
-
+  description: "Jogou aquele jogo brabo e quer dizer sua opinião para o mundo? Está em dúvida do que jogar? Acesse o Gamers' Pub e resolva todos os seus problemas! A comunidade Gamer feita por Gamers!",
 };
 
 export default function RootLayout({

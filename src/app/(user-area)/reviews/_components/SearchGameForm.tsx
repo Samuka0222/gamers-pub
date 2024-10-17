@@ -4,7 +4,6 @@ import { Button } from "@/components/Button";
 import { IGameSearchResult } from "@/interfaces/IGame";
 import { Input } from "@/components/Input";
 import { Loader2Icon, Search } from "lucide-react";
-import { SubmitButton } from "@/components/SubmitButton";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -17,7 +16,6 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
   const [isSearching, setIsSearching] = useState(false);
   const [searchGameName, setSearchGameName] = useState('');
   const [searchResults, setSearchResults] = useState<IGameSearchResult[]>([]);
-  const [game, setGame] = useState('');
 
   const router = useRouter();
 
@@ -46,7 +44,6 @@ export function SearchGameForm({ searchGameByName }: SearchGameFormProps) {
 
   const setGameAction = (game: IGameSearchResult) => {
     setIsSearching(false);
-    setGame(game.name);
     router.push(`/reviews/create-review/${game.id}`)
   }
 

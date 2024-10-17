@@ -9,7 +9,7 @@ type IOutput = {
   LastEvaluatedItem: IReviewRequest;
 };
 
-export async function getReviewsByUser() {
+export async function getReviewsByUserAction() {
   const auth = new Auth();
   const tokens = auth.getUserTokens();
 

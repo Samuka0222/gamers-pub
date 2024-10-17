@@ -3,11 +3,15 @@
 import { IGameReleases } from '@/interfaces/IGame';
 import axios, { AxiosError } from 'axios';
 
-export async function getGamesByReleaseDate(releasedGames: boolean) {
+type IInput = {
+  released?: boolean;
+};
+
+export async function getGamesByReleaseDate({ released }: IInput) {
   try {
     const nowInMilliseconds = Date.now();
     const epochTimeStamp = Math.floor(nowInMilliseconds / 1000);
-    const apiqlQuery = releasedGames
+    const apiqlQuery = released
       ? `fields name, cover.url, first_release_date, release_dates.human; where category = 0 & first_release_date <= ${epochTimeStamp}; sort first_release_date desc; limit 8;`
       : `fields name, cover.url, first_release_date, release_dates.human; where category = 0 & first_release_date >= ${epochTimeStamp}; sort first_release_date asc; limit 8;`;
 

@@ -30,6 +30,8 @@ import { getPresignedUrl } from "@/actions/upload/getPresignedUrl";
 import { uploadFile } from "@/actions/upload/uploadFile";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { queryClient } from "@/lib/queryClient";
+import { USER_QUERY_KEY } from "@/lib/queryClientKey";
 
 interface IUpload {
   file: File;
@@ -111,6 +113,7 @@ export function EditUserInfoForm() {
         }
       }
       setIsSubmitting(false);
+      queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY })
       window.location.reload();
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -129,7 +132,6 @@ export function EditUserInfoForm() {
         <div className="w-full h-fit flex justify-between items-center gap-8">
           <div className="w-[150px] h-28 flex flex-col justify-center items-center">
             {
-              // TODO: Create a Get Profile Picture function
               user?.profilePicture !== undefined
                 ? <Image src={user?.profilePicture} alt='Sua foto de perfil' height={100} width={100} />
                 : <div className="w-full h-full bg-gray-500 flex justify-center items-center rounded-lg">

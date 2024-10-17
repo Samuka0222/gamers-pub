@@ -4,7 +4,7 @@ import { CH_QUERY_KEY } from '@/lib/queryClientKey';
 import { useGlobalStore } from '@/store/globalStore';
 import { useQuery } from '@tanstack/react-query';
 
-export function useChatHistoryByUser() {
+export function useGetChatHistoryByUser() {
   const { user } = useGlobalStore();
 
   const { data, isLoading, error } = useQuery(
@@ -12,7 +12,6 @@ export function useChatHistoryByUser() {
       enabled: user !== undefined,
       queryKey: CH_QUERY_KEY,
       queryFn: async () => {
-        console.log('QueryFn() executou');
         const response = await getUserChatBotHistory();
         return response;
       },

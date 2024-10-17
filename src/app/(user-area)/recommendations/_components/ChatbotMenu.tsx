@@ -3,7 +3,7 @@
 import { deleteChatHistory } from "@/actions/chatbot/deleteChatHistory"
 import { Button } from "@/components/Button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/DropdownMenu"
-import { useChatHistoryByUser } from "@/hooks/useGetChatHistoryByUser"
+import { useGetChatHistoryByUser } from "@/hooks/useGetChatHistoryByUser"
 import { queryClient } from "@/lib/queryClient"
 import { CH_QUERY_KEY } from "@/lib/queryClientKey"
 import { format } from "date-fns"
@@ -17,7 +17,7 @@ export function ChatbotMenu({ chatId }: { chatId: string }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
-  const { chatbotHistory, isLoading } = useChatHistoryByUser();
+  const { chatbotHistory, isLoading } = useGetChatHistoryByUser();
 
   const deleteChatHistoryAction = async (chatHistoryId: string) => {
     try {

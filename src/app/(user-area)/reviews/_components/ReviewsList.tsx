@@ -1,12 +1,17 @@
 'use client'
 
+import { ErrorWarning } from "@/components/ErrorWarning";
 import { ReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
 import { useGetReviewsByUser } from "@/hooks/useGetReviewsByUser";
+import { useEffect } from "react";
 
 export function ReviewsList() {
-  const { reviews, isLoading } = useGetReviewsByUser();
+  const { reviews, isLoading, error } = useGetReviewsByUser();
+  useEffect(() => console.log(error), [error])
+
   return (
     <>
+      {error && (<ErrorWarning errorCause={error.message} />)}
       {
         isLoading
           ? <div className="min-w-full h-full flex flex-col justify-center items-center gap-4">

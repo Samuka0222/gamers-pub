@@ -1,16 +1,18 @@
 import { Skeleton } from "@/components/Skeleton"
 import { useGetReleases } from "@/hooks/useGetReleases"
 import { GamesList } from "./GamesList"
+import { ErrorWarning } from "@/components/ErrorWarning";
 
 interface GamesListProps {
   type: 'released' | 'upcoming'
 }
 
 export function GamesListContainer({ type }: GamesListProps) {
-  const { releasesList, isLoading } = useGetReleases();
+  const { releasesList, isLoading, error } = useGetReleases();
 
   return (
     <div className="w-full md:w-fit flex flex-col justify-center items-start">
+      {error && (<ErrorWarning errorCause={error.message} />)}
       {
         isLoading
           ? <GameListSkeleton />

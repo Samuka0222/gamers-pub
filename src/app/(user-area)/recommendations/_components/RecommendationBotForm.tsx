@@ -19,6 +19,7 @@ import { useGetChatHistoryByUser } from "@/hooks/useGetChatHistoryByUser";
 import { Content } from "@google/generative-ai";
 import { queryClient } from "@/lib/queryClient";
 import { CH_QUERY_KEY } from "@/lib/queryClientKey";
+import { ErrorWarning } from "@/components/ErrorWarning";
 
 interface RecommendationBotFormProps {
   id: string;
@@ -115,6 +116,7 @@ export function RecommendationBotForm({ id: conversationId }: RecommendationBotF
 
   return (
     <>
+      {error && (<ErrorWarning errorCause={error.message} />)}
       {
         isLoading
           ? <div className="w-full min-h-full flex flex-1 justify-center items-center">

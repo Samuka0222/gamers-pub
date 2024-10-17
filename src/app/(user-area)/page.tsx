@@ -5,6 +5,7 @@ import { GamesListContainer } from "./_components/GamesListContainer";
 import { RandomReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
 import { Skeleton } from "@/components/Skeleton";
 import { useGetRandomReviews } from "@/hooks/useGetRandomReviews";
+import { ErrorWarning } from "@/components/ErrorWarning";
 
 export default function HomePage() {
   const { randomReviews, isLoading: isRandomReviewsLoading, error } = useGetRandomReviews();
@@ -25,6 +26,7 @@ export default function HomePage() {
       </div>
       <div className="w-full xl:w-[70%] h-full flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold">Confira algumas das últimas reviews.</h3>
+        {error && (<ErrorWarning errorCause={error.message} />)}
         {
           isRandomReviewsLoading
             ? <div className="w-full h-full flex justify-center items-center mt-6 gap-8">
@@ -53,6 +55,7 @@ export default function HomePage() {
 
       <div className="w-full h-fit flex flex-col justify-center items-center mt-10">
         <h3 className="text-xl font-semibold text-center">Games jogados recentemente por nossos membros</h3>
+        {error && (<ErrorWarning errorCause={error.message} />)}
         {
           isRandomReviewsLoading
             ? <div className="w-full h-full flex gap-4 justify-center items-center mt-6">

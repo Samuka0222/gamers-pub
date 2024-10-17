@@ -20,7 +20,7 @@ export function ReviewsList() {
             </div>
             : < ul className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 lg:gap-10">
               {
-                reviews?.map(reviewItem => <li key={reviewItem.review.id} className="w-full lg:w-[800px] h-fit">
+                reviews?.map(reviewItem => <li key={reviewItem.review.id} className="w-full h-fit">
                   <ReviewCard review={reviewItem.review} />
                 </li>)
               }

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function ReviewsPage() {
   return (
-    <section className="w-full xl:w-[80%] h-full flex flex-1 flex-col justify-center items-center px-5 py-6">
+    <section className="w-full xl:w-[75%] h-full flex flex-1 flex-col justify-center items-center px-5 py-6">
       <div className="w-full h-full flex-1 lg:w-[60%]">
         <ProfileHeader />
         <div className="w-full flex justify-between items-center mt-5">

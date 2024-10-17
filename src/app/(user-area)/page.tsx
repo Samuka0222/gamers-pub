@@ -1,9 +1,5 @@
 'use client'
 
-import { getRandomReviews } from "@/actions/reviews/getRandomReviews";
-import { IReview } from "@/interfaces/IReview";
-import { useGlobalStore } from "@/store/globalStore";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { GamesListContainer } from "./_components/GamesListContainer";
 import { RandomReviewCard, ReviewCardSkeleton } from "@/components/ReviewCard";
@@ -11,16 +7,7 @@ import { Skeleton } from "@/components/Skeleton";
 import { useGetRandomReviews } from "@/hooks/useGetRandomReviews";
 
 export default function HomePage() {
-  const { user } = useGlobalStore();
   const { randomReviews, isLoading: isRandomReviewsLoading, error } = useGetRandomReviews();
-
-  const [userName, setUserName] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    if (user !== undefined) {
-      setUserName(user.username);
-    }
-  }, [user])
 
   return (
     <section className="w-full h-full flex flex-col justify-center items-center px-5 py-6 overflow-x-hidden">
@@ -31,9 +18,7 @@ export default function HomePage() {
         <div className="w-fit text-3xl font-bold text-slate-600">
           <h1 className="uppercase flex flex-col gap-2">
             <span>Bem-vindo</span>
-            {
-              userName !== undefined ? <span>de volta ao</span> : <span>ao</span>
-            }
+            <span>ao</span>
             <span className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Gamers&apos; Pub</span>
           </h1>
         </div>
@@ -42,8 +27,13 @@ export default function HomePage() {
         <h3 className="text-xl font-semibold">Confira algumas das últimas reviews.</h3>
         {
           isRandomReviewsLoading
-            ? <div className="w-[600px] h-full flex justify-center items-center">
-              <ReviewCardSkeleton />
+            ? <div className="w-full h-full flex justify-center items-center mt-6 gap-8">
+              <div className="w-[600px]">
+                <ReviewCardSkeleton />
+              </div>
+              <div className="w-[600px]">
+                <ReviewCardSkeleton />
+              </div>
             </div>
             : <div className="w-full h-fit flex justify-center items-center mt-6 pb-3 overflow-x-auto">
               <ul
@@ -65,14 +55,13 @@ export default function HomePage() {
         <h3 className="text-xl font-semibold text-center">Games jogados recentemente por nossos membros</h3>
         {
           isRandomReviewsLoading
-            ? <div className="w-full h-full flex gap-4 justify-center items-center">
-              <Skeleton className="w-[70px] h-[100px]" />
-              <Skeleton className="w-[70px] h-[100px]" />
-              <Skeleton className="w-[70px] h-[100px]" />
-              <Skeleton className="w-[70px] h-[100px]" />
-              <Skeleton className="w-[70px] h-[100px]" />
-              <Skeleton className="w-[70px] h-[100px]" />
-              <Skeleton className="w-[70px] h-[100px]" />
+            ? <div className="w-full h-full flex gap-4 justify-center items-center mt-6">
+              <Skeleton className="w-[150px] h-[230px]" />
+              <Skeleton className="w-[150px] h-[230px]" />
+              <Skeleton className="w-[150px] h-[230px]" />
+              <Skeleton className="w-[150px] h-[230px]" />
+              <Skeleton className="w-[150px] h-[230px]" />
+              <Skeleton className="w-[150px] h-[230px]" />
             </div>
             : randomReviews !== undefined
               ? <div className="w-full h-full flex justify-center items-center mt-6 pb-3 overflow-x-auto">

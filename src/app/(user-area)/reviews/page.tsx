@@ -12,6 +12,12 @@ import {
 } from "@/components/Dialog";
 import { Button } from "@/components/Button";
 import { ReviewsList } from "./_components/ReviewsList";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Reviews',
+  description: "Compartilhe suas opiniões sobre os jogos que você jogou, mostre para o mundo que você é um apreciador de jogos de qualidade!",
+};
 
 export default function ReviewsPage() {
   return (

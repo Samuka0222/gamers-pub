@@ -172,7 +172,7 @@ export function RandomReviewCard({ review }: ReviewCardProps) {
 
 export function ReviewCardSkeleton() {
   return (
-    <div className="w-full h-[250px] px-2 py-4 border border-gray-400/50 gap-4 rounded-lg flex justify-between items-center">
+    <div className="w-full h-[350px] px-2 py-4 border border-gray-400/50 gap-4 rounded-lg flex justify-between items-center">
       <div className="w-[110px] h-full">
         <Skeleton className="w-full h-[120px]" />
       </div>
